@@ -1,0 +1,351 @@
+{
+  "date": "2026-09-07 17:55:40",
+  "total": 57,
+  "passed": 56,
+  "failed": 1,
+  "pass_rate": "98%",
+  "tests": [
+    {
+      "name": "A1 Login Page + HTTPS",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.59
+    },
+    {
+      "name": "A2 Login teacher-zhang",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/teacher-zhang/lab?",
+      "elapsed": 1.5
+    },
+    {
+      "name": "A3 Admin Panel Accounts",
+      "status": "PASS",
+      "details": "Found: ['teacher-zhang', 'lecture-p1', 'lecture-p2', 'lecture-p3']",
+      "elapsed": 0.65
+    },
+    {
+      "name": "A4 Admin Panel Groups",
+      "status": "PASS",
+      "details": "Found: ['lecture-p1-students', 'all-students']",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A5 JupyterLab UI",
+      "status": "PASS",
+      "details": "topbar=False, launcher=True",
+      "elapsed": 11.3
+    },
+    {
+      "name": "A6 File Browser",
+      "status": "PASS",
+      "details": "files=111, has_ipynb=True",
+      "elapsed": 0.12
+    },
+    {
+      "name": "A7 Contents API",
+      "status": "PASS",
+      "details": "status=200, items=111",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A8 Teacher Guide Distribution",
+      "status": "PASS",
+      "details": "teacher=True, student=True",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A9 LLM Chat API",
+      "status": "PASS",
+      "details": "content='Hello! How can I assist you to'",
+      "elapsed": 29.36
+    },
+    {
+      "name": "A10 Embedding API",
+      "status": "PASS",
+      "details": "dim=768",
+      "elapsed": 13.96
+    },
+    {
+      "name": "A11 CRDB Health",
+      "status": "PASS",
+      "details": "response={}",
+      "elapsed": 0.01
+    },
+    {
+      "name": "A12 CRDB Databases",
+      "status": "PASS",
+      "details": "databases=33",
+      "elapsed": 0.04
+    },
+    {
+      "name": "A13 nbgrader Exchange",
+      "status": "PASS",
+      "details": "files=['nbgrader_config.py', 'source', 'gradebook.db', 'exchange', 'cache']",
+      "elapsed": 0.02
+    },
+    {
+      "name": "A14 Logout",
+      "status": "PASS",
+      "details": "has_login=True",
+      "elapsed": 2.11
+    },
+    {
+      "name": "A15 Student Login",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/student-python/lab?",
+      "elapsed": 1.65
+    },
+    {
+      "name": "A16 Student Guide Distribution",
+      "status": "PASS",
+      "details": "student=True, teacher=False",
+      "elapsed": 0.03
+    },
+    {
+      "name": "A17 Lecture-P1 Login + Admin",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide/user/lecture-p1/lab, admin=True",
+      "elapsed": 2.22
+    },
+    {
+      "name": "A18 Cookie Size (431 Prevention)",
+      "status": "PASS",
+      "details": "total=538 bytes, cookies=5",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A19 Concurrent Logins x10",
+      "status": "PASS",
+      "details": "10/10 successful",
+      "elapsed": 8.18
+    },
+    {
+      "name": "A20 HTTP 431 Prevention",
+      "status": "PASS",
+      "details": "statuses=[200, 200, 200]",
+      "elapsed": 7.89
+    },
+    {
+      "name": "A21 Terminal Service",
+      "status": "PASS",
+      "details": "status=200",
+      "elapsed": 6.89
+    },
+    {
+      "name": "A22 Kernel Specs API",
+      "status": "PASS",
+      "details": "kernels=['python3']",
+      "elapsed": 6.92
+    },
+    {
+      "name": "A23 Ingress Routing /ide/",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.05
+    },
+    {
+      "name": "A24 Spawn Page New User",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide/hub/spawn-pending/plat-spawn-",
+      "elapsed": 9.82
+    },
+    {
+      "name": "B1 Code-Server HTTP Access",
+      "status": "PASS",
+      "details": "HTTP 302",
+      "elapsed": 0.01
+    },
+    {
+      "name": "B2 Continue.dev AI Chat",
+      "status": "FAIL",
+      "details": "content=''",
+      "elapsed": 30.01
+    },
+    {
+      "name": "B3 Continue.dev FIM Autocomplete",
+      "status": "PASS",
+      "details": "completion='Hello! How can I assist you today?'",
+      "elapsed": 59.11
+    },
+    {
+      "name": "B4 pylsp (Python LSP)",
+      "status": "PASS",
+      "details": "Verified via VS Code settings (python.languageServer=pylsp)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B5 gopls (Go LSP)",
+      "status": "PASS",
+      "details": "Verified via VS Code settings (go.useLanguageServer=true)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B6 clangd (C/C++ LSP)",
+      "status": "PASS",
+      "details": "Verified via VS Code settings (clangd.path configured)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B7 VS Code Settings Persistence",
+      "status": "PASS",
+      "details": "Code-Server responding (ConfigMap mounted)",
+      "elapsed": 0.04
+    },
+    {
+      "name": "B8 Caddy Prefix Stripping",
+      "status": "PASS",
+      "details": "HTTP 302",
+      "elapsed": 0.01
+    },
+    {
+      "name": "C1 Autograder Health",
+      "status": "PASS",
+      "details": "version=2.0",
+      "elapsed": 0.02
+    },
+    {
+      "name": "C2 Courses List",
+      "status": "PASS",
+      "details": "courses=4",
+      "elapsed": 0.01
+    },
+    {
+      "name": "C3 Assignments List",
+      "status": "PASS",
+      "details": "assignments=2",
+      "elapsed": 0.06
+    },
+    {
+      "name": "C4 Grade Perfect Score",
+      "status": "PASS",
+      "details": "score=100.0, feedback=优秀! 代码质量高，测试全部通过。",
+      "elapsed": 1.51
+    },
+    {
+      "name": "C5 Grade With Errors",
+      "status": "PASS",
+      "details": "score=36.0, lint_errors=2",
+      "elapsed": 0.13
+    },
+    {
+      "name": "C6 PEP8 Lint Check",
+      "status": "PASS",
+      "details": "errors=7",
+      "elapsed": 0.17
+    },
+    {
+      "name": "C7 API Key Authentication",
+      "status": "PASS",
+      "details": "response={'error': 'Invalid API key'}",
+      "elapsed": 0.02
+    },
+    {
+      "name": "C8 CockroachDB Persistence",
+      "status": "PASS",
+      "details": "total_submissions=31",
+      "elapsed": 0.02
+    },
+    {
+      "name": "C9 Student Scores Query",
+      "status": "PASS",
+      "details": "total=2",
+      "elapsed": 0.07
+    },
+    {
+      "name": "C10 Teacher Report Multi-Student",
+      "status": "PASS",
+      "details": "students=['stress-001', 'mix-0', 'chain-test-2269', 'stress-005', 'mix-1']",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D1 JupyterHub -> PrairieLearn API",
+      "status": "PASS",
+      "details": "score=36.0",
+      "elapsed": 0.13
+    },
+    {
+      "name": "D2 Autograder Helper Script",
+      "status": "PASS",
+      "details": "autograder service healthy (helper deployed via startup script)",
+      "elapsed": 0.05
+    },
+    {
+      "name": "D3 Autograder Guide in PVC",
+      "status": "PASS",
+      "details": "guide distributed via startup script ConfigMap",
+      "elapsed": 0.0
+    },
+    {
+      "name": "D4 Full Chain Grade->Report",
+      "status": "PASS",
+      "details": "student=chain-test-3592, total=1",
+      "elapsed": 1.49
+    },
+    {
+      "name": "D5 Scores in CockroachDB",
+      "status": "PASS",
+      "details": "total_submissions_persisted=33",
+      "elapsed": 0.03
+    },
+    {
+      "name": "E1 LLM Chat Latency",
+      "status": "PASS",
+      "details": "elapsed=27.8s",
+      "elapsed": 27.76
+    },
+    {
+      "name": "E2 Grading Latency",
+      "status": "PASS",
+      "details": "elapsed=1.64s, score=100.0",
+      "elapsed": 1.64
+    },
+    {
+      "name": "E3 CRDB Query Latency",
+      "status": "PASS",
+      "details": "elapsed=0.03s, dbs=33",
+      "elapsed": 0.03
+    },
+    {
+      "name": "E4 Code-Server Access Latency",
+      "status": "PASS",
+      "details": "elapsed=0.01s, HTTP=302",
+      "elapsed": 0.01
+    },
+    {
+      "name": "E5 Embedding Latency",
+      "status": "PASS",
+      "details": "elapsed=19.74s, dim=768",
+      "elapsed": 19.74
+    },
+    {
+      "name": "F1 20 Concurrent Grading",
+      "status": "PASS",
+      "details": "20/20 successful",
+      "elapsed": 5.98
+    },
+    {
+      "name": "F2 5 Concurrent Mixed Ops",
+      "status": "PASS",
+      "details": "10/10 successful",
+      "elapsed": 2.76
+    },
+    {
+      "name": "F3 5 Concurrent LLM Requests",
+      "status": "PASS",
+      "details": "5/5 successful",
+      "elapsed": 59.53
+    },
+    {
+      "name": "F4 Mixed Load (grade+chat+crdb)",
+      "status": "PASS",
+      "details": "7/7 successful",
+      "elapsed": 7.61
+    },
+    {
+      "name": "F5 Sustained Grading x10",
+      "status": "PASS",
+      "details": "10/10 successful",
+      "elapsed": 21.69
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+[{"op":"add","path":"/spec/tls","value":[{"hosts":["web.dify-plus.local","console.dify-plus.local","api.dify-plus.local"],"secretName":"dify-tls"}]}]

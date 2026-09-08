@@ -1,0 +1,10 @@
+Method,Name,Error,Occurrences
+POST,POST /v1/embeddings,CatchResponseError('Embedding: 0'),3384
+POST,POST /v1/embeddings,CatchResponseError('Embedding: 500'),923
+POST,POST /v1/chat/completions (7b),CatchResponseError('Chat completion: 0'),10826
+POST,POST /v1/chat/completions (coder),CatchResponseError('Coder completion: 0'),2103
+GET,GET /v1/models,CatchResponseError('List models: 0'),9241
+GET,GET /health/readiness,CatchResponseError('Health check: 0'),12366
+POST,POST /v1/chat/completions (coder),CatchResponseError('Coder completion: 500'),806
+POST,POST /v1/chat/completions (14b),CatchResponseError('Chat completion 14b: 0'),7353
+POST,POST /v1/chat/completions (7b),CatchResponseError('Chat completion: 500'),3957

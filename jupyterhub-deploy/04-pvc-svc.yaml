@@ -1,0 +1,38 @@
+---
+# PVC for the JupyterHub hub itself (sqlite DB + secrets persist across restarts)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hub-db-dir
+  namespace: jupyterhub
+  labels:
+    app.kubernetes.io/name: jupyterhub
+    app.kubernetes.io/component: hub
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 5Gi
+---
+# Service: NodePort 30089 for LAN access without hosts configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyterhub
+  namespace: jupyterhub
+  labels:
+    app.kubernetes.io/name: jupyterhub
+    app.kubernetes.io/component: hub
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: jupyterhub
+    app.kubernetes.io/component: hub
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+      nodePort: 30089
+      protocol: TCP

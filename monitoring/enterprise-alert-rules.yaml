@@ -1,0 +1,240 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: enterprise-alert-rules
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: ollama-alerts
+      rules:
+        - alert: OllamaMasterDown
+          annotations:
+            description: "Ollama Master pod in ai-platform has been down for more than 2 minutes."
+            summary: "Ollama Master is DOWN"
+          expr: up{namespace="ai-platform", pod=~"ollama-master-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: OllamaWorkerDown
+          annotations:
+            description: "Ollama Worker pod in ai-platform has been down for more than 2 minutes. All 12 LLM models are unavailable."
+            summary: "Ollama Worker is DOWN - ALL models unavailable"
+          expr: up{namespace="ai-platform", pod=~"ollama-worker-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: OllamaHighMemoryUsage
+          annotations:
+            description: "Ollama {{ $labels.pod }} memory usage is {{ $value | humanizePercentage }}. Risk of OOM kill."
+            summary: "Ollama memory usage > 85%"
+          expr: |
+            (container_memory_working_set_bytes{namespace="ai-platform", pod=~"ollama-.*"}
+            / container_spec_memory_limit_bytes{namespace="ai-platform", pod=~"ollama-.*"})
+            > 0.85
+          for: 10m
+          labels:
+            severity: warning
+        - alert: OllamaHighCPUUsage
+          annotations:
+            description: "Ollama {{ $labels.pod }} CPU usage is {{ $value | humanizePercentage }}. Inference will be slow."
+            summary: "Ollama CPU usage > 90%"
+          expr: |
+            (rate(container_cpu_usage_seconds_total{namespace="ai-platform", pod=~"ollama-.*"}[5m])
+            / on(pod) group_left
+            container_spec_cpu_quota{namespace="ai-platform", pod=~"ollama-.*"})
+            * container_spec_cpu_period{namespace="ai-platform", pod=~"ollama-.*"}
+            > 0.9
+          for: 10m
+          labels:
+            severity: warning
+
+    - name: ingress-alerts
+      rules:
+        - alert: IngressControllerDown
+          annotations:
+            description: "NGINX Ingress Controller in ingress-nginx namespace has been down for more than 2 minutes. ALL external traffic is blocked."
+            summary: "Ingress Controller is DOWN - all services unreachable"
+          expr: up{namespace="ingress-nginx", pod=~"ingress-nginx-controller-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: IngressHigh5xxRate
+          annotations:
+            description: "NGINX Ingress 5xx error rate is {{ $value | humanizePercentage }}. Services may be failing."
+            summary: "Ingress 5xx error rate > 5%"
+          expr: |
+            sum(rate(nginx_ingress_controller_requests{status=~"5.."}[5m]))
+            / sum(rate(nginx_ingress_controller_requests[5m]))
+            > 0.05
+          for: 5m
+          labels:
+            severity: critical
+        - alert: IngressHighLatency
+          annotations:
+            description: "NGINX Ingress P99 latency is {{ $value }}s. Users experiencing slow responses."
+            summary: "Ingress P99 latency > 2s"
+          expr: |
+            histogram_quantile(0.99,
+              sum(rate(nginx_ingress_controller_request_duration_seconds_bucket[5m]))
+              by (le))
+            > 2
+          for: 5m
+          labels:
+            severity: warning
+        - alert: IngressHigh4xxRate
+          annotations:
+            description: "NGINX Ingress 4xx error rate is {{ $value | humanizePercentage }}. Check service configurations."
+            summary: "Ingress 4xx error rate > 10%"
+          expr: |
+            sum(rate(nginx_ingress_controller_requests{status=~"4.."}[5m]))
+            / sum(rate(nginx_ingress_controller_requests[5m]))
+            > 0.1
+          for: 5m
+          labels:
+            severity: warning
+
+    - name: storage-alerts
+      rules:
+        - alert: PVCUsageHigh
+          annotations:
+            description: "PVC {{ $labels.persistentvolumeclaim }} in {{ $labels.namespace }} is {{ $value | humanizePercentage }} full."
+            summary: "PVC usage > 80%"
+          expr: |
+            kubelet_volume_stats_used_bytes
+            / kubelet_volume_stats_capacity_bytes
+            > 0.8
+          for: 10m
+          labels:
+            severity: warning
+        - alert: PVCUsageCritical
+          annotations:
+            description: "PVC {{ $labels.persistentvolumeclaim }} in {{ $labels.namespace }} is {{ $value | humanizePercentage }} full. Risk of data loss."
+            summary: "PVC usage > 90% - CRITICAL"
+          expr: |
+            kubelet_volume_stats_used_bytes
+            / kubelet_volume_stats_capacity_bytes
+            > 0.9
+          for: 5m
+          labels:
+            severity: critical
+        - alert: NodeDiskSpaceLow
+          annotations:
+            description: "Node {{ $labels.instance }} has only {{ $value | humanizePercentage }} disk remaining on {{ $labels.mountpoint }}."
+            summary: "Node disk space < 15%"
+          expr: |
+            (node_filesystem_avail_bytes{mountpoint="/"}
+            / node_filesystem_size_bytes{mountpoint="/"})
+            < 0.15
+          for: 5m
+          labels:
+            severity: warning
+
+    - name: dify-namespace-alerts
+      rules:
+        - alert: DifyNsAPIDown
+          annotations:
+            description: "Dify API (dify namespace) has been down for more than 2 minutes."
+            summary: "Dify API is DOWN (dify namespace)"
+          expr: up{namespace="dify", pod=~"dify-api-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: DifyNsWebDown
+          annotations:
+            description: "Dify Web frontend (dify namespace) has been down for more than 2 minutes."
+            summary: "Dify Web is DOWN (dify namespace)"
+          expr: up{namespace="dify", pod=~"dify-web-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifyNsWorkerDown
+          annotations:
+            description: "Dify Worker (dify namespace) has been down for more than 2 minutes. Background tasks will not process."
+            summary: "Dify Worker is DOWN (dify namespace)"
+          expr: up{namespace="dify", pod=~"dify-worker-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifyNsPluginDaemonDown
+          annotations:
+            description: "Dify Plugin Daemon (dify namespace) has been down for more than 2 minutes."
+            summary: "Dify Plugin Daemon is DOWN (dify namespace)"
+          expr: up{namespace="dify", pod=~"dify-plugin-daemon-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifyNsHighErrorRate
+          annotations:
+            description: "Dify API (dify namespace) 5xx error rate is {{ $value | humanizePercentage }}."
+            summary: "Dify API high error rate (dify namespace)"
+          expr: |
+            sum(rate(http_requests_total{namespace="dify", status=~"5.."}[5m]))
+            / sum(rate(http_requests_total{namespace="dify"}[5m]))
+            > 0.05
+          for: 5m
+          labels:
+            severity: critical
+
+    - name: rancher-alerts
+      rules:
+        - alert: RancherAgentDown
+          annotations:
+            description: "Rancher Cluster Agent in cattle-system has been down for more than 5 minutes."
+            summary: "Rancher Agent is DOWN"
+          expr: up{namespace="cattle-system", pod=~"cattle-cluster-agent-.*"} == 0
+          for: 5m
+          labels:
+            severity: warning
+
+    - name: infrastructure-alerts
+      rules:
+        - alert: TooManyPodRestarts
+          annotations:
+            description: "Pod {{ $labels.pod }} in {{ $labels.namespace }} is restarting at {{ $value }}/sec."
+            summary: "Pod restart rate too high"
+          expr: rate(kube_pod_container_status_restarts_total[15m]) > 0.05
+          for: 15m
+          labels:
+            severity: warning
+        - alert: PendingPodsHigh
+          annotations:
+            description: "{{ $value }} pods are in Pending state. Check node resources and scheduling."
+            summary: "Too many pending pods"
+          expr: sum(kube_pod_status_phase{phase="Pending"}) > 5
+          for: 10m
+          labels:
+            severity: warning
+        - alert: CPUThrottlingHigh
+          annotations:
+            description: "Container {{ $labels.container }} in {{ $labels.namespace }}/{{ $labels.pod }} is being CPU throttled at {{ $value | humanizePercentage }}."
+            summary: "CPU throttling > 25%"
+          expr: |
+            rate(container_cpu_cfs_throttled_seconds_total[5m])
+            / rate(container_cpu_cfs_periods_total[5m])
+            > 0.25
+          for: 10m
+          labels:
+            severity: warning
+        - alert: DeploymentReplicasMismatch
+          annotations:
+            description: "Deployment {{ $labels.deployment }} in {{ $labels.namespace }} has {{ $value }} ready replicas vs desired."
+            summary: "Deployment replicas mismatch"
+          expr: |
+            kube_deployment_status_replicas_ready
+            != kube_deployment_spec_replicas
+          for: 10m
+          labels:
+            severity: warning
+        - alert: StatefulSetReplicasMismatch
+          annotations:
+            description: "StatefulSet {{ $labels.statefulset }} in {{ $labels.namespace }} has {{ $value }} ready replicas vs desired."
+            summary: "StatefulSet replicas mismatch"
+          expr: |
+            kube_statefulset_status_replicas_ready
+            != kube_statefulset_replicas
+          for: 10m
+          labels:
+            severity: warning

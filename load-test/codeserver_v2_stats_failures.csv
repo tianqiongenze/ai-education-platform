@@ -1,0 +1,12 @@
+Method,Name,Error,Occurrences
+POST,POST /login,CatchResponseError('Login failed: 503'),144
+GET,GET /api/settings,HTTPError('404 Client Error: Not Found for url: GET /api/settings'),130
+GET,GET /static/out/vs/loader.js,HTTPError('404 Client Error: Not Found for url: GET /static/out/vs/loader.js'),224
+GET,GET /static/out/vs/workbench/workbench.desktop.main.css,HTTPError('503 Server Error: Service Temporarily Unavailable for url: GET /static/out/vs/workbench/workbench.desktop.main.css'),7202
+GET,GET /api/settings,HTTPError('503 Server Error: Service Temporarily Unavailable for url: GET /api/settings'),120
+GET,GET / (workspace),CatchResponseError('Workspace failed: 503'),982
+GET,GET /static/out/vs/workbench/workbench.desktop.main.css,HTTPError('404 Client Error: Not Found for url: GET /static/out/vs/workbench/workbench.desktop.main.css'),161
+GET,GET /login,CatchResponseError('Login page failed: 503'),1772
+GET,GET /static/out/vs/loader.js,HTTPError('401 Client Error: Unauthorized for url: GET /static/out/vs/loader.js'),4605
+GET,GET /static/out/vs/loader.js,HTTPError('503 Server Error: Service Temporarily Unavailable for url: GET /static/out/vs/loader.js'),5242
+GET,GET /static/out/vs/workbench/workbench.desktop.main.css,HTTPError('401 Client Error: Unauthorized for url: GET /static/out/vs/workbench/workbench.desktop.main.css'),2707

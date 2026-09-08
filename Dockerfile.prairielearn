@@ -1,0 +1,100 @@
+FROM quay.io/centos/centos:stream8
+
+# Use Aliyun mirrors (CentOS Stream 8 mirrorlist is EOL/blocked)
+RUN rm -f /etc/yum.repos.d/CentOS-Stream-*.repo && printf '[baseos]\nname=BaseOS\nbaseurl=https://mirrors.aliyun.com/centos/8-stream/BaseOS/x86_64/os/\ngpgcheck=0\nenabled=1\n\n[appstream]\nname=AppStream\nbaseurl=https://mirrors.aliyun.com/centos/8-stream/AppStream/x86_64/os/\ngpgcheck=0\nenabled=1\n\n[powertools]\nname=PowerTools\nbaseurl=https://mirrors.aliyun.com/centos/8-stream/PowerTools/x86_64/os/\ngpgcheck=0\nenabled=1\n\n[epel]\nname=EPEL\nbaseurl=https://mirrors.aliyun.com/epel/8/Everything/x86_64/\ngpgcheck=0\nenabled=1\n' > /etc/yum.repos.d/aliyun.repo
+
+# Install system deps. gcc-toolset-12 needed for C++20 (bind-mount native addon).
+# zlib/bzip2/readline/sqlite/libffi/xz devels needed for Python 3.13 build.
+RUN dnf -y install make git curl bzip2 tar findutils which procps-ng \
+    bash-completion gcc gcc-c++ graphviz graphviz-devel \
+    ImageMagick libjpeg-devel lsof openssl tmux \
+    python39 python39-devel python39-pip libcurl-devel \
+    zlib-devel bzip2-devel readline-devel sqlite-devel libffi-devel xz-devel tk-devel \
+    gcc-toolset-12 \
+    && dnf module reset -y postgresql \
+    && dnf module enable -y postgresql:16 \
+    && dnf -y install postgresql postgresql-server postgresql-contrib postgresql-devel \
+    && dnf clean all \
+    && source /opt/rh/gcc-toolset-12/enable \
+    && make --version | head -1 \
+    && git --version \
+    && g++ --version | head -1 \
+    && psql --version
+
+# Build and install pgvector extension (for AI question generation embeddings)
+RUN dnf -y --nobest --allowerasing install postgresql-server-devel redhat-rpm-config \
+    && ls /usr/lib64/pgsql/pgxs/src/makefiles/pgxs.mk \
+    && cd /tmp && curl -4 -sSL -L https://codeload.github.com/pgvector/pgvector/tar.gz/refs/tags/v0.7.4 -o pgvector.tar.gz \
+    && tar xzf pgvector.tar.gz && cd pgvector-0.7.4 \
+    && make PG_CONFIG=/usr/bin/pg_config OPTFLAGS="" \
+    && make PG_CONFIG=/usr/bin/pg_config OPTFLAGS="" install \
+    && cd / && rm -rf /tmp/pgvector*
+
+# Install Node.js 24 from nodejs.org (github/nvm git-clone path is unreliable)
+RUN curl -4 -sSL https://nodejs.org/dist/v24.0.0/node-v24.0.0-linux-x64.tar.xz -o /tmp/node.tar.xz \
+    && tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1 \
+    && rm /tmp/node.tar.xz \
+    && node --version \
+    && npm install -g pnpm@11.19.0 \
+    && pnpm --version
+
+# Build Python 3.13 from source (python.org reachable; uv GitHub cpython download blocked)
+RUN cd /tmp && curl -4 -sSL https://www.python.org/ftp/python/3.13.15/Python-3.13.15.tar.xz -o py.tar.xz \
+    && tar -xJf py.tar.xz && cd Python-3.13.15 \
+    && ./configure --prefix=/usr/local/python313 --enable-shared --without-ensurepip LDFLAGS="-Wl,-rpath=/usr/local/python313/lib" \
+    && make -j4 && make install && cd / && rm -rf /tmp/Python-3.13.15 /tmp/py.tar.xz \
+    && /usr/local/python313/bin/python3.13 --version
+
+# uv for python dependency management (installed via pip from pypi, which is reachable)
+RUN pip3.9 install --no-cache-dir uv && uv --version
+
+ENV PATH=/PrairieLearn/.venv/bin:/PrairieLearn/node_modules/.bin:/opt/rh/gcc-toolset-12/root/usr/bin:/usr/local/bin:/usr/bin:/bin
+ENV UV_COMPILE_BYTECODE=1 UV_NO_CACHE=1 UV_PYTHON=/usr/local/python313/bin/python3.13
+ENV CC=gcc CXX=g++ CXXFLAGS="-std=gnu++20"
+
+WORKDIR /PrairieLearn
+
+# Copy manifest files needed for dependency install
+COPY pyproject.toml Makefile ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY apps ./apps
+COPY packages ./packages
+
+# Python deps (uv uses the system python3.13 instead of downloading from GitHub)
+RUN make python-deps-core
+
+# Node deps
+RUN pnpm install --frozen-lockfile && pnpm store prune
+
+# Copy the rest of the source
+COPY . .
+
+# Prepare dirs and git identity
+RUN chmod +x /PrairieLearn/scripts/init.sh 2>/dev/null || true \
+    && mkdir -p /course /course2 /course3 /course4 /course5 /course6 /course7 /course8 /course9 \
+    && mkdir -p /workspace_main_zips /workspace_host_zips /jobs /chunks \
+    && git config --global user.email "dev@example.com" \
+    && git config --global user.name "Dev User" \
+    && git config --global safe.directory '*'
+
+# Initialize a local postgres for the build-time migration step, then stop it.
+# Production uses CockroachDB via config.json.
+# After build, replace sharp's native binary with a no-op stub (CPU lacks v2 support).
+# make build must succeed (TypeScript types check); sharp is stubbed AFTER build.
+RUN set -e; \
+    mkdir -p /var/postgres /var/run/postgresql; \
+    chown postgres:postgres /var/postgres /var/run/postgresql 2>/dev/null || true; \
+    su postgres -c "initdb -D /var/postgres" || true; \
+    /PrairieLearn/scripts/start_postgres.sh || true; \
+    su postgres -c "createuser -s root" 2>/dev/null || true; \
+    make build; \
+    node apps/prairielearn/dist/server.js --migrate-and-exit || true; \
+    /PrairieLearn/scripts/start_postgres.sh stop 2>/dev/null || true; \
+    /PrairieLearn/scripts/gen_ssl.sh 2>/dev/null || true; \
+    SHARP_DIST=$(find /PrairieLearn/node_modules/.pnpm -maxdepth 1 -name 'sharp@*' -type d | head -1)/node_modules/sharp; \
+    echo 'const _=new Proxy({},{get:(_,p)=>{if(p==="then")return undefined;return function(){return _}}});module.exports=_;module.exports.default=_;' > "$SHARP_DIST/dist/index.cjs"; \
+    echo 'const _=new Proxy({},{get:(_,p)=>{if(p==="then")return undefined;return function(){return _}}});export default _;' > "$SHARP_DIST/dist/index.mjs"; \
+    echo 'const _=new Proxy({},{get:(_,p)=>{if(p==="then")return undefined;return function(){return _}}});export default _;' > "$SHARP_DIST/dist/sharp.mjs"
+
+HEALTHCHECK --interval=30s --timeout=10s CMD ["curl", "--fail", "http://localhost:3000/pl/webhooks/ping"]
+CMD [ "/PrairieLearn/scripts/init.sh" ]

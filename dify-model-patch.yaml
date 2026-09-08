@@ -1,0 +1,21 @@
+# Patch for dify-api-env ConfigMap - adds OpenAI-compatible model provider via litellm
+# Litellm provides an OpenAI-compatible API at http://litellm.ai-platform.svc.cluster.local:4000/v1
+# All ollama models are routed through litellm
+
+# OpenAI-compatible provider (primary - all models via litellm)
+OPENAI_API_BASE: "http://litellm.ai-platform.svc.cluster.local:4000/v1"
+OPENAI_API_KEY: "sk-ai-platform-master"
+
+# Custom model definitions for Dify to discover
+# These tell Dify which models are available through the OpenAI-compatible endpoint
+CUSTOM_MODELS: |
+  - model: qwen2.5:14b
+    model_type: llm
+  - model: deepseek-r1:14b
+    model_type: llm
+  - model: qwen2.5:7b
+    model_type: llm
+  - model: qwen2.5-coder:14b
+    model_type: llm
+  - model: bge-m3
+    model_type: text-embedding

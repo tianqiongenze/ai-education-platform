@@ -1,0 +1,1 @@
+[{"op":"remove","path":"/metadata/annotations/nginx.ingress.kubernetes.io~1limit-rps"},{"op":"remove","path":"/metadata/annotations/nginx.ingress.kubernetes.io~1limit-burst"},{"op":"remove","path":"/metadata/annotations/nginx.ingress.kubernetes.io~1limit-connections"}]

@@ -1,0 +1,26 @@
+{
+  "name": "jupyter-inline-completion",
+  "version": "1.0.0",
+  "description": "AI inline (ghost text) completion for JupyterLab using cache + ollama FIM",
+  "main": "lib/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "jlpm run build:ts && jlpm run build:labext",
+    "build:ts": "tsc -b",
+    "build:labext": "jupyter labextension build ."
+  },
+  "jupyterlab": {
+    "extension": true,
+    "outputDir": "jupyter_inline_completion/labextension",
+    "schemaPath": "schema"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^4.0.0",
+    "@jupyterlab/completer": "^4.0.0",
+    "@jupyterlab/settingregistry": "^4.0.0"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^4.0.0",
+    "typescript": "~5.2.2"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "data": {
+    "OPENAI_API_BASE": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+    "OPENAI_API_KEY": "sk-ai-platform-master"
+  }
+}

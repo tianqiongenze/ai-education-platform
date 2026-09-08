@@ -1,0 +1,111 @@
+model_list:
+  - model_name: qwen2.5:72b
+    litellm_params:
+      model: ollama/qwen2.5:72b
+      api_base: http://ollama-worker:11434
+      rpm: 5
+      tpm: 30000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "旗舰大模型 - 复杂科研/论文/深度分析"
+
+  - model_name: qwen2.5:32b
+    litellm_params:
+      model: ollama/qwen2.5:32b
+      api_base: http://ollama-master:11434
+      rpm: 10
+      tpm: 50000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "高性能模型 - 高级备课/学术写作"
+
+  - model_name: deepseek-r1:32b
+    litellm_params:
+      model: ollama/deepseek-r1:32b
+      api_base: http://ollama-worker:11434
+      rpm: 10
+      tpm: 50000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "深度推理 - 数学证明/复杂逻辑"
+
+  - model_name: qwen2.5:14b
+    litellm_params:
+      model: ollama/qwen2.5:14b-instruct-q5_K_M
+      api_base: http://ollama-worker:11434
+      rpm: 30
+      tpm: 100000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "通用全能模型 - 备课/写作/翻译"
+
+  - model_name: deepseek-r1:14b
+    litellm_params:
+      model: ollama/deepseek-r1:14b
+      api_base: http://ollama-worker:11434
+      rpm: 20
+      tpm: 80000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "复杂推理 - 数学/考试出题/科研分析"
+
+  - model_name: qwen2.5:7b
+    litellm_params:
+      model: ollama/qwen2.5:7b-instruct-q4_K_M
+      api_base: http://ollama-worker:11434
+      rpm: 60
+      tpm: 200000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "轻量快速 - 课堂即时问答"
+
+  - model_name: bge-m3
+    litellm_params:
+      model: ollama/bge-m3
+      api_base: http://ollama-worker:11434
+      rpm: 120
+    model_info:
+      mode: embedding
+      description: "文本嵌入 - RAG知识库"
+
+  - model_name: qwen2.5-coder:14b
+    litellm_params:
+      model: ollama/qwen2.5-coder:14b-instruct-q4_K_M
+      api_base: http://ollama-master:11434
+      rpm: 30
+      tpm: 100000
+      drop_params: true
+    model_info:
+      mode: chat
+      description: "代码教学 - 编程辅导/Debug"
+
+  - model_name: qwen2.5:14b-fallback
+    litellm_params:
+      model: ollama/qwen2.5:32b
+      api_base: http://ollama-master:11434
+      rpm: 20
+      tpm: 50000
+      drop_params: true
+
+fallbacks:
+  - qwen2.5:14b: [qwen2.5:14b-fallback]
+  - deepseek-r1:14b: [qwen2.5:14b]
+
+general_settings:
+  master_key: "sk-ai-platform-master"
+  otel: false
+  proxy_batch_responses: true
+  disable_model_discovery_auth: true
+
+router_settings:
+  routing_strategy: "latency-based-routing"
+  allowed_fails: 3
+  num_retries: 2
+  fallback_ack: false
+  cooldown: 60

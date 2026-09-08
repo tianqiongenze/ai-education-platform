@@ -1,0 +1,453 @@
+{
+  "date": "2026-09-07 22:01:58",
+  "total": 74,
+  "passed": 67,
+  "failed": 7,
+  "pass_rate": "90%",
+  "tests": [
+    {
+      "name": "A1 Open edX LMS Login Page",
+      "status": "FAIL",
+      "details": "HTTP 429",
+      "elapsed": 0.05
+    },
+    {
+      "name": "A2 Open edX CMS Studio",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.05
+    },
+    {
+      "name": "A3 Open edX LMS Home",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.06
+    },
+    {
+      "name": "A4 Open edX Registration",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.06
+    },
+    {
+      "name": "A5 Open edX Courses API",
+      "status": "PASS",
+      "details": "HTTP 301",
+      "elapsed": 0.02
+    },
+    {
+      "name": "A6 Open edX Admin User",
+      "status": "PASS",
+      "details": "admin@openedx.local (superuser)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A7 Open edX MySQL (457 tables)",
+      "status": "PASS",
+      "details": "migrated successfully",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A8 Open edX Services",
+      "status": "PASS",
+      "details": "ES+Mongo+Redis+Caddy+SMTP running",
+      "elapsed": 0.01
+    },
+    {
+      "name": "A9 Open edX Demo Course",
+      "status": "PASS",
+      "details": "imported successfully",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A10 Open edX Chinese UI",
+      "status": "FAIL",
+      "details": "LANGUAGE_CODE=zh-cn",
+      "elapsed": 0.05
+    },
+    {
+      "name": "B1 Login Page + HTTPS",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.61
+    },
+    {
+      "name": "B2 Login teacher-zhang",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/teacher-zhang/lab?",
+      "elapsed": 1.24
+    },
+    {
+      "name": "B3 Admin Panel",
+      "status": "PASS",
+      "details": "admins=['teacher-zhang', 'lecture-p1', 'lecture-p2']",
+      "elapsed": 0.65
+    },
+    {
+      "name": "B4 Admin Groups",
+      "status": "PASS",
+      "details": "groups=['lecture-p1-students', 'all-students']",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B5 JupyterLab UI",
+      "status": "PASS",
+      "details": "launcher=True",
+      "elapsed": 11.6
+    },
+    {
+      "name": "B6 File Browser",
+      "status": "PASS",
+      "details": "files=111",
+      "elapsed": 0.12
+    },
+    {
+      "name": "B7 Teacher Guide",
+      "status": "PASS",
+      "details": "t=True, s=True",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B8 LLM Chat",
+      "status": "PASS",
+      "details": "content='Hello! How can I assist you to'",
+      "elapsed": 26.24
+    },
+    {
+      "name": "B9 Embedding",
+      "status": "PASS",
+      "details": "dim=768",
+      "elapsed": 0.09
+    },
+    {
+      "name": "B10 CRDB Health",
+      "status": "PASS",
+      "details": "healthy",
+      "elapsed": 0.01
+    },
+    {
+      "name": "B11 CRDB Databases",
+      "status": "PASS",
+      "details": "dbs=33",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B12 nbgrader",
+      "status": "PASS",
+      "details": "files=['nbgrader_config.py', 'source', 'gradebook.db']",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B13 Logout",
+      "status": "PASS",
+      "details": "has_login=True",
+      "elapsed": 2.08
+    },
+    {
+      "name": "B14 Student Login",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/student-python/lab?",
+      "elapsed": 1.2
+    },
+    {
+      "name": "B15 Student Guide",
+      "status": "PASS",
+      "details": "sg=True, tg=False",
+      "elapsed": 0.04
+    },
+    {
+      "name": "B16 Lecture-P1 Admin",
+      "status": "PASS",
+      "details": "admin=True",
+      "elapsed": 2.29
+    },
+    {
+      "name": "B17 Cookie Size",
+      "status": "PASS",
+      "details": "total=538b",
+      "elapsed": 0.0
+    },
+    {
+      "name": "B18 Concurrent Logins x10",
+      "status": "PASS",
+      "details": "10/10",
+      "elapsed": 7.5
+    },
+    {
+      "name": "B19 HTTP 431 Prevention",
+      "status": "PASS",
+      "details": "statuses=[200, 200, 200]",
+      "elapsed": 7.92
+    },
+    {
+      "name": "B20 Terminal Service",
+      "status": "PASS",
+      "details": "status=200",
+      "elapsed": 6.86
+    },
+    {
+      "name": "B21 Kernel Specs",
+      "status": "PASS",
+      "details": "kernels=['python3']",
+      "elapsed": 6.71
+    },
+    {
+      "name": "B22 Ingress Routing",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.04
+    },
+    {
+      "name": "B23 Spawn New User",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide/user/spawn-v2-test/lab",
+      "elapsed": 8.84
+    },
+    {
+      "name": "B24 Contents API",
+      "status": "PASS",
+      "details": "items=111",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C1 Code-Server HTTP",
+      "status": "PASS",
+      "details": "HTTP 302",
+      "elapsed": 0.01
+    },
+    {
+      "name": "C2 Continue.dev AI Chat",
+      "status": "PASS",
+      "details": "LiteLLM configured",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C3 Continue.dev FIM",
+      "status": "PASS",
+      "details": "Ollama generate API",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C4 pylsp",
+      "status": "PASS",
+      "details": "ConfigMap configured",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C5 gopls",
+      "status": "PASS",
+      "details": "ConfigMap configured",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C6 clangd",
+      "status": "PASS",
+      "details": "ConfigMap configured",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C7 Settings Persistence",
+      "status": "PASS",
+      "details": "ConfigMap mounted",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C8 Caddy Prefix",
+      "status": "PASS",
+      "details": "HTTP 302",
+      "elapsed": 0.01
+    },
+    {
+      "name": "D1 Autograder Health",
+      "status": "PASS",
+      "details": "v=2.0",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D2 Courses",
+      "status": "PASS",
+      "details": "courses=4",
+      "elapsed": 0.05
+    },
+    {
+      "name": "D3 Assignments",
+      "status": "PASS",
+      "details": "assignments=2",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D4 Grade Perfect",
+      "status": "PASS",
+      "details": "score=100.0",
+      "elapsed": 2.11
+    },
+    {
+      "name": "D5 Grade Errors",
+      "status": "PASS",
+      "details": "score=36.0",
+      "elapsed": 0.17
+    },
+    {
+      "name": "D6 PEP8 Lint",
+      "status": "PASS",
+      "details": "errors=4",
+      "elapsed": 0.12
+    },
+    {
+      "name": "D7 API Key Auth",
+      "status": "PASS",
+      "details": "rejected",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D8 CockroachDB Persist",
+      "status": "FAIL",
+      "details": "total=0",
+      "elapsed": 0.1
+    },
+    {
+      "name": "D9 Student Scores",
+      "status": "FAIL",
+      "details": "total=0",
+      "elapsed": 0.06
+    },
+    {
+      "name": "D10 Teacher Report",
+      "status": "FAIL",
+      "details": "students=0",
+      "elapsed": 0.02
+    },
+    {
+      "name": "E1 JH→PrairieLearn API",
+      "status": "PASS",
+      "details": "score=36.0",
+      "elapsed": 0.12
+    },
+    {
+      "name": "E2 Autograder Helper",
+      "status": "PASS",
+      "details": "service healthy",
+      "elapsed": 0.06
+    },
+    {
+      "name": "E3 Autograder Guide",
+      "status": "PASS",
+      "details": "ConfigMap mounted",
+      "elapsed": 0.0
+    },
+    {
+      "name": "E4 Full Chain",
+      "status": "FAIL",
+      "details": "total=0",
+      "elapsed": 1.92
+    },
+    {
+      "name": "E5 Scores in CRDB",
+      "status": "FAIL",
+      "details": "total=0",
+      "elapsed": 0.02
+    },
+    {
+      "name": "F1 LLM Latency",
+      "status": "PASS",
+      "details": "elapsed=1.6s",
+      "elapsed": 1.64
+    },
+    {
+      "name": "F2 Grading Latency",
+      "status": "PASS",
+      "details": "elapsed=1.22s",
+      "elapsed": 1.22
+    },
+    {
+      "name": "F3 CRDB Latency",
+      "status": "PASS",
+      "details": "elapsed=0.02s",
+      "elapsed": 0.02
+    },
+    {
+      "name": "F4 Code-Server Latency",
+      "status": "PASS",
+      "details": "elapsed=0.01s",
+      "elapsed": 0.01
+    },
+    {
+      "name": "F5 Embedding Latency",
+      "status": "PASS",
+      "details": "elapsed=0.07s",
+      "elapsed": 0.07
+    },
+    {
+      "name": "G100 Grading x100",
+      "status": "PASS",
+      "details": "success=100/100 (100%), avg=2.55s, p50=2.43s, p95=3.64s, min=1.65s, max=5.47s",
+      "elapsed": 6.14
+    },
+    {
+      "name": "G100 CRDB x100",
+      "status": "PASS",
+      "details": "success=100/100 (100%), avg=0.03s, p50=0.02s, p95=0.08s, min=0.01s, max=0.09s",
+      "elapsed": 0.21
+    },
+    {
+      "name": "G100 OpenEdX x100",
+      "status": "PASS",
+      "details": "success=100/100 (100%), avg=0.73s, p50=0.91s, p95=0.97s, min=0.10s, max=0.98s",
+      "elapsed": 1.95
+    },
+    {
+      "name": "G200 Grading x200",
+      "status": "PASS",
+      "details": "success=200/200 (100%), avg=2.40s, p50=2.28s, p95=3.61s, min=1.52s, max=4.64s",
+      "elapsed": 10.37
+    },
+    {
+      "name": "G200 CRDB x200",
+      "status": "PASS",
+      "details": "success=200/200 (100%), avg=0.05s, p50=0.06s, p95=0.10s, min=0.01s, max=0.11s",
+      "elapsed": 0.39
+    },
+    {
+      "name": "G200 OpenEdX x200",
+      "status": "PASS",
+      "details": "success=200/200 (100%), avg=0.80s, p50=0.89s, p95=0.94s, min=0.10s, max=0.95s",
+      "elapsed": 3.63
+    },
+    {
+      "name": "G300 Grading x300",
+      "status": "PASS",
+      "details": "success=300/300 (100%), avg=4.86s, p50=4.71s, p95=7.79s, min=1.58s, max=10.60s",
+      "elapsed": 31.33
+    },
+    {
+      "name": "G300 CRDB x300",
+      "status": "PASS",
+      "details": "success=300/300 (100%), avg=0.07s, p50=0.06s, p95=0.16s, min=0.01s, max=0.20s",
+      "elapsed": 0.6
+    },
+    {
+      "name": "G300 Mixed x300",
+      "status": "PASS",
+      "details": "success=300/300 (100%), avg=2.83s, p50=1.67s, p95=7.53s, min=0.01s, max=15.22s",
+      "elapsed": 18.7
+    },
+    {
+      "name": "G500 Grading x500",
+      "status": "PASS",
+      "details": "success=500/500 (100%), avg=5.11s, p50=4.82s, p95=7.65s, min=2.50s, max=9.98s",
+      "elapsed": 52.62
+    },
+    {
+      "name": "G500 CRDB x500",
+      "status": "PASS",
+      "details": "success=500/500 (100%), avg=0.09s, p50=0.09s, p95=0.18s, min=0.01s, max=0.29s",
+      "elapsed": 1.04
+    },
+    {
+      "name": "G500 Mixed x500",
+      "status": "PASS",
+      "details": "success=500/500 (100%), avg=1.77s, p50=0.30s, p95=6.16s, min=0.01s, max=11.09s",
+      "elapsed": 19.25
+    }
+  ]
+}

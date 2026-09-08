@@ -1,0 +1,45 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: code-server
+  namespace: ai-platform
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: ai-platform
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: code-server
+  namespaceSelector:
+    matchNames:
+      - ai-platform
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+      honorLabels: true
+      basicAuth:
+        username:
+          name: code-server-secrets
+          key: password
+        password:
+          name: code-server-secrets
+          key: password
+      relabelings:
+        - sourceLabels:
+            - __meta_kubernetes_pod_name
+          targetLabel: pod
+        - sourceLabels:
+            - __meta_kubernetes_namespace
+          targetLabel: namespace
+        - sourceLabels:
+            - __meta_kubernetes_pod_label_app_kubernetes_io_name
+          targetLabel: app
+      metricRelabelings:
+        - sourceLabels:
+            - __name__
+          regex: "^(code_server|go|process)_(.*)"
+          action: keep

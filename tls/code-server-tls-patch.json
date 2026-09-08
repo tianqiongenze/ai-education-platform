@@ -1,0 +1,1 @@
+[{"op":"add","path":"/spec/tls","value":[{"hosts":["code-server.ai-platform.local"],"secretName":"code-server-tls"}]}]

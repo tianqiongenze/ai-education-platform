@@ -1,0 +1,1 @@
+[{"op":"replace","path":"/spec/rules","value":[{"host":"code-server.ai-platform.local","http":{"paths":[{"backend":{"service":{"name":"code-server","port":{"number":8080}}},"path":"/","pathType":"Prefix"}]}},{"http":{"paths":[{"backend":{"service":{"name":"code-server","port":{"number":8080}}},"path":"/","pathType":"Prefix"}]}}]}]

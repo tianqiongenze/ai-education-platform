@@ -1,0 +1,55 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: equipment-service
+  datasource:
+    url: ${MES_DB_URL:jdbc:postgresql://db-postgres.dify-plus.svc.cluster.local:5432/mes_equipment}
+    driver-class-name: org.postgresql.Driver
+    username: ${MES_DB_USER:postgres}
+    password: ${MES_DB_PASSWORD:difyai123456}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: EquipHikariPool
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  data:
+    redis:
+      host: ${REDIS_HOST:redis.dify-plus.svc.cluster.local}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:difyai123456}
+      database: 2
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+  h2:
+    console:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,cache
+mes:
+  cache:
+    redis:
+      key-prefix: "mes:equip:"
+      ttl-seconds: 300
+    default-spec: "maximumSize=1000,expireAfterWrite=120s"
+    specs: "equipment:maximumSize=2000,expireAfterWrite=300s;equipmentMetrics:maximumSize=50,expireAfterWrite=60s"

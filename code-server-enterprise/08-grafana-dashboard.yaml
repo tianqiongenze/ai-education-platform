@@ -1,0 +1,294 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: code-server-grafana-dashboard
+  namespace: ai-platform
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/component: monitoring
+    grafana_dashboard: "1"
+data:
+  code-server-dashboard.json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "code-server enterprise dashboard - 3000 concurrent users",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 1,
+      "id": null,
+      "links": [],
+      "panels": [
+        {
+          "title": "Active WebSocket Connections",
+          "type": "stat",
+          "gridPos": { "h": 8, "w": 6, "x": 0, "y": 0 },
+          "targets": [
+            {
+              "expr": "sum(code_server_websocket_connections_total{namespace=\"code-server\"})",
+              "legendFormat": "Total WS Connections",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 2000 },
+                  { "color": "red", "value": 2800 }
+                ]
+              },
+              "unit": "short"
+            }
+          }
+        },
+        {
+          "title": "HTTP Requests Per Second",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 6, "y": 0 },
+          "targets": [
+            {
+              "expr": "sum(rate(code_server_http_requests_total{namespace=\"code-server\"}[5m]))",
+              "legendFormat": "RPS",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "reqps",
+              "custom": { "fillOpacity": 10 }
+            }
+          }
+        },
+        {
+          "title": "Pod CPU Usage",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 12, "y": 0 },
+          "targets": [
+            {
+              "expr": "avg(rate(process_cpu_seconds_total{namespace=\"code-server\"}[5m])) by (pod)",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "max": 1,
+              "min": 0
+            }
+          }
+        },
+        {
+          "title": "Pod Memory Usage",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 6, "x": 18, "y": 0 },
+          "targets": [
+            {
+              "expr": "avg(process_resident_memory_bytes{namespace=\"code-server\"}) by (pod) / 1024 / 1024 / 1024",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "GiB",
+              "min": 0
+            }
+          }
+        },
+        {
+          "title": "Replica Count (HPA)",
+          "type": "stat",
+          "gridPos": { "h": 4, "w": 4, "x": 0, "y": 8 },
+          "targets": [
+            {
+              "expr": "kube_hpa_status_current_replicas{hpa=\"code-server\",namespace=\"code-server\"}",
+              "legendFormat": "Current",
+              "refId": "A"
+            },
+            {
+              "expr": "kube_hpa_status_desired_replicas{hpa=\"code-server\",namespace=\"code-server\"}",
+              "legendFormat": "Desired",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "title": "Session Affinity Distribution",
+          "type": "piechart",
+          "gridPos": { "h": 4, "w": 4, "x": 4, "y": 8 },
+          "targets": [
+            {
+              "expr": "code_server_websocket_connections_total{namespace=\"code-server\"}",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Request Latency (p50/p95/p99)",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 8 },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.50, sum(rate(code_server_http_request_duration_seconds_bucket{namespace=\"code-server\"}[5m])) by (le))",
+              "legendFormat": "p50",
+              "refId": "A"
+            },
+            {
+              "expr": "histogram_quantile(0.95, sum(rate(code_server_http_request_duration_seconds_bucket{namespace=\"code-server\"}[5m])) by (le))",
+              "legendFormat": "p95",
+              "refId": "B"
+            },
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(code_server_http_request_duration_seconds_bucket{namespace=\"code-server\"}[5m])) by (le))",
+              "legendFormat": "p99",
+              "refId": "C"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          }
+        },
+        {
+          "title": "Continue.dev API Calls",
+          "type": "timeseries",
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 8 },
+          "targets": [
+            {
+              "expr": "sum(rate(code_server_http_requests_total{namespace=\"code-server\",path=~\"/api/continue.*\"}[5m]))",
+              "legendFormat": "Continue API RPS",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Pod Restarts",
+          "type": "stat",
+          "gridPos": { "h": 4, "w": 4, "x": 0, "y": 16 },
+          "targets": [
+            {
+              "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"code-server\"}) by (pod)",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "red", "value": 3 }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "PVC Usage",
+          "type": "gauge",
+          "gridPos": { "h": 4, "w": 4, "x": 4, "y": 16 },
+          "targets": [
+            {
+              "expr": "kubelet_volume_stats_used_bytes{namespace=\"code-server\"} / kubelet_volume_stats_capacity_bytes{namespace=\"code-server\"}",
+              "legendFormat": "{{persistentvolumeclaim}}",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "min": 0,
+              "max": 1,
+              "thresholds": {
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.7 },
+                  { "color": "red", "value": 0.9 }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "title": "Extension Install Rate",
+          "type": "timeseries",
+          "gridPos": { "h": 4, "w": 8, "x": 8, "y": 16 },
+          "targets": [
+            {
+              "expr": "sum(rate(code_server_extensions_installed_total{namespace=\"code-server\"}[1h]))",
+              "legendFormat": "Installs/hr",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Error Rate (5xx)",
+          "type": "timeseries",
+          "gridPos": { "h": 4, "w": 8, "x": 16, "y": 16 },
+          "targets": [
+            {
+              "expr": "sum(rate(code_server_http_requests_total{namespace=\"code-server\",code=~\"5..\"}[5m])) / sum(rate(code_server_http_requests_total{namespace=\"code-server\"}[5m]))",
+              "legendFormat": "Error Rate",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "red", "value": 0.05 }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "style": "dark",
+      "tags": ["code-server", "enterprise", "ai-platform"],
+      "templating": {
+        "list": [
+          {
+            "current": { "selected": true, "text": "code-server", "value": "code-server" },
+            "definition": "label_values(kube_pod_info, namespace)",
+            "hide": 0,
+            "includeAll": false,
+            "name": "namespace",
+            "options": [],
+            "query": "label_values(kube_pod_info, namespace)",
+            "refresh": 2,
+            "regex": "code-server",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          }
+        ]
+      },
+      "time": { "from": "now-1h", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "code-server Enterprise",
+      "uid": "code-server-enterprise",
+      "version": 1
+    }

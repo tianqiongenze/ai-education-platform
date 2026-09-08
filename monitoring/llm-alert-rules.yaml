@@ -1,0 +1,104 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: llm-services-alerts
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: llm-services
+      rules:
+        - alert: LitellmDown
+          annotations:
+            description: Litellm service in ai-platform has been down for more than 2 minutes.
+            summary: Litellm is down
+          expr: up{namespace="ai-platform", pod=~"litellm-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: OpenWebUIDown
+          annotations:
+            description: Open-WebUI service in ai-platform has been down for more than 2 minutes.
+            summary: Open-WebUI is down
+          expr: up{namespace="ai-platform", pod=~"open-webui-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: CodeServerReplicasLow
+          annotations:
+            description: Code-server has fewer than 3 ready replicas for more than 5 minutes.
+            summary: Code-server replicas below minimum
+          expr: kube_deployment_status_replicas_ready{namespace="ai-platform", deployment="code-server"} < 3
+          for: 5m
+          labels:
+            severity: warning
+        - alert: LitellmHighErrorRate
+          annotations:
+            description: Litellm 5xx error rate is above 10% for 5 minutes.
+            summary: Litellm high error rate
+          expr: rate(http_requests_total{namespace="ai-platform", status=~"5.."}[5m]) / rate(http_requests_total{namespace="ai-platform"}[5m]) > 0.1
+          for: 5m
+          labels:
+            severity: warning
+    - name: dify-services
+      rules:
+        - alert: DifyAPIDown
+          annotations:
+            description: Dify API service has been down for more than 2 minutes.
+            summary: Dify API is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-api-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: DifyWorkerDown
+          annotations:
+            description: Dify Worker service has been down for more than 2 minutes.
+            summary: Dify Worker is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-worker-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifyWebDown
+          annotations:
+            description: Dify Web frontend has been down for more than 2 minutes.
+            summary: Dify Web is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-web-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifySandboxDown
+          annotations:
+            description: Dify Sandbox service has been down for more than 2 minutes.
+            summary: Dify Sandbox is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-sandbox-.*"} == 0
+          for: 2m
+          labels:
+            severity: warning
+        - alert: DifyDBDown
+          annotations:
+            description: Dify PostgreSQL database has been down for more than 2 minutes.
+            summary: Dify Database is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-db-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+        - alert: DifyRedisDown
+          annotations:
+            description: Dify Redis has been down for more than 2 minutes.
+            summary: Dify Redis is down
+          expr: up{namespace="dify-plus", pod=~"dify-plus-redis-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+    - name: notification-channels
+      rules:
+        - alert: AlertmanagerConfigMissing
+          annotations:
+            description: No AlertmanagerConfig found. Alerts will not be routed to external channels.
+            summary: Alertmanager notification not configured
+          expr: absent(alertmanager_notifications_total)
+          for: 10m
+          labels:
+            severity: info

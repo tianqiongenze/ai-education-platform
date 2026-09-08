@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: browser-test-runner
+  namespace: jupyterhub
+data:
+  setup_and_run.py: |
+    import subprocess, sys, os
+    print("=== Installing Chromium dependencies ===", flush=True)
+    subprocess.run(["apt-get", "update", "-qq"], check=True)
+    deps = [
+        "libnspr4", "libnss3", "libatk1.0-0", "libatk-bridge2.0-0",
+        "libcups2", "libdrm2", "libxkbcommon0", "libxcomposite1",
+        "libxdamage1", "libxfixes3", "libxrandr2", "libgbm1",
+        "libpango-1.0-0", "libcairo2", "libasound2", "libatspi2.0-0",
+        "libxshmfence1"
+    ]
+    subprocess.run(["apt-get", "install", "-y", "-qq"] + deps, check=True)
+    print("=== Installing Playwright ===", flush=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "playwright==1.52.0", "-q"], check=True)
+    subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+    print("=== Verifying browser launch ===", flush=True)
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        b = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
+        page = b.new_page()
+        page.goto("about:blank")
+        print("Browser launch: OK", flush=True)
+        b.close()
+    print("DEPS_OK", flush=True)

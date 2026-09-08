@@ -1,0 +1,40 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: litellm
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "4000"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - ai-platform
+  selector:
+    matchLabels:
+      app: litellm
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: open-webui
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "8080"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - ai-platform
+  selector:
+    matchLabels:
+      app: open-webui

@@ -1,0 +1,5 @@
+Method,Name,Error,Occurrences
+GET,/static/out/vs/code/browser/workbench/workbench.css,CatchResponseError('Asset /static/out/vs/code/browser/workbench/workbench.css returned 401'),4335
+GET,/static/out/vs/loader.js,CatchResponseError('Asset /static/out/vs/loader.js returned 401'),4381
+GET,/static/out/vs/code/browser/workbench/workbench.html,CatchResponseError('API /static/out/vs/code/browser/workbench/workbench.html returned 401'),2197
+GET,/static/out/vs/code/browser/workbench/workbench.js,CatchResponseError('Asset /static/out/vs/code/browser/workbench/workbench.js returned 401'),4442

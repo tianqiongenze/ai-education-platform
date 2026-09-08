@@ -1,0 +1,110 @@
+---
+# JupyterHub hub Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyterhub
+  namespace: jupyterhub
+  labels:
+    app.kubernetes.io/name: jupyterhub
+    app.kubernetes.io/component: hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jupyterhub
+      app.kubernetes.io/component: hub
+  strategy:
+    type: Recreate   # avoid two hubs racing on the sqlite DB / volume
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jupyterhub
+        app.kubernetes.io/component: hub
+    spec:
+      serviceAccountName: jupyterhub-hub
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: "OnRootMismatch"
+      initContainers:
+        - name: init-hub-db
+          image: 10.100.135.132:5000/jupyterhub/custom:4.0.2
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              mkdir -p /srv/jupyterhub
+              chown -R 1000:100 /srv/jupyterhub || true
+              echo "hub db dir ready at /srv/jupyterhub"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          volumeMounts:
+            - name: hub-db
+              mountPath: /srv/jupyterhub
+      containers:
+        - name: jupyterhub
+          image: 10.100.135.132:5000/jupyterhub/custom:4.0.2
+          imagePullPolicy: IfNotPresent
+          command:
+            - jupyterhub
+            - --config=/etc/jupyterhub/jupyterhub_config.py
+            - --debug
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/jupyterhub
+              readOnly: true
+            - name: hub-db
+              mountPath: /srv/jupyterhub
+          readinessProbe:
+            httpGet:
+              path: /ide/hub/login
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /ide/hub/login
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+      volumes:
+        - name: config
+          configMap:
+            name: jupyterhub-config
+            defaultMode: 420
+        - name: hub-db
+          persistentVolumeClaim:
+            claimName: hub-db-dir

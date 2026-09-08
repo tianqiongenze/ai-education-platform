@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: code-server-config
+  namespace: ai-platform
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/component: configuration
+data:
+  config.yaml: |
+    bind-addr: 0.0.0.0:8080
+    auth: password
+    password: ${PASSWORD}
+    cert: false
+    proxy-domain: code-server.ai-platform.local
+    disable-telemetry: true
+    disable-update-check: true
+    extensions-dir: /home/coder/.local/share/code-server/extensions
+    user-data-dir: /home/coder/.local/share/code-server
+
+  continue-config.json: |
+    {
+      "models": [
+        {
+          "title": "qwen2.5:7b",
+          "model": "qwen2.5:7b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 32768,
+          "completionOptions": {
+            "temperature": 0.7,
+            "topP": 0.9,
+            "maxTokens": 4096
+          }
+        },
+        {
+          "title": "qwen2.5:14b",
+          "model": "qwen2.5:14b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 32768,
+          "completionOptions": {
+            "temperature": 0.7,
+            "topP": 0.9,
+            "maxTokens": 4096
+          }
+        },
+        {
+          "title": "qwen2.5:32b",
+          "model": "qwen2.5:32b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 32768,
+          "completionOptions": {
+            "temperature": 0.7,
+            "topP": 0.9,
+            "maxTokens": 4096
+          }
+        },
+        {
+          "title": "qwen2.5:72b",
+          "model": "qwen2.5:72b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 32768,
+          "completionOptions": {
+            "temperature": 0.7,
+            "topP": 0.9,
+            "maxTokens": 8192
+          }
+        },
+        {
+          "title": "qwen2.5-coder:14b",
+          "model": "qwen2.5-coder:14b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 65536,
+          "completionOptions": {
+            "temperature": 0.5,
+            "topP": 0.9,
+            "maxTokens": 8192
+          }
+        },
+        {
+          "title": "deepseek-r1:14b",
+          "model": "deepseek-r1:14b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 65536,
+          "completionOptions": {
+            "temperature": 0.6,
+            "topP": 0.95,
+            "maxTokens": 8192
+          }
+        },
+        {
+          "title": "deepseek-r1:32b",
+          "model": "deepseek-r1:32b",
+          "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+          "provider": "openai",
+          "contextLength": 65536,
+          "completionOptions": {
+            "temperature": 0.6,
+            "topP": 0.95,
+            "maxTokens": 8192
+          }
+        }
+      ],
+      "tabAutocompleteModel": {
+        "title": "qwen2.5-coder:14b",
+        "model": "qwen2.5-coder:14b",
+        "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+        "provider": "openai",
+        "contextLength": 65536,
+        "completionOptions": {
+          "temperature": 0.2,
+          "topP": 0.9,
+          "maxTokens": 256
+        }
+      },
+      "embeddingsProvider": {
+        "model": "text-embedding-nomic-embed-text-v1.5",
+        "apiBase": "http://litellm.ai-platform.svc.cluster.local:4000/v1",
+        "provider": "openai"
+      },
+      "allowAnonymousTelemetry": false,
+      "showWhatsNewOnStartup": false
+    }
+
+  extensions.txt: |
+    continue.continue
+    ms-python.python
+    ms-python.vscode-pylance
+    golang.go
+    ms-azuretools.vscode-docker
+    hashicorp.terraform
+    redhat.vscode-yaml
+    esbenp.prettier-vscode
+    dbaeumer.vscode-eslint
+    ms-kubernetes-tools.vscode-kubernetes-tools
+
+  settings.json: |
+    {
+      "extensions.autoUpdate": false,
+      "extensions.autoCheckUpdates": false,
+      "extensions.gallery.serviceUrl": "https://open-vsx.org/vscode/gallery",
+      "extensions.gallery.itemUrl": "https://open-vsx.org/vscode/item",
+      "extensions.gallery.resourceUrlTemplate": "https://open-vsx.org/vscode/unpkg/{publisher}/{name}/{version}/{path}",
+      "extensions.gallery.controlUrl": "https://open-vsx.org/vscode/control",
+      "extensions.gallery.recommendationsUrl": "https://open-vsx.org/vscode/recommendations",
+      "workbench.colorTheme": "Default Dark+",
+      "editor.fontSize": 14,
+      "editor.formatOnSave": true,
+      "editor.tabSize": 2,
+      "terminal.integrated.defaultProfile.linux": "bash",
+      "files.autoSave": "afterDelay",
+      "files.autoSaveDelay": 1000,
+      "http.proxySupport": "off"
+    }
+
+  entrypoint.sh: |
+    #!/bin/bash
+    set -e
+
+    CONTINUE_DIR="/home/coder/.continue"
+    mkdir -p "${CONTINUE_DIR}"
+
+    if [ ! -f "${CONTINUE_DIR}/config.json" ]; then
+      cp /etc/code-server/continue-config.json "${CONTINUE_DIR}/config.json"
+      echo "Installed Continue.dev config"
+    fi
+
+    SETTINGS_DIR="/home/coder/.local/share/code-server/User"
+    mkdir -p "${SETTINGS_DIR}"
+
+    if [ ! -f "${SETTINGS_DIR}/settings.json" ]; then
+      cp /etc/code-server/settings.json "${SETTINGS_DIR}/settings.json"
+      echo "Installed VS Code settings"
+    fi
+
+    PASSWORD_FILE="/etc/code-server-secrets/password"
+    if [ -f "${PASSWORD_FILE}" ]; then
+      export PASSWORD="$(cat ${PASSWORD_FILE})"
+    fi
+
+    SOPS_FILE="/etc/code-server-secrets/sops-key"
+    if [ -f "${SOPS_FILE}" ]; then
+      export SOPS_AGE_KEY="$(cat ${SOPS_FILE})"
+    fi
+
+    exec code-server /home/coder \
+      --config /etc/code-server/config.yaml \
+      --disable-telemetry

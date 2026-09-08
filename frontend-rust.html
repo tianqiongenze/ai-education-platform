@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全审计平台 | Security Audit Dashboard</title>
+    <style>
+        :root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#334155;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--accent-blue:#3b82f6;--accent-green:#10b981;--accent-red:#ef4444;--accent-yellow:#f59e0b;--accent-purple:#8b5cf6;--accent-cyan:#06b6d4;--border:#475569;--radius:12px;--shadow:0 4px 6px -1px rgba(0,0,0,0.3)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--text-primary);min-height:100vh;padding:20px}
+        .header{display:flex;justify-content:space-between;align-items:center;padding:20px 30px;background:var(--bg-secondary);border-radius:var(--radius);margin-bottom:20px;box-shadow:var(--shadow)}
+        .header h1{font-size:1.8rem;background:linear-gradient(135deg,var(--accent-red),var(--accent-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .status-badge{padding:8px 16px;border-radius:20px;font-size:0.85rem;font-weight:600}
+        .status-healthy{background:rgba(16,185,129,0.15);color:var(--accent-green);border:1px solid rgba(16,185,129,0.3)}
+        .status-error{background:rgba(239,68,68,0.15);color:var(--accent-red);border:1px solid rgba(239,68,68,0.3)}
+        .status-loading{background:rgba(245,158,11,0.15);color:var(--accent-yellow);border:1px solid rgba(245,158,11,0.3)}
+        .grid{display:grid;gap:20px;max-width:1400px;margin:0 auto}
+        .row{display:grid;gap:20px}.row-4{grid-template-columns:repeat(4,1fr)}.row-2{grid-template-columns:1fr 1fr}
+        @media(max-width:1024px){.row-4{grid-template-columns:repeat(2,1fr)}.row-2{grid-template-columns:1fr}}
+        @media(max-width:640px){.row-4{grid-template-columns:1fr}}
+        .card{background:var(--bg-secondary);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border);transition:transform 0.2s}
+        .card:hover{transform:translateY(-2px)}
+        .card h3{font-size:1.1rem;margin-bottom:16px;color:var(--text-secondary)}
+        .stat-value{font-size:2.5rem;font-weight:700}
+        .stat-label{font-size:0.85rem;color:var(--text-secondary);margin-top:4px}
+        .stat-blue{color:var(--accent-blue)}.stat-green{color:var(--accent-green)}.stat-red{color:var(--accent-red)}.stat-yellow{color:var(--accent-yellow)}.stat-purple{color:var(--accent-purple)}.stat-cyan{color:var(--accent-cyan)}
+        input,select,button,textarea{background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:10px 14px;border-radius:8px;font-size:0.9rem;outline:none}
+        input:focus,select:focus,textarea:focus{border-color:var(--accent-blue)}
+        button{cursor:pointer;font-weight:600}
+        .btn-primary{background:var(--accent-blue);border:none}.btn-success{background:var(--accent-green);border:none}.btn-danger{background:var(--accent-red);border:none}.btn-warn{background:var(--accent-yellow);border:none;color:#1e293b}
+        .form-group{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+        .form-group label{font-size:0.8rem;color:var(--text-secondary);display:block;margin-bottom:4px}
+        table{width:100%;border-collapse:collapse}
+        th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border)}
+        th{color:var(--text-secondary);font-size:0.8rem;text-transform:uppercase}
+        tr:hover{background:var(--bg-card)}
+        .badge{padding:4px 10px;border-radius:12px;font-size:0.75rem;font-weight:600}
+        .badge-critical{background:rgba(239,68,68,0.15);color:var(--accent-red)}.badge-high{background:rgba(249,115,22,0.15);color:#f97316}.badge-medium{background:rgba(245,158,11,0.15);color:var(--accent-yellow)}.badge-low{background:rgba(59,130,246,0.15);color:var(--accent-blue)}.badge-info{background:rgba(107,114,128,0.15);color:#9ca3af}
+        .badge-pass{background:rgba(16,185,129,0.15);color:var(--accent-green)}.badge-fail{background:rgba(239,68,68,0.15);color:var(--accent-red)}
+        .toast{position:fixed;bottom:20px;right:20px;padding:16px 24px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);z-index:1000;display:none}
+        .toast.show{display:block;animation:slideIn 0.3s}
+        @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        .api-log{background:#0c1117;border-radius:8px;padding:12px;max-height:200px;overflow-y:auto;font-family:monospace;font-size:0.8rem}
+        .log-ok{color:var(--accent-green)}.log-err{color:var(--accent-red)}
+        .compliance-score{font-size:3rem;font-weight:700;text-align:center;padding:20px}
+        .sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+        .sr-item{display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg-card);border-radius:6px}
+        .vuln-list{max-height:200px;overflow-y:auto}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ 工业安全审计平台</h1>
+        <div id="healthBadge" class="status-badge status-loading">检查中...</div>
+    </div>
+
+    <div class="grid">
+        <!-- Stats -->
+        <div class="row row-4">
+            <div class="card"><h3>📋 审计会话</h3><div class="stat-value stat-blue" id="statSessions">--</div><div class="stat-label">Audit Sessions</div></div>
+            <div class="card"><h3>🔍 漏洞发现</h3><div class="stat-value stat-red" id="statFindings">--</div><div class="stat-label">Findings</div></div>
+            <div class="card"><h3>✅ 合规率</h3><div class="stat-value stat-green" id="statCompliance">--</div><div class="stat-label">Compliance</div></div>
+            <div class="card"><h3>💾 缓存命中</h3><div class="stat-value stat-purple" id="statCache">--</div><div class="stat-label">L1+L2 Cache</div></div>
+        </div>
+
+        <!-- Create Audit -->
+        <div class="card">
+            <h3>➕ 创建审计会话</h3>
+            <div class="form-group">
+                <div><label>审计目标</label><input type="text" id="auditTarget" value="PLC-SCADA-Line1" style="width:200px"></div>
+                <div><label>审计员</label><input type="text" id="auditor" value="security-team" style="width:140px"></div>
+                <button class="btn-primary" onclick="createAudit()">创建审计</button>
+            </div>
+        </div>
+
+        <!-- Audit Session -->
+        <div class="card" id="auditSessionCard" style="display:none">
+            <h3>🔧 审计会话: <span id="currentAuditId" style="color:var(--accent-blue)"></span></h3>
+            <div class="form-group" style="margin-bottom:16px">
+                <div><label>扫描指纹 (逗号分隔)</label><input type="text" id="fingerprints" value="hmi-default-creds,modbus-plaintext,unauth-access" style="width:320px"></div>
+                <button class="btn-danger" onclick="runScan()">执行扫描</button>
+                <button class="btn-warn" onclick="runCompliance()">合规报告</button>
+                <button class="btn-success" onclick="finalizeAudit()">完成审计</button>
+            </div>
+            <div id="scanResults" style="display:none">
+                <h3 style="margin-top:16px">🔍 扫描结果</h3>
+                <div class="vuln-list" id="vulnList"></div>
+            </div>
+            <div id="complianceResults" style="display:none">
+                <div class="compliance-score" id="complianceScore">--</div>
+                <div class="sr-grid" id="srGrid"></div>
+            </div>
+        </div>
+
+        <!-- Audit List -->
+        <div class="card">
+            <h3>📋 审计会话列表</h3>
+            <table>
+                <thead><tr><th>会话ID</th><th>目标</th><th>审计员</th><th>状态</th><th>漏洞数</th><th>操作</th></tr></thead>
+                <tbody id="auditTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Cache Stats -->
+        <div class="card">
+            <h3>💾 缓存统计 (L1 内存 + L2 Redis)</h3>
+            <pre id="cacheStats" style="font-size:0.85rem;color:var(--text-secondary);white-space:pre-wrap"></pre>
+        </div>
+
+        <!-- API Log -->
+        <div class="card">
+            <h3>🔌 API 调用日志</h3>
+            <div class="api-log" id="apiLog"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API = window.location.origin.replace(/\/hub.*/, '') + '/api/v1';
+        let currentAuditId = null;
+
+        function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.className='toast show';setTimeout(()=>t.classList.remove('show'),3000)}
+        function logApi(m,u,s,d){const log=document.getElementById('apiLog');const e=document.createElement('div');e.className='log-entry '+(s>=200&&s<300?'log-ok':'log-err');e.textContent=`[${new Date().toLocaleTimeString()}] ${m} ${u} → ${s} ${d?JSON.stringify(d).substring(0,150):''}`;log.insertBefore(e,log.firstChild);while(log.children.length>30)log.removeChild(log.lastChild)}
+        async function apiCall(method,url,body){const opts={method,headers:{'Content-Type':'application/json'}};if(body)opts.body=JSON.stringify(body);try{const r=await fetch(url,opts);const d=await r.json().catch(()=>({}));logApi(method,url,r.status,d);return{status:r.status,data:d}}catch(e){logApi(method,url,'ERR',{error:e.message});return{status:0,data:{error:e.message}}}}
+
+        async function checkHealth(){const badge=document.getElementById('healthBadge');const r=await apiCall('GET',API+'/health');if(r.status===200){badge.className='status-badge status-healthy';badge.textContent='✅ 服务正常'}else{badge.className='status-badge status-error';badge.textContent='❌ 服务异常'}}
+
+        async function createAudit(){const body={target:document.getElementById('auditTarget').value,auditor:document.getElementById('auditor').value};const r=await apiCall('POST',API+'/audits',body);if(r.status===201){currentAuditId=r.data.id||r.data.session_id;document.getElementById('currentAuditId').textContent=currentAuditId;document.getElementById('auditSessionCard').style.display='';showToast('✅ 审计会话已创建: '+currentAuditId);loadAudits()}else showToast('❌ 创建失败')}
+
+        async function loadAudits(){const r=await apiCall('GET',API+'/audits');const tbody=document.getElementById('auditTable');tbody.innerHTML='';let totalFindings=0;if(r.status===200&&Array.isArray(r.data)){document.getElementById('statSessions').textContent=r.data.length;r.data.forEach(a=>{const findings=a.findings||a.finding_count||0;totalFindings+=findings;const cls=a.status==='FINALIZED'?'badge-pass':a.status==='IN_PROGRESS'?'badge-medium':'badge-info';const row=document.createElement('tr');row.innerHTML=`<td>${a.id||a.session_id}</td><td>${a.target}</td><td>${a.auditor}</td><td><span class="badge ${cls}">${a.status}</span></td><td>${findings}</td><td><button class="btn-primary" onclick="selectAudit('${a.id||a.session_id}')">查看</button></td>`;tbody.appendChild(row)})}document.getElementById('statFindings').textContent=totalFindings}
+
+        function selectAudit(id){currentAuditId=id;document.getElementById('currentAuditId').textContent=id;document.getElementById('auditSessionCard').style.display='';}
+
+        async function runScan(){const fps=document.getElementById('fingerprints').value.split(',').map(s=>s.trim()).filter(s=>s);const r=await apiCall('POST',API+`/audits/${currentAuditId}/scan`,{fingerprints:fps});if(r.status===200){document.getElementById('scanResults').style.display='';const list=document.getElementById('vulnList');list.innerHTML='';const findings=Array.isArray(r.data)?r.data:(r.data.findings||[]);findings.forEach(f=>{const sev=f.severity||f.level||'INFO';const cls=sev==='CRITICAL'?'badge-critical':sev==='HIGH'?'badge-high':sev==='MEDIUM'?'badge-medium':sev==='LOW'?'badge-low':'badge-info';const div=document.createElement('div');div.style.cssText='padding:10px;margin-bottom:8px;background:var(--bg-card);border-radius:6px;display:flex;justify-content:space-between';div.innerHTML=`<div><strong>${f.fingerprint||f.rule_id||'-'}</strong> — ${f.description||f.message||''}</div><span class="badge ${cls}">${sev}</span>`;list.appendChild(div)})}else showToast('❌ 扫描失败')}
+
+        async function runCompliance(){const sl=prompt('安全等级 (1-5)?','2');if(!sl)return;const r=await apiCall('POST',API+`/audits/${currentAuditId}/compliance`,{security_level:parseInt(sl)});if(r.status===200){document.getElementById('complianceResults').style.display='';const score=r.data.score||r.data.compliance_score||0;document.getElementById('complianceScore').textContent=score+'%';document.getElementById('complianceScore').style.color=score>=80?'var(--accent-green)':score>=60?'var(--accent-yellow)':'var(--accent-red)';document.getElementById('statCompliance').textContent=score+'%';const grid=document.getElementById('srGrid');grid.innerHTML='';const gaps=r.data.gaps||r.data.gap_counts||{};const srs=r.data.satisfied||r.data.satisfied_requirements||[];Object.entries(gaps).forEach(([k,v])=>{const div=document.createElement('div');div.className='sr-item';div.innerHTML=`<span>${k}</span><span class="badge badge-fail">FAIL (${v})</span>`;grid.appendChild(div)})}else showToast('❌ 合规报告生成失败')}
+
+        async function finalizeAudit(){const r=await apiCall('POST',API+`/audits/${currentAuditId}/finalize`);if(r.status===200){showToast('✅ 审计已完成');loadAudits()}else showToast('❌ 完成失败')}
+
+        async function loadCacheStats(){const r=await apiCall('GET',API+'/cache/stats');if(r.status===200){document.getElementById('statCache').textContent='OK';document.getElementById('cacheStats').textContent=JSON.stringify(r.data,null,2)}else{document.getElementById('cacheStats').textContent='缓存统计不可用'}}
+
+        checkHealth();loadAudits();loadCacheStats();setInterval(checkHealth,30000);
+    </script>
+</body>
+</html>

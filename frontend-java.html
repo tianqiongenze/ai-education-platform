@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MES 生产管理系统 | Manufacturing Execution System</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-card: #334155;
+            --text-primary: #f1f5f9; --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6; --accent-green: #10b981; --accent-red: #ef4444;
+            --accent-yellow: #f59e0b; --accent-purple: #8b5cf6; --border: #475569;
+            --radius: 12px; --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',system-ui,sans-serif; background:linear-gradient(135deg,#0f172a,#1e293b); color:var(--text-primary); min-height:100vh; padding:20px; }
+        .header { display:flex; justify-content:space-between; align-items:center; padding:20px 30px; background:var(--bg-secondary); border-radius:var(--radius); margin-bottom:20px; box-shadow:var(--shadow); }
+        .header h1 { font-size:1.8rem; background:linear-gradient(135deg,var(--accent-blue),var(--accent-green)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .status-badge { padding:8px 16px; border-radius:20px; font-size:0.85rem; font-weight:600; }
+        .status-healthy { background:rgba(16,185,129,0.15); color:var(--accent-green); border:1px solid rgba(16,185,129,0.3); }
+        .status-error { background:rgba(239,68,68,0.15); color:var(--accent-red); border:1px solid rgba(239,68,68,0.3); }
+        .status-loading { background:rgba(245,158,11,0.15); color:var(--accent-yellow); border:1px solid rgba(245,158,11,0.3); }
+        .grid { display:grid; gap:20px; max-width:1400px; margin:0 auto; }
+        .row { display:grid; gap:20px; }
+        .row-4 { grid-template-columns:repeat(4,1fr); }
+        .row-2 { grid-template-columns:1fr 1fr; }
+        @media(max-width:1024px){ .row-4{grid-template-columns:repeat(2,1fr);} .row-2{grid-template-columns:1fr;} }
+        @media(max-width:640px){ .row-4{grid-template-columns:1fr;} }
+        .card { background:var(--bg-secondary); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow); border:1px solid var(--border); transition:transform 0.2s; }
+        .card:hover { transform:translateY(-2px); }
+        .card h3 { font-size:1.1rem; margin-bottom:16px; color:var(--text-secondary); }
+        .stat-value { font-size:2.5rem; font-weight:700; }
+        .stat-label { font-size:0.85rem; color:var(--text-secondary); margin-top:4px; }
+        .stat-blue{color:var(--accent-blue)} .stat-green{color:var(--accent-green)} .stat-red{color:var(--accent-red)} .stat-yellow{color:var(--accent-yellow)} .stat-purple{color:var(--accent-purple)}
+        input,select,button { background:var(--bg-card); border:1px solid var(--border); color:var(--text-primary); padding:10px 14px; border-radius:8px; font-size:0.9rem; outline:none; }
+        input:focus,select:focus { border-color:var(--accent-blue); }
+        button { cursor:pointer; font-weight:600; }
+        .btn-primary{background:var(--accent-blue);border:none} .btn-success{background:var(--accent-green);border:none} .btn-danger{background:var(--accent-red);border:none}
+        .form-group { display:flex; gap:10px; flex-wrap:wrap; align-items:end; }
+        .form-group label { font-size:0.8rem; color:var(--text-secondary); display:block; margin-bottom:4px; }
+        table { width:100%; border-collapse:collapse; }
+        th,td { text-align:left; padding:12px 16px; border-bottom:1px solid var(--border); }
+        th { color:var(--text-secondary); font-size:0.8rem; text-transform:uppercase; }
+        tr:hover { background:var(--bg-card); }
+        .badge { padding:4px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; }
+        .badge-pending{background:rgba(245,158,11,0.15);color:var(--accent-yellow)} .badge-running{background:rgba(59,130,246,0.15);color:var(--accent-blue)} .badge-completed{background:rgba(16,185,129,0.15);color:var(--accent-green)} .badge-cancelled{background:rgba(239,68,68,0.15);color:var(--accent-red)}
+        .toast { position:fixed; bottom:20px; right:20px; padding:16px 24px; border-radius:8px; background:var(--bg-card); border:1px solid var(--border); z-index:1000; display:none; }
+        .toast.show { display:block; animation:slideIn 0.3s; }
+        @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        .tabs { display:flex; gap:4px; margin-bottom:20px; }
+        .tab { padding:10px 20px; border-radius:8px 8px 0 0; cursor:pointer; background:var(--bg-secondary); color:var(--text-secondary); border:1px solid var(--border); }
+        .tab.active { background:var(--accent-blue); color:white; border-color:var(--accent-blue); }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        .api-log { background:#0c1117; border-radius:8px; padding:12px; max-height:200px; overflow-y:auto; font-family:monospace; font-size:0.8rem; }
+        .log-ok{color:var(--accent-green)} .log-err{color:var(--accent-red)}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏭 MES 生产管理系统</h1>
+        <div id="healthBadge" class="status-badge status-loading">检查中...</div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('production')">📋 生产订单</div>
+        <div class="tab" onclick="switchTab('quality')">🔍 质量检测</div>
+    </div>
+
+    <div class="grid">
+        <!-- Production Tab -->
+        <div id="tab-production" class="tab-content active">
+            <!-- Metrics -->
+            <div class="row row-4" style="margin-bottom:20px">
+                <div class="card"><h3>📦 总订单数</h3><div class="stat-value stat-blue" id="prodTotal">--</div><div class="stat-label">Total Orders</div></div>
+                <div class="card"><h3>🏃 运行中</h3><div class="stat-value stat-green" id="prodRunning">--</div><div class="stat-label">In Progress</div></div>
+                <div class="card"><h3>✅ 已完成</h3><div class="stat-value stat-purple" id="prodDone">--</div><div class="stat-label">Completed</div></div>
+                <div class="card"><h3>📊 合格率</h3><div class="stat-value stat-yellow" id="prodYield">--%</div><div class="stat-label">Yield Rate</div></div>
+            </div>
+
+            <!-- Create Order -->
+            <div class="card" style="margin-bottom:20px">
+                <h3>➕ 创建生产订单</h3>
+                <div class="form-group">
+                    <div><label>产品名称</label><input type="text" id="prodName" value="阀门-A型" style="width:180px"></div>
+                    <div><label>计划数量</label><input type="number" id="prodQty" value="100" style="width:80px"></div>
+                    <div><label>优先级</label><select id="prodPriority"><option value="HIGH">高</option><option value="NORMAL">正常</option><option value="LOW">低</option></select></div>
+                    <button class="btn-primary" onclick="createOrder()">创建订单</button>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="card">
+                <h3>📋 生产订单列表</h3>
+                <div class="form-group" style="margin-bottom:16px">
+                    <div><label>状态筛选</label><select id="prodFilter" onchange="loadOrders()"><option value="">全部</option><option value="PENDING">待开始</option><option value="RUNNING">运行中</option><option value="COMPLETED">已完成</option><option value="CANCELLED">已取消</option></select></div>
+                    <button class="btn-success" onclick="loadOrders()">刷新</button>
+                </div>
+                <table>
+                    <thead><tr><th>订单ID</th><th>产品</th><th>计划量</th><th>已完成</th><th>次品</th><th>状态</th><th>操作</th></tr></thead>
+                    <tbody id="ordersTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quality Tab -->
+        <div id="tab-quality" class="tab-content">
+            <div class="row row-4" style="margin-bottom:20px">
+                <div class="card"><h3>🔍 检测总数</h3><div class="stat-value stat-blue" id="qualTotal">--</div><div class="stat-label">Total Inspections</div></div>
+                <div class="card"><h3>✅ 首检合格</h3><div class="stat-value stat-green" id="qualFPY">--%</div><div class="stat-label">First Pass Yield</div></div>
+                <div class="card"><h3>❌ 缺陷率</h3><div class="stat-value stat-red" id="qualDefect">--%</div><div class="stat-label">Defect Rate</div></div>
+                <div class="card"><h3>💾 缓存</h3><div class="stat-value stat-purple" id="qualCache">--</div><div class="stat-label">Cache Status</div></div>
+            </div>
+
+            <div class="card" style="margin-bottom:20px">
+                <h3>➕ 记录质量检测</h3>
+                <div class="form-group">
+                    <div><label>订单ID</label><input type="text" id="inspOrder" value="ORD-001" style="width:140px"></div>
+                    <div><label>检测项</label><input type="text" id="inspItem" value="尺寸检测" style="width:140px"></div>
+                    <div><label>结果</label><select id="inspResult"><option value="PASS">合格</option><option value="FAIL">不合格</option></select></div>
+                    <div><label>缺陷描述</label><input type="text" id="inspDefect" value="" placeholder="可选" style="width:160px"></div>
+                    <button class="btn-primary" onclick="recordInspection()">记录</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📋 检测记录列表</h3>
+                <div class="form-group" style="margin-bottom:16px">
+                    <div><label>订单ID</label><input type="text" id="inspFilterOrder" value="ORD-001" style="width:140px"></div>
+                    <button class="btn-success" onclick="loadInspections()">查询</button>
+                </div>
+                <table>
+                    <thead><tr><th>检测ID</th><th>订单ID</th><th>检测项</th><th>结果</th><th>缺陷</th><th>时间</th></tr></thead>
+                    <tbody id="inspTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- API Log -->
+        <div class="card">
+            <h3>🔌 API 调用日志</h3>
+            <div class="api-log" id="apiLog"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // MES services run on different ports: production=8081, quality=8082, gateway=8080
+        const PROD_API = window.location.origin.replace(/\/hub.*/, '') + '/api/v1/production';
+        const QUAL_API = window.location.origin.replace(/\/hub.*/, '') + '/api/v1/quality';
+        const GATEWAY_API = window.location.origin.replace(/\/hub.*/, '') + '/api/v1';
+
+        function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'; setTimeout(()=>t.classList.remove('show'),3000); }
+        function logApi(m,u,s,d){ const log=document.getElementById('apiLog'); const e=document.createElement('div'); e.className='log-entry '+(s>=200&&s<300?'log-ok':'log-err'); e.textContent=`[${new Date().toLocaleTimeString()}] ${m} ${u} → ${s} ${d?JSON.stringify(d).substring(0,120):''}`; log.insertBefore(e,log.firstChild); while(log.children.length>30) log.removeChild(log.lastChild); }
+        async function apiCall(method, url, body) {
+            const opts={method,headers:{'Content-Type':'application/json'}}; if(body)opts.body=JSON.stringify(body);
+            try{ const r=await fetch(url,opts); const d=await r.json().catch(()=>({})); logApi(method,url,r.status,d); return{status:r.status,data:d}; }
+            catch(e){ logApi(method,url,'ERR',{error:e.message}); return{status:0,data:{error:e.message}}; }
+        }
+        function switchTab(tab) { document.querySelectorAll('.tab').forEach((t,i)=>{ t.classList.toggle('active', t.textContent.includes(tab==='production'?'生产':'质量')); }); document.getElementById('tab-production').classList.toggle('active',tab==='production'); document.getElementById('tab-quality').classList.toggle('active',tab==='quality'); if(tab==='production')loadOrders(); else loadQualityMetrics(); }
+
+        async function checkHealth() {
+            const badge=document.getElementById('healthBadge');
+            const r=await apiCall('GET',GATEWAY_API+'/health');
+            if(r.status===200){ badge.className='status-badge status-healthy'; badge.textContent='✅ 系统正常'; }
+            else{ badge.className='status-badge status-error'; badge.textContent='❌ 系统异常'; }
+        }
+
+        async function createOrder() {
+            const body={productName:document.getElementById('prodName').value, plannedQuantity:parseInt(document.getElementById('prodQty').value),priority:document.getElementById('prodPriority').value};
+            const r=await apiCall('POST',PROD_API+'/orders',body);
+            if(r.status===201){ showToast('✅ 订单创建成功: '+r.data.id); loadOrders(); loadProdMetrics(); }
+            else showToast('❌ 创建失败: '+(r.data.message||r.data.error||''));
+        }
+
+        async function loadOrders() {
+            const filter=document.getElementById('prodFilter').value;
+            const url=filter?PROD_API+'/orders?status='+filter:PROD_API+'/orders';
+            const r=await apiCall('GET',url);
+            const tbody=document.getElementById('ordersTable');
+            tbody.innerHTML='';
+            if(r.status===200&&Array.isArray(r.data)) {
+                r.data.forEach(o=>{
+                    const cls=o.status==='PENDING'?'badge-pending':o.status==='RUNNING'?'badge-running':o.status==='COMPLETED'?'badge-completed':'badge-cancelled';
+                    const row=document.createElement('tr');
+                    row.innerHTML=`<td>${o.id||o.orderId}</td><td>${o.productName}</td><td>${o.plannedQuantity||o.plannedQty}</td><td>${o.completedQuantity||o.completed||0}</td><td>${o.defectCount||o.defects||0}</td><td><span class="badge ${cls}">${o.status}</span></td>
+                    <td>${o.status==='PENDING'?`<button class="btn-success" onclick="startOrder('${o.id||o.orderId}')">开始</button>`:''}
+                    ${o.status==='RUNNING'?`<button class="btn-primary" onclick="reportProg('${o.id||o.orderId}')">报工</button><button class="btn-danger" onclick="cancelOrder('${o.id||o.orderId}')">取消</button>`:''}</td>`;
+                    tbody.appendChild(row);
+                });
+                document.getElementById('prodTotal').textContent=r.data.length;
+                document.getElementById('prodRunning').textContent=r.data.filter(o=>o.status==='RUNNING').length;
+                document.getElementById('prodDone').textContent=r.data.filter(o=>o.status==='COMPLETED').length;
+            }
+        }
+
+        async function loadProdMetrics() {
+            const r=await apiCall('GET',PROD_API+'/orders/metrics/yield-rate');
+            if(r.status===200) document.getElementById('prodYield').textContent=r.data.yieldRate+'%';
+            const r2=await apiCall('GET',PROD_API+'/orders/metrics/cache');
+        }
+
+        async function startOrder(id) { const r=await apiCall('POST',PROD_API+`/orders/${id}/start`); if(r.status===200){showToast('✅ 已开始生产');loadOrders();} }
+        async function cancelOrder(id) { const r=await apiCall('POST',PROD_API+`/orders/${id}/cancel`); if(r.status===200){showToast('✅ 已取消');loadOrders();} }
+        async function reportProg(id) { const c=prompt('已完成数量?','10'); const d=prompt('次品数量?','0'); if(c){const r=await apiCall('POST',PROD_API+`/orders/${id}/progress?completed=${c}&defects=${d||0}`); if(r.status===200)showToast('✅ 已报工'); loadOrders();} }
+
+        async function loadQualityMetrics() {
+            const r1=await apiCall('GET',QUAL_API+'/inspections/metrics/fpy'); if(r1.status===200)document.getElementById('qualFPY').textContent=r1.data.firstPassYield+'%';
+            const r2=await apiCall('GET',QUAL_API+'/inspections/metrics/defect-rate'); if(r2.status===200)document.getElementById('qualDefect').textContent=r2.data.defectRate+'%';
+            const r3=await apiCall('GET',QUAL_API+'/inspections/metrics/cache'); if(r3.status===200)document.getElementById('qualCache').textContent=r3.data.cache||'OK';
+        }
+
+        async function recordInspection() {
+            const body={orderId:document.getElementById('inspOrder').value,inspectionItem:document.getElementById('inspItem').value,result:document.getElementById('inspResult').value,defectDescription:document.getElementById('inspDefect').value};
+            const r=await apiCall('POST',QUAL_API+'/inspections',body);
+            if(r.status===201){showToast('✅ 检测记录已保存'); loadQualityMetrics();}
+            else showToast('❌ 记录失败');
+        }
+
+        async function loadInspections() {
+            const oid=document.getElementById('inspFilterOrder').value;
+            const r=await apiCall('GET',QUAL_API+`/inspections?orderId=${oid}`);
+            const tbody=document.getElementById('inspTable'); tbody.innerHTML='';
+            if(r.status===200&&Array.isArray(r.data)){
+                document.getElementById('qualTotal').textContent=r.data.length;
+                r.data.forEach(i=>{ const cls=i.result==='PASS'?'badge-completed':'badge-cancelled'; const row=document.createElement('tr'); row.innerHTML=`<td>${i.id||'-'}</td><td>${i.orderId}</td><td>${i.inspectionItem||i.item}</td><td><span class="badge ${cls}">${i.result}</span></td><td>${i.defectDescription||'-'}</td><td>${i.timestamp||i.inspectionTime||'-'}</td>`; tbody.appendChild(row); });
+            }
+        }
+
+        checkHealth(); loadOrders(); loadProdMetrics(); setInterval(checkHealth,30000);
+    </script>
+</body>
+</html>

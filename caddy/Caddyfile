@@ -1,0 +1,12 @@
+:8081 {
+	@vscodeWithoutSlash path /vscode
+	handle @vscodeWithoutSlash {
+		redir /vscode/{query} permanent
+	}
+
+	handle_path /vscode/* {
+		reverse_proxy localhost:8080 {
+			header_up X-Forwarded-Prefix /vscode
+		}
+	}
+}

@@ -1,0 +1,194 @@
+# Custom JupyterHub + user-workspace image built on scipy-notebook
+# Base already contains: JupyterHub 4.0.2, JupyterLab, Python 3.11, Node.js 20, GCC, scipy stack
+# This image adds: Rust, Maven, Gradle, Spring Boot CLI, DB clients, Docker/k8s/helm,
+# AI frameworks, web frameworks, Node/Go frameworks, and JupyterLab LSP/AI extensions.
+FROM 10.100.135.132:5000/jupyter/scipy-notebook:latest
+
+USER root
+
+# Switch apt to aliyun mirror (Ubuntu 22.04 jammy) for speed
+RUN sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true \
+    && sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/*.list 2>/dev/null || true
+
+# Install build essentials + C/C++ tools + DB clients + DevOps client tools
+# (psql, redis-cli, sqlite3, mysql client; docker CLI client; build tools cmake/make/gdb)
+RUN apt-get update --fix-missing \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates curl wget git vim tmux less unzip tree htop \
+        build-essential make cmake pkg-config gdb \
+        openssh-client \
+        postgresql-client \
+        redis-tools \
+        sqlite3 \
+        default-mysql-client \
+        gnupg lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Java (OpenJDK 17) via conda-forge
+RUN conda install -y -c conda-forge openjdk=17 \
+    && conda clean -afy \
+    && ln -sf /opt/conda/bin/java /usr/local/bin/java \
+    && ln -sf /opt/conda/bin/javac /usr/local/bin/javac
+
+# Install Go via official tarball (aliyun mirror)
+ARG GO_VERSION=1.21.13
+RUN cd /tmp \
+    && wget -q https://mirrors.aliyun.com/golang/go${GO_VERSION}.linux-amd64.tar.gz -O go.tar.gz \
+    && tar -C /usr/local -xzf go.tar.gz \
+    && rm go.tar.gz \
+    && ln -sf /usr/local/go/bin/go /usr/local/bin/go \
+    && ln -sf /usr/local/go/bin/gofmt /usr/local/bin/gofmt
+
+# ---- Java ecosystem: Maven, Gradle, Spring Boot CLI ----
+# Maven 3.9.x (aliyun mirror keeps only the latest 3.9.x release)
+ARG MAVEN_VERSION=3.9.16
+RUN cd /tmp \
+    && wget -q https://mirrors.aliyun.com/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -O maven.tar.gz \
+    && mkdir -p /opt/maven \
+    && tar -xzf maven.tar.gz -C /opt/maven --strip-components=1 \
+    && rm maven.tar.gz \
+    && ln -sf /opt/maven/bin/mvn /usr/local/bin/mvn
+# Configure Maven to use aliyun mirror for dependencies
+RUN mkdir -p /usr/share/maven/conf \
+    && printf '<settings>\n  <mirrors>\n    <mirror>\n      <id>aliyun</id>\n      <mirrorOf>*</mirrorOf>\n      <name>Aliyun Maven Mirror</name>\n      <url>https://maven.aliyun.com/repository/public</url>\n    </mirror>\n  </mirrors>\n</settings>\n' \
+       > /usr/share/maven/conf/settings.xml \
+    && mkdir -p /root/.m2 /home/jovyan/.m2 \
+    && cp /usr/share/maven/conf/settings.xml /root/.m2/settings.xml \
+    && cp /usr/share/maven/conf/settings.xml /home/jovyan/.m2/settings.xml \
+    && chown -R 1000:100 /home/jovyan/.m2
+
+# Gradle 8.x (aliyun mirror for gradle dist; tencent for gradle distributions)
+ARG GRADLE_VERSION=8.10.2
+RUN cd /tmp \
+    && wget -q https://mirrors.cloud.tencent.com/gradle/gradle-${GRADLE_VERSION}-bin.zip -O gradle.zip \
+    && unzip -q gradle.zip -d /opt \
+    && ln -sf /opt/gradle-${GRADLE_VERSION}/bin/gradle /usr/local/bin/gradle \
+    && rm gradle.zip
+
+# Spring Boot CLI (from aliyun maven public repo)
+ARG SPRING_BOOT_CLI_VERSION=3.3.5
+RUN cd /tmp \
+    && wget -q https://maven.aliyun.com/repository/public/org/springframework/boot/spring-boot-cli/${SPRING_BOOT_CLI_VERSION}/spring-boot-cli-${SPRING_BOOT_CLI_VERSION}-bin.tar.gz -O spring-boot.tar.gz \
+    && mkdir -p /opt/spring-boot-cli \
+    && tar -xzf spring-boot.tar.gz -C /opt/spring-boot-cli --strip-components=1 \
+    && ln -sf /opt/spring-boot-cli/bin/spring /usr/local/bin/spring \
+    && rm spring-boot.tar.gz \
+    && spring --version \
+    || echo "Spring Boot CLI download failed (optional); continuing"
+
+# ---- Rust via rustup (official installer script; USTC mirror for toolchain) ----
+ENV RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static \
+    RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup \
+    CARGO_HOME=/opt/cargo \
+    RUSTUP_HOME=/opt/rustup \
+    PATH=/opt/cargo/bin:/usr/local/go/bin:/opt/conda/bin:$PATH
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | sh -s -- -y --default-toolchain stable --profile minimal \
+    && chmod -R a+rX /opt/cargo /opt/rustup \
+    && rustc --version && cargo --version
+# Configure cargo to use USTC mirror for crates
+RUN mkdir -p /opt/cargo \
+    && printf '[source.crates-io]\nreplace-with = "ustc"\n\n[source.ustc]\nregistry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index"\n' \
+       > /opt/cargo/config.toml
+
+# ---- DevOps tools: Docker CLI client, kubectl, helm 3 ----
+# Docker CLI only (no daemon) for connecting to remote Docker
+RUN cd /tmp \
+    && wget -q https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/docker-26.1.4.tgz -O docker.tgz \
+    && tar -xzf docker.tgz docker/docker \
+    && mv docker/docker /usr/local/bin/docker \
+    && rm -rf docker.tgz docker \
+    && docker --version
+
+# kubectl + helm: copied from host (statically-linked binaries) for reliability.
+# The China mirrors (aliyun/tencent) intermittently serve HTML error pages
+# instead of the real binaries, so COPY is far more robust than wget here.
+COPY kubectl-bin /usr/local/bin/kubectl
+COPY helm-bin /usr/local/bin/helm
+RUN chmod +x /usr/local/bin/kubectl /usr/local/bin/helm \
+    && kubectl version --client \
+    && helm version
+
+# Install kubespawner + jupyterhub-nativeauthenticator for self-registration option
+RUN pip install --no-cache-dir --break-system-packages \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    jupyterhub-kubespawner==7.1.0 \
+    escapism \
+    oauthenticator
+
+# ---- Python AI frameworks, web frameworks, dev tools ----
+RUN pip install --no-cache-dir --break-system-packages \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    langchain langgraph langsmith \
+    openai anthropic \
+    pydantic pydantic-ai \
+    flask django fastapi uvicorn \
+    pytest coverage pylint black mypy \
+    paho-mqtt pyserial \
+    redis psycopg2-binary sqlalchemy \
+    jupyter-ai
+
+# Large AI model frameworks in a separate layer (CPU-only torch)
+RUN pip install --no-cache-dir --break-system-packages \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    transformers \
+    && pip install --no-cache-dir --break-system-packages \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    torch --index-url https://download.pytorch.org/whl/cpu
+
+# ---- JupyterLab extensions: LSP + language servers ----
+RUN pip install --no-cache-dir --break-system-packages \
+    -i https://pypi.tuna.tsinghua.edu.cn/simple \
+    jupyterlab-lsp \
+    python-lsp-server[all] \
+    'jupyterlab-code-formatters' \
+    && jupyter labextension list 2>/dev/null || true
+
+# ---- Node.js frameworks (npmmirror China registry) ----
+ENV npm_config_registry=https://registry.npmmirror.com
+RUN npm install -g --registry=https://registry.npmmirror.com \
+        express next react vue typescript \
+        nodemon tsx \
+    && npm cache clean --force 2>/dev/null || true
+
+# ---- Go frameworks (gin, echo, fiber) pre-populated in module cache ----
+# These are libraries (not main packages), so `go install` of their root won't
+# produce binaries. Instead we create a throwaway module that imports all three,
+# then `go mod download` to fetch their source + deps into the module cache
+# (GOPATH/pkg/mod) so users can `import` them offline-ish from the aliyun proxy.
+# GOTOOLCHAIN=local forces the installed Go 1.21 (no auto-toolchain upgrade).
+# Versions pinned to releases compatible with Go 1.21.
+ENV GOPATH=/home/jovyan/go \
+    GOPROXY=https://mirrors.aliyun.com/goproxy/,direct \
+    GOSUMDB=off \
+    GOTOOLCHAIN=local
+RUN mkdir -p /tmp/gofw \
+    && cd /tmp/gofw \
+    && go mod init gofw \
+    && go get github.com/gin-gonic/gin@v1.10.0 \
+       github.com/labstack/echo/v4@v4.12.0 \
+       github.com/gofiber/fiber/v2@v2.52.5 \
+    && go mod download \
+    && cd / && rm -rf /tmp/gofw \
+    && chmod -R a+rX /home/jovyan/go \
+    && chown -R 1000:100 /home/jovyan/go
+
+# Make Rust toolchain available to jovyan via PATH already set globally;
+# create cargo bin symlinks in a standard spot
+RUN ln -sf /opt/cargo/bin/rustc /usr/local/bin/rustc \
+    && ln -sf /opt/cargo/bin/cargo /usr/local/bin/cargo \
+    && ln -sf /opt/cargo/bin/rustup /usr/local/bin/rustup \
+    && ln -sf /opt/cargo/bin/rustfmt /usr/local/bin/rustfmt 2>/dev/null || true \
+    && ln -sf /opt/cargo/bin/cargo-clippy /usr/local/bin/cargo-clippy 2>/dev/null || true
+
+# Set Go env for all users
+ENV GOPATH=/home/jovyan/go \
+    PATH=/usr/local/go/bin:/opt/conda/bin:/opt/cargo/bin:$PATH
+
+# Ensure jovyan home is owned correctly (after go install created dirs as root)
+RUN chown -R 1000:100 /home/jovyan
+
+USER ${NB_USER:-jovyan}
+WORKDIR /home/jovyan
+
+EXPOSE 8000 8888

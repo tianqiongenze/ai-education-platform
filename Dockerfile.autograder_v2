@@ -1,0 +1,8 @@
+FROM 10.100.135.132:5000/jupyterhub/custom:4.0.3
+USER root
+RUN apt-get update -qq && apt-get install -y -qq postgresql-client && rm -rf /var/lib/apt/lists/*
+RUN pip install --break-system-packages flask flask-cors psycopg2-binary pytest pycodestyle pylint
+COPY autograder_server_v2.py /opt/autograder/autograder_server.py
+WORKDIR /opt/autograder
+EXPOSE 3000
+CMD ["python3", "/opt/autograder/autograder_server.py"]

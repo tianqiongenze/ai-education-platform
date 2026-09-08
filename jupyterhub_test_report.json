@@ -1,0 +1,299 @@
+{
+  "total": 58,
+  "passed": 58,
+  "failed": 0,
+  "skipped": 0,
+  "rate": 100.0,
+  "results": [
+    {
+      "test": "1.1 登录页加载",
+      "status": "PASS",
+      "detail": "JupyterHub"
+    },
+    {
+      "test": "1.2 用户名输入框",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "1.3 密码输入框",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "2.1 用户注册-student-alice",
+      "status": "PASS",
+      "detail": "登录成功 xsrf=有"
+    },
+    {
+      "test": "2.1 用户注册-student-bob",
+      "status": "PASS",
+      "detail": "登录成功 xsrf=有"
+    },
+    {
+      "test": "2.1 用户注册-student-carol",
+      "status": "PASS",
+      "detail": "登录成功 xsrf=有"
+    },
+    {
+      "test": "2.2 多用户注册",
+      "status": "PASS",
+      "detail": "3/3"
+    },
+    {
+      "test": "3.1 Pod就绪-student-alice",
+      "status": "PASS",
+      "detail": "API可用 (0s)"
+    },
+    {
+      "test": "3.1 Pod就绪-student-bob",
+      "status": "PASS",
+      "detail": "API可用 (0s)"
+    },
+    {
+      "test": "3.1 Pod就绪-student-carol",
+      "status": "PASS",
+      "detail": "API可用 (0s)"
+    },
+    {
+      "test": "4.0 创建/work目录-student-alice",
+      "status": "PASS",
+      "detail": "exists"
+    },
+    {
+      "test": "4.0 创建/work目录-student-bob",
+      "status": "PASS",
+      "detail": "exists"
+    },
+    {
+      "test": "4.0 创建/work目录-student-carol",
+      "status": "PASS",
+      "detail": "exists"
+    },
+    {
+      "test": "4.1 Alice写文件",
+      "status": "PASS",
+      "detail": "status=200"
+    },
+    {
+      "test": "4.2 工作空间隔离",
+      "status": "PASS",
+      "detail": "Bob无法访问Alice文件(404)"
+    },
+    {
+      "test": "5.1 写入文件",
+      "status": "PASS",
+      "detail": "status=200"
+    },
+    {
+      "test": "5.2 读取验证",
+      "status": "PASS",
+      "detail": "内容一致"
+    },
+    {
+      "test": "6.1 检查notebook部署",
+      "status": "PASS",
+      "detail": "已写入 /work/tool_check.ipynb"
+    },
+    {
+      "test": "6.2 notebook执行",
+      "status": "PASS",
+      "detail": "es to /tmp/tool_check_out.ipynb\nEXECRC=0\nWarning: Permanently added '10.167.2.175' (ED25519) to the list of known hosts."
+    },
+    {
+      "test": "6.3 工具-python3",
+      "status": "PASS",
+      "detail": "Python 3.11.6"
+    },
+    {
+      "test": "6.3 工具-java",
+      "status": "PASS",
+      "detail": "openjdk version \"17.0.9-internal\" 2023-10-17\nOpenJ"
+    },
+    {
+      "test": "6.3 工具-go",
+      "status": "PASS",
+      "detail": "go version go1.21.13 linux/amd64"
+    },
+    {
+      "test": "6.3 工具-rustc",
+      "status": "PASS",
+      "detail": "rustc 1.98.0 (88d9e12ae 2026-08-18)"
+    },
+    {
+      "test": "6.3 工具-node",
+      "status": "PASS",
+      "detail": "v20.8.1"
+    },
+    {
+      "test": "6.3 工具-npm",
+      "status": "PASS",
+      "detail": "10.1.0"
+    },
+    {
+      "test": "6.3 工具-mvn",
+      "status": "PASS",
+      "detail": "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb7"
+    },
+    {
+      "test": "6.3 工具-gradle",
+      "status": "PASS",
+      "detail": "--------------------------------------------------"
+    },
+    {
+      "test": "6.3 工具-gcc",
+      "status": "PASS",
+      "detail": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0\nCopyrigh"
+    },
+    {
+      "test": "6.3 工具-cmake",
+      "status": "PASS",
+      "detail": "cmake version 3.22.1\n\nCMake suite maintained and s"
+    },
+    {
+      "test": "6.3 工具-docker",
+      "status": "PASS",
+      "detail": "Docker version 26.1.4, build 5650f9b"
+    },
+    {
+      "test": "6.3 工具-kubectl",
+      "status": "PASS",
+      "detail": "Client Version: v1.28.2\nKustomize Version: v5.0.4-"
+    },
+    {
+      "test": "6.3 工具-helm",
+      "status": "PASS",
+      "detail": "v3.21.0+ge0878d4"
+    },
+    {
+      "test": "6.3 工具-psql",
+      "status": "PASS",
+      "detail": "psql (PostgreSQL) 14.24 (Ubuntu 14.24-0ubuntu0.22."
+    },
+    {
+      "test": "6.3 工具-redis-cli",
+      "status": "PASS",
+      "detail": "redis-cli 6.0.16"
+    },
+    {
+      "test": "6.3 工具-sqlite3",
+      "status": "PASS",
+      "detail": "3.37.2 2022-01-06 13:25:41 872ba256cbf61d9290b571c"
+    },
+    {
+      "test": "7.1 langchain",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 langgraph",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 openai",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 anthropic",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 transformers",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 flask",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 fastapi",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 django",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 pandas",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 numpy",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 matplotlib",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 pytest",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 pydantic",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 redis",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 sqlalchemy",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "7.1 paho.mqtt",
+      "status": "PASS",
+      "detail": "已安装"
+    },
+    {
+      "test": "8.1 JupyterLab加载",
+      "status": "PASS",
+      "detail": "JupyterLab"
+    },
+    {
+      "test": "9.1 Worker节点",
+      "status": "PASS",
+      "detail": "status=302"
+    },
+    {
+      "test": "9.2 /ide/子路径",
+      "status": "PASS",
+      "detail": "status=302"
+    },
+    {
+      "test": "9.3 IP直连无hosts",
+      "status": "PASS",
+      "detail": "status=302"
+    },
+    {
+      "test": "10.1 未认证拦截",
+      "status": "PASS",
+      "detail": "status=403"
+    },
+    {
+      "test": "10.2 错误密码拒绝",
+      "status": "PASS",
+      "detail": "status=403"
+    },
+    {
+      "test": "11.1 并发注册10用户",
+      "status": "PASS",
+      "detail": "10/10 成功"
+    }
+  ]
+}

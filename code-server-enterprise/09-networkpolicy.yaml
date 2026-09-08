@@ -1,0 +1,96 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: code-server
+  namespace: ai-platform
+  labels:
+    app.kubernetes.io/name: code-server
+    app.kubernetes.io/component: security
+    app.kubernetes.io/part-of: ai-platform
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: code-server
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - port: 8080
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - port: 8080
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: code-server
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: code-server
+      ports:
+        - port: 8080
+          protocol: TCP
+  egress:
+    - ports:
+        - port: 4000
+          protocol: TCP
+      to:
+        - podSelector:
+            matchLabels:
+              app: litellm
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+    - ports:
+        - port: 9090
+          protocol: TCP
+      to:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+    - ports:
+        - port: 80
+          protocol: TCP
+        - port: 443
+          protocol: TCP
+      to:
+        - namespaceSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+    - ports:
+        - port: 11434
+          protocol: TCP
+      to:
+        - podSelector:
+            matchLabels:
+              app: ollama-master
+        - podSelector:
+            matchLabels:
+              app: ollama-worker

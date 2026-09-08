@@ -1,0 +1,32 @@
+{
+  "title": "AI Inline Completion",
+  "description": "AI-powered ghost text inline completion settings",
+  "jupyter.lab.setting-icon": "jupyter-inline-completion:icon",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "title": "Enable inline completion",
+      "description": "Enable/disable AI ghost text inline completion",
+      "default": true
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Completion endpoint",
+      "description": "Server endpoint for FIM completion requests",
+      "default": "/inline-completion/v1/completion"
+    },
+    "debounceMs": {
+      "type": "number",
+      "title": "Debounce delay (ms)",
+      "description": "Delay before sending completion request after typing stops",
+      "default": 600
+    },
+    "maxTokens": {
+      "type": "number",
+      "title": "Max tokens",
+      "description": "Maximum number of tokens to generate per completion",
+      "default": 32
+    }
+  },
+  "additionalProperties": false
+}

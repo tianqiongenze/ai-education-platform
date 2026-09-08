@@ -1,0 +1,157 @@
+Warning: Permanently added '10.167.2.175' (ED25519) to the list of known hosts.
+{
+  "date": "2026-09-07 14:25:35",
+  "tool": "Playwright Headless Chromium",
+  "hub_url": "https://10.167.2.175:31825/ide/",
+  "total": 24,
+  "passed": 24,
+  "failed": 0,
+  "pass_rate": "100%",
+  "total_time": 263.0,
+  "tests": [
+    {
+      "name": "Login Page + HTTPS",
+      "status": "PASS",
+      "details": "HTTP 200, title='JupyterHub', username=True, password=True, submit=True",
+      "elapsed": 0.62
+    },
+    {
+      "name": "Login teacher-zhang",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/teacher-zhang/lab?",
+      "elapsed": 1.46
+    },
+    {
+      "name": "Admin Panel - Accounts",
+      "status": "PASS",
+      "details": "Found 4 admins in HTML: ['teacher-zhang', 'lecture-p1', 'lecture-p2', 'lecture-p3'], has_users_table=True, has_user_list=False",
+      "elapsed": 2.73
+    },
+    {
+      "name": "Admin Panel - Groups",
+      "status": "PASS",
+      "details": "Found 4/5 groups: ['lecture-p1-students', 'lecture-p2-students', 'lecture-p3-students', 'all-students']",
+      "elapsed": 0.01
+    },
+    {
+      "name": "JupyterLab UI",
+      "status": "PASS",
+      "details": "jupyter=True, topbar=True, launcher=True",
+      "elapsed": 12.93
+    },
+    {
+      "name": "File Browser",
+      "status": "PASS",
+      "details": "API status=200, files=109, has_ipynb=True, has_guides=True, has_course_dirs=True, sample=['Untitled.ipynb', 'nbgrader', 'mydemo01.ipynb', 'a2_m22_学生版.ipynb', 'p11_P1.1_Python基础_教师版.ipynb', 'a2_m21_学生版.ipynb', 'concurrent_test_report.json', 'p11_P1.1_Python基础_学生版.ipynb', 'p12_P1.2_标准Python_学生版.ipynb', 'p21_P2.1_Pandas数据_学生版.ipynb']",
+      "elapsed": 0.11
+    },
+    {
+      "name": "Contents API",
+      "status": "PASS",
+      "details": "Root items=109, dirs(4)=['-f', 'ai-telemetry-project', 'nbgrader', 'student_code_framework'], files(29)=['COCKROACHDB-K8S-DEPLOYMENT-GUIDE.md', 'JUPYTERHUB-OPERATION-GUIDE.md', 'JUPYTERHUB-STUDENT-GUIDE.md', 'buffer.db', 'code_grader.py', 'concurrent_test_report.json', 'grading_report.json', 'jupyterhub_full_test.py']",
+      "elapsed": 0.11
+    },
+    {
+      "name": "Teacher Guide Distribution",
+      "status": "PASS",
+      "details": "teacher_guide=True, student_guide=True, root_files=['Untitled.ipynb', 'nbgrader', 'mydemo01.ipynb', 'a2_m22_学生版.ipynb', 'p11_P1.1_Python基础_教师版.ipynb', 'a2_m21_学生版.ipynb', 'concurrent_test_report.json', 'p11_P1.1_Python基础_学生版.ipynb']",
+      "elapsed": 0.11
+    },
+    {
+      "name": "LLM Chat API",
+      "status": "PASS",
+      "details": "model=qwen2.5-coder:7b, content='Hello! How can I assist you to', eval_count=10",
+      "elapsed": 14.0
+    },
+    {
+      "name": "Embedding API",
+      "status": "PASS",
+      "details": "dim=768, first5=[-0.9517, 1.7601, -3.6228, -0.9988, 1.0002]",
+      "elapsed": 0.83
+    },
+    {
+      "name": "CRDB Health",
+      "status": "PASS",
+      "details": "response={}",
+      "elapsed": 0.01
+    },
+    {
+      "name": "CRDB Databases",
+      "status": "PASS",
+      "details": "databases=32: ['course_db', 'defaultdb', 'dify', 'dify_plus', 'education', 'esp_assessment', 'esp_auth', 'esp_community', 'esp_content', 'esp_gamif']",
+      "elapsed": 0.02
+    },
+    {
+      "name": "nbgrader Exchange",
+      "status": "PASS",
+      "details": "nbgrader_dir=200, exchange=True, nbgrader_config=True, nbgrader_files=['nbgrader_config.py', 'source', 'gradebook.db', 'exchange', 'cache', 'release']",
+      "elapsed": 0.05
+    },
+    {
+      "name": "Logout",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide//hub/login, has_login_form=True",
+      "elapsed": 2.89
+    },
+    {
+      "name": "Student Login",
+      "status": "PASS",
+      "details": "URL: https://10.167.2.175:31825/ide/user/student-python/lab?",
+      "elapsed": 1.39
+    },
+    {
+      "name": "Student Guide Distribution",
+      "status": "PASS",
+      "details": "student_guide=True, teacher_guide=False (should be False), root_files=['industrial-analytics', 'industrial-analytics.tar.gz', 'jupyter-inline-completion', 'p11_P1.1_Python基础_学生版.ipynb', 'student_code_framework', 'JUPYTERHUB-STUDENT-GUIDE.md', 'code_grader.py', 'nbgrader']",
+      "elapsed": 0.06
+    },
+    {
+      "name": "Lecture-P1 Login + Admin",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide/hub/spawn-pending/lecture-p1, admin_access=True",
+      "elapsed": 185.59
+    },
+    {
+      "name": "Cookie Size",
+      "status": "PASS",
+      "details": "Total=293 bytes, cookies=3, max_single=179 bytes (limit=30000 for 32k buffer)",
+      "elapsed": 0.0
+    },
+    {
+      "name": "Concurrent Logins x10",
+      "status": "PASS",
+      "details": "10/10 successful: conc2-test-00=✓, conc2-test-01=✓, conc2-test-02=✓, conc2-test-03=✓, conc2-test-04=✓, conc2-test-05=✓, conc2-test-06=✓, conc2-test-07=✓, conc2-test-08=✓, conc2-test-09=✓",
+      "elapsed": 8.1
+    },
+    {
+      "name": "HTTP 431 Prevention",
+      "status": "PASS",
+      "details": "Statuses after repeated navigation: [200, 200, 200], no 431=True",
+      "elapsed": 7.9
+    },
+    {
+      "name": "Terminal Service",
+      "status": "PASS",
+      "details": "Terminal API status=200 (200=enabled, 403=disabled but responding)",
+      "elapsed": 6.82
+    },
+    {
+      "name": "Kernel Specs API",
+      "status": "PASS",
+      "details": "status=200, kernels=['python3'], has_python=True",
+      "elapsed": 6.79
+    },
+    {
+      "name": "Ingress Routing /ide/",
+      "status": "PASS",
+      "details": "HTTP 200, URL=https://10.167.2.175:31825/ide//hub/login",
+      "elapsed": 0.61
+    },
+    {
+      "name": "Spawn Page New User",
+      "status": "PASS",
+      "details": "URL=https://10.167.2.175:31825/ide/hub/spawn-pending/spawn-test-user2",
+      "elapsed": 9.82
+    }
+  ]
+}

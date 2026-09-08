@@ -1,0 +1,23 @@
+# --- Rust build output (always ignore for binary + library crates) ---
+/target/
+*/target/
+**/target/
+
+# --- Local SQLite databases (audit runtime data) ---
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# --- IDE / editor ---
+.idea/
+.vscode/
+*.code-workspace
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Misc ---
+*.log

@@ -1,0 +1,32 @@
+{
+  "models": [
+    {
+      "title": "Qwen 2.5 14B",
+      "provider": "openai",
+      "model": "qwen2.5:14b",
+      "apiBase": "http://litellm:4000/v1",
+      "apiKey": "sk-ai-platform-master"
+    },
+    {
+      "title": "DeepSeek R1 14B",
+      "provider": "openai",
+      "model": "deepseek-r1:14b",
+      "apiBase": "http://litellm:4000/v1",
+      "apiKey": "sk-ai-platform-master"
+    },
+    {
+      "title": "Qwen 2.5 Coder 14B",
+      "provider": "openai",
+      "model": "qwen2.5-coder:14b",
+      "apiBase": "http://litellm:4000/v1",
+      "apiKey": "sk-ai-platform-master"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Qwen 2.5 7B",
+    "provider": "openai",
+    "model": "qwen2.5:7b",
+    "apiBase": "http://litellm:4000/v1",
+    "apiKey": "sk-ai-platform-master"
+  }
+}

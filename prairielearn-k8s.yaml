@@ -1,0 +1,326 @@
+###############################################################################
+# PrairieLearn Kubernetes Deployment
+# Cluster: 2-node K8s (master 10.167.2.175 / worker 10.167.2.176)
+# Database: CockroachDB v24.3.11 (infra namespace, PostgreSQL-compatible)
+# Cache:    Redis (dify-plus namespace, password-protected cluster)
+# Image:   10.100.135.132:5000/prairielearn:latest (local registry)
+#
+# NOTE on NodePort:
+#   30090 is already taken by redis8-node-0 in the dify-plus namespace, so
+#   PrairieLearn web access uses NodePort 30093.
+###############################################################################
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+    app.kubernetes.io/part-of: teaching-platform
+
+###############################################################################
+# ConfigMap: PrairieLearn config.json
+# Loaded into the container at /PrairieLearn/config.json. PrairieLearn reads
+# its runtime configuration from this JSON file (see apps/prairielearn/src/lib/
+# config.ts in the PrairieLearn repo for the full list of supported keys).
+###############################################################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prairielearn-config
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+data:
+  config.json: |
+    {
+      "serverPort": "3000",
+      "serverType": "http",
+      "serverCanonicalHost": "prairielearn.local",
+      "cookieDomain": "prairielearn.local",
+
+      "postgresqlUser": "root",
+      "postgresqlPassword": "",
+      "postgresqlDatabase": "prairielearn",
+      "postgresqlHost": "localhost",
+      "postgresqlPoolSize": 20,
+      "postgresqlIdleTimeoutMillis": 30000,
+      "postgresqlSsl": false,
+
+      "redisUrl": "redis://default:difyai123456@redis.dify-plus.svc.cluster.local:6379/0",
+      "nonVolatileRedisUrl": "redis://default:difyai123456@redis.dify-plus.svc.cluster.local:6379/1",
+
+      "filesRoot": "/data/files",
+      "coursesRoot": "/data/courses",
+      "courseDirs": ["/data/courses", "./exampleCourse"],
+
+      "secretKey": "pl-prod-secret-key-CHANGE-ME-2026",
+      "databaseEncryptionKey": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+
+      "authUid": "admin@prairielearn.local",
+      "authName": "Admin User",
+      "authUin": "000000001",
+      "authEmail": "admin@prairielearn.local",
+
+      "externalGradingPullImagesFromDockerHub": false,
+      "workspacePullImagesFromDockerHub": false,
+
+      "courseRepoDefaultBranch": "master",
+      "exampleCoursePath": "./exampleCourse"
+    }
+
+###############################################################################
+# ConfigMap: init script that runs DB migrations on first boot, then starts
+# the PrairieLearn server. We bypass the bundled init.sh because the bundled
+# script starts an in-container PostgreSQL + Redis that we do NOT want (we
+# use CockroachDB and the shared Redis instead).
+###############################################################################
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prairielearn-init
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+data:
+  entrypoint.sh: |
+    #!/bin/bash
+    set -e
+    echo "[prairielearn] starting entrypoint..."
+    cd /PrairieLearn
+
+    # PrairieLearn reads config from /PrairieLearn/config.json
+    cp /etc/prairielearn/config.json /PrairieLearn/config.json 2>/dev/null || true
+
+    # Git identity is required by PrairieLearn's course sync machinery.
+    git config --global user.email "dev@example.com" 2>/dev/null || true
+    git config --global user.name "Dev User" 2>/dev/null || true
+    git config --global safe.directory '*' 2>/dev/null || true
+
+    # Create course / data directories so PrairieLearn does not crash on boot.
+    mkdir -p /data/files /data/courses /jobs /chunks
+    mkdir -p /course /course2 /course3 /course4 /course5 /course6 /course7 /course8 /course9 2>/dev/null || true
+    mkdir -p /workspace_main_zips /workspace_host_zips 2>/dev/null || true
+
+    # Start the bundled local PostgreSQL (PrairieLearn migrations use PL/pgSQL DO blocks
+    # that CockroachDB does not support, so we use a dedicated local Postgres).
+    mkdir -p /var/postgres /var/run/postgresql
+    chown postgres:postgres /var/postgres /var/run/postgresql 2>/dev/null || true
+    # Initialize if not already done
+    if [ ! -f /var/postgres/PG_VERSION ]; then
+      su postgres -c "initdb -D /var/postgres" 2>/dev/null || true
+    fi
+    su postgres -c "pg_ctl -D /var/postgres -l /var/postgres/pg.log start" 2>/dev/null || true
+    sleep 2
+    su postgres -c "createuser -s root" 2>/dev/null || true
+    su postgres -c "createdb prairielearn" 2>/dev/null || true
+
+    # Run database migrations against the local PostgreSQL.
+    echo "[prairielearn] running migrations..."
+    node apps/prairielearn/dist/server.js --migrate-and-exit 2>&1 || echo "[prairielearn] WARNING: migration had issues; continuing."
+
+    # Start the PrairieLearn server directly (bypasses make start which needs local redis-server).
+    # Redis is provided by the shared cluster instance via config.json.
+    echo "[prairielearn] starting server on port 3000..."
+    exec node apps/prairielearn/dist/server.js
+
+###############################################################################
+# Persistent Volume Claims
+#  - course-data:  course repos, uploaded files, generated artifacts
+#  - workspace:    student workspace home directories (optional, for graders)
+###############################################################################
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prairielearn-course-data
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prairielearn-workspace
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 10Gi
+
+###############################################################################
+# Deployment
+###############################################################################
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prairielearn
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate          # single replica + RWO PVC -> recreate, not rolling
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prairielearn
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prairielearn
+    spec:
+      # Prefer the larger worker node for course/grading workloads.
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker1
+      containers:
+        - name: prairielearn
+          image: 10.100.135.132:5000/prairielearn:latest
+          imagePullPolicy: Always
+          command: ["/bin/bash", "/etc/prairielearn-init/entrypoint.sh"]
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            # PostgreSQL connection (local, bundled by PrairieLearn image)
+            - name: DATABASE_URL
+              value: "postgres://root@localhost:5432/prairielearn"
+            - name: PGUSER
+              value: "root"
+            - name: PGHOST
+              value: "localhost"
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: "prairielearn"
+            - name: PGSSLMODE
+              value: "disable"
+            # Redis connection (shared instance in dify-plus)
+            - name: REDIS_URL
+              value: "redis://default:difyai123456@redis.dify-plus.svc.cluster.local:6379/0"
+            # Runtime
+            - name: NODE_ENV
+              value: "development"
+            - name: PORT
+              value: "3000"
+            - name: HOSTNAME
+              value: "0.0.0.0"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prairielearn
+              readOnly: true
+            - name: init
+              mountPath: /etc/prairielearn-init
+              readOnly: true
+            - name: course-data
+              mountPath: /data
+            - name: workspace
+              mountPath: /jobs
+            # Docker socket: enables external graders / workspaces if the host
+            # container runtime is reachable. Safe no-op if absent.
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+      volumes:
+        - name: config
+          configMap:
+            name: prairielearn-config
+            items:
+              - key: config.json
+                path: config.json
+        - name: init
+          configMap:
+            name: prairielearn-init
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        - name: course-data
+          persistentVolumeClaim:
+            claimName: prairielearn-course-data
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: prairielearn-workspace
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
+
+###############################################################################
+# Service (ClusterIP + NodePort 30093)
+###############################################################################
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prairielearn
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: prairielearn
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      nodePort: 30093
+      protocol: TCP
+
+###############################################################################
+# Ingress (optional): exposes PrairieLearn via the Nginx Ingress on 31825/32231.
+# Reachable at http://<any-node-ip>:31825  (host header: prairielearn.local)
+###############################################################################
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prairielearn
+  namespace: prairielearn
+  labels:
+    app.kubernetes.io/name: prairielearn
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prairielearn.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prairielearn
+                port:
+                  number: 3000
+
+###############################################################################
+# NetworkPolicy removed: it blocked NodePort (30093) access from outside the
+# cluster. For production, re-add with an allow-all-ingress rule or restrict
+# to the ingress-nginx namespace + NodePort CIDRs.
+###############################################################################

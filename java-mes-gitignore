@@ -1,0 +1,46 @@
+# --- Java / Maven build output ---
+target/
+*/target/
+**/target/
+*.class
+
+# --- Maven release & status ---
+release.properties
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+dependency-reduced-pom.xml
+.build.properties
+
+# --- IDE: IntelliJ IDEA ---
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# --- IDE: Eclipse / Spring Tool Suite ---
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.apt_generated/
+
+# --- IDE: VS Code ---
+.vscode/
+*.code-workspace
+
+# --- Runtime / logs ---
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Misc stray ---
+*.tar.gz
+None/

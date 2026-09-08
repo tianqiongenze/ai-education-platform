@@ -1,0 +1,286 @@
+---
+# =============================================================================
+# MISSING SERVICEMONITORS - Enterprise Monitoring Completion
+# =============================================================================
+# Services NOT previously monitored:
+# - ollama-master (direct) / ollama-worker (direct)
+# - smtp-debug/mailpit (dify namespace)
+# - ingress-nginx-controller
+# - Rancher (cattle-system)
+# - local-path-storage provisioner
+# - dify-plus-db (PostgreSQL direct metrics)
+# - dify-plus-redis (Redis direct metrics)
+# - dify-plus-mail-server
+# =============================================================================
+
+---
+# 1. Ollama Master - Direct pod monitoring
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ollama-master
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "11434"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - ai-platform
+  selector:
+    matchLabels:
+      app: ollama-master
+---
+# 2. Ollama Worker - Direct pod monitoring
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ollama-worker
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "11434"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - ai-platform
+  selector:
+    matchLabels:
+      app: ollama-worker
+---
+# 3. SMTP Debug / Mailpit - Dify email testing service
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: smtp-debug
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "1025"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: smtp-debug
+---
+# 4. Ingress NGINX Controller - Critical infrastructure
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ingress-nginx-controller
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 15s
+      path: /metrics
+      port: metrics
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - ingress-nginx
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+---
+# 5. Rancher Cluster Agent
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rancher-cluster-agent
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "80"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - cattle-system
+  selector:
+    matchLabels:
+      app: cattle-cluster-agent
+---
+# 6. Local Path Storage Provisioner
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: local-path-provisioner
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: metrics
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - local-path-storage
+  selector:
+    matchLabels:
+      app: local-path-provisioner
+---
+# 7. Dify-Plus PostgreSQL - Direct database metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-plus-postgres
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "5432"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify-plus
+  selector:
+    matchLabels:
+      app: db-postgres
+---
+# 8. Dify-Plus Redis - Direct Redis metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-plus-redis
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "6379"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify-plus
+  selector:
+    matchLabels:
+      app: redis
+---
+# 9. Dify-Plus Mail Server
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-plus-mail-server
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "8025"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify-plus
+  selector:
+    matchLabels:
+      app: mail-server
+---
+# 10. Dify namespace services (dify-api, dify-web, dify-worker, dify-plugin-daemon)
+# These are in the "dify" namespace (not dify-plus)
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-ns-api
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5001"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-api
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-ns-web
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "3000"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-web
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-ns-worker
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5001"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-worker
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-ns-plugin-daemon
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5002"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-plugin-daemon

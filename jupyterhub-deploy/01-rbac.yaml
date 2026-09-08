@@ -1,0 +1,81 @@
+---
+# ServiceAccount for the JupyterHub hub pod AND for spawned user pods (kubespawner)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jupyterhub-hub
+  namespace: jupyterhub
+---
+# ServiceAccount for user pods (kubespawner spawns pods using this SA)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jupyterhub-user-sa
+  namespace: jupyterhub
+---
+# Role: lets the hub SA manage pods, PVCs, events within jupyterhub namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jupyterhub-hub
+  namespace: jupyterhub
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "watch", "create", "delete", "deletecollection", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch", "create", "patch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch", "create", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["statefulsets", "deployments"]
+    verbs: ["get", "list", "watch"]
+---
+# RoleBinding for the hub SA
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jupyterhub-hub
+  namespace: jupyterhub
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jupyterhub-hub
+subjects:
+  - kind: ServiceAccount
+    name: jupyterhub-hub
+    namespace: jupyterhub
+---
+# ClusterRole: allows kubespawner to read nodes (for scheduling) and list PVCs cluster-wide
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jupyterhub-hub-cluster
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumes"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jupyterhub-hub-cluster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: jupyterhub-hub-cluster
+subjects:
+  - kind: ServiceAccount
+    name: jupyterhub-hub
+    namespace: jupyterhub

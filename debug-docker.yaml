@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-docker
+spec:
+  nodeName: k8s-master
+  hostNetwork: true
+  hostPID: true
+  containers:
+  - name: docker-cli
+    image: docker:24-cli
+    command:
+    - sh
+    - -c
+    args:
+    - |
+      echo "=== DOCKER PS ==="
+      docker -H unix:///var/run/docker.sock ps --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}' 2>&1 | head -30
+      echo "=== DOCKER INFO ==="
+      docker -H unix:///var/run/docker.sock info 2>&1 | grep -E 'Server Version|Storage Driver|Docker Root Dir|Containers|Images'
+      echo "=== DISK USAGE ==="
+      df -h /var/lib/docker 2>&1
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+    securityContext:
+      privileged: true
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+  restartPolicy: Never

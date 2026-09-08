@@ -1,0 +1,120 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-api
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5001"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-api
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-web
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "3000"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-web
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-worker
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5001"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-worker
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-plugin-daemon
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /health
+      port: "5002"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify
+  selector:
+    matchLabels:
+      app: dify-plugin-daemon
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-db
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "5432"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify-plus
+  selector:
+    matchLabels:
+      app: db-postgres
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dify-redis
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: "6379"
+      scheme: http
+  namespaceSelector:
+    matchNames:
+      - dify-plus
+  selector:
+    matchLabels:
+      app: redis

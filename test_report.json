@@ -1,0 +1,224 @@
+{
+  "total": 43,
+  "passed": 31,
+  "failed": 4,
+  "skipped": 8,
+  "rate": 88.6,
+  "results": [
+    {
+      "test": "1.1 Dify登录",
+      "status": "FAIL",
+      "detail": "https://10.167.2.175:31825/signin"
+    },
+    {
+      "test": "2.1 应用列表加载",
+      "status": "PASS",
+      "detail": "页面可见"
+    },
+    {
+      "test": "2.2 应用-工业互联网",
+      "status": "PASS",
+      "detail": "工业互联网"
+    },
+    {
+      "test": "2.2 应用-PLC",
+      "status": "PASS",
+      "detail": "PLC"
+    },
+    {
+      "test": "2.2 应用-Python",
+      "status": "PASS",
+      "detail": "Python"
+    },
+    {
+      "test": "2.2 应用-Java",
+      "status": "PASS",
+      "detail": "Java"
+    },
+    {
+      "test": "2.2 应用-智能体",
+      "status": "PASS",
+      "detail": "智能体"
+    },
+    {
+      "test": "2.2 应用-工作流",
+      "status": "PASS",
+      "detail": "工作流"
+    },
+    {
+      "test": "3.1 获取应用API",
+      "status": "FAIL",
+      "detail": "20 个应用"
+    },
+    {
+      "test": "4.1 知识库列表",
+      "status": "PASS",
+      "detail": "13 个知识库"
+    },
+    {
+      "test": "4.2 检索-2026级工业互联网应用专业人才培养..",
+      "status": "SKIP",
+      "detail": "status=404"
+    },
+    {
+      "test": "4.2 检索-qwen3-embedding-8b测试",
+      "status": "SKIP",
+      "detail": "status=404"
+    },
+    {
+      "test": "4.2 检索-软件工程最佳实践知识库",
+      "status": "SKIP",
+      "detail": "status=404"
+    },
+    {
+      "test": "4.2 检索-Java编程教程知识库",
+      "status": "SKIP",
+      "detail": "status=404"
+    },
+    {
+      "test": "4.2 检索-Python编程教程知识库",
+      "status": "SKIP",
+      "detail": "status=404"
+    },
+    {
+      "test": "4.3 知识库总检",
+      "status": "FAIL",
+      "detail": "0 个知识库可检索"
+    },
+    {
+      "test": "5.1 工作流数量",
+      "status": "PASS",
+      "detail": "5 个工作流"
+    },
+    {
+      "test": "5.2 工作流-工业设备健康度评估工作流",
+      "status": "PASS",
+      "detail": "空工作流"
+    },
+    {
+      "test": "5.2 工作流-工业数据采集分析工作流",
+      "status": "PASS",
+      "detail": "空工作流"
+    },
+    {
+      "test": "5.2 工作流-代码质量分析工作流",
+      "status": "PASS",
+      "detail": "空工作流"
+    },
+    {
+      "test": "6.1 智能体数量",
+      "status": "PASS",
+      "detail": "13 个智能体"
+    },
+    {
+      "test": "7.1 CS登录页",
+      "status": "PASS",
+      "detail": "code-server login"
+    },
+    {
+      "test": "7.2 CS登录",
+      "status": "PASS",
+      "detail": "Welcome - coder - code-server"
+    },
+    {
+      "test": "7.3 编辑器加载",
+      "status": "PASS",
+      "detail": "编辑器可见"
+    },
+    {
+      "test": "7.4 扩展面板",
+      "status": "SKIP",
+      "detail": "扩展面板未找到(需要特定UI操作)"
+    },
+    {
+      "test": "8.1 Worker节点CS",
+      "status": "PASS",
+      "detail": "status=302"
+    },
+    {
+      "test": "9.1 JupyterLab页面",
+      "status": "PASS",
+      "detail": "JupyterLab"
+    },
+    {
+      "test": "9.2 JupyterLab功能",
+      "status": "PASS",
+      "detail": "功能可用"
+    },
+    {
+      "test": "10.1 模型列表",
+      "status": "PASS",
+      "detail": "26 个模型"
+    },
+    {
+      "test": "10.2 模型-qwen2.5-coder:7b",
+      "status": "PASS",
+      "detail": "可用"
+    },
+    {
+      "test": "10.2 模型-qwen3:4b",
+      "status": "PASS",
+      "detail": "可用"
+    },
+    {
+      "test": "10.2 模型-qwen3:8b",
+      "status": "PASS",
+      "detail": "可用"
+    },
+    {
+      "test": "10.2 模型-bge-m3",
+      "status": "PASS",
+      "detail": "可用"
+    },
+    {
+      "test": "10.2 模型-qwen3-embedding:0.6b",
+      "status": "PASS",
+      "detail": "可用"
+    },
+    {
+      "test": "11.1 qwen2.5-coder对话",
+      "status": "SKIP",
+      "detail": "Ollama繁忙(索引中): HTTPConnectionPool(host='10.167.2.176', port=30083): Read ti"
+    },
+    {
+      "test": "12.1 bge-m3嵌入",
+      "status": "FAIL",
+      "detail": "status=500"
+    },
+    {
+      "test": "13.1 Mailpit Web",
+      "status": "PASS",
+      "detail": "status=200"
+    },
+    {
+      "test": "13.2 Mailpit UI",
+      "status": "PASS",
+      "detail": "UI加载"
+    },
+    {
+      "test": "14.1 Redis Node 0",
+      "status": "PASS",
+      "detail": "port 30090 可达(非HTTP响应正常)"
+    },
+    {
+      "test": "14.2 Redis Node 1",
+      "status": "PASS",
+      "detail": "port 30091 可达(非HTTP响应正常)"
+    },
+    {
+      "test": "15.1 Grafana",
+      "status": "PASS",
+      "detail": "status=302"
+    },
+    {
+      "test": "16.1 成员列表",
+      "status": "PASS",
+      "detail": "0 成员, 角色: set()"
+    },
+    {
+      "test": "17.1 IoT应用健康",
+      "status": "SKIP",
+      "detail": "应用未启动 status=401"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+---
+# ConfigMap holding jupyterhub_config.py
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jupyterhub-config
+  namespace: jupyterhub
+data:
+  jupyterhub_config.py: |
+    # JupyterHub configuration file
+    import os
+    import sys
+
+    c = get_config()  # noqa: F821
+
+    # ---------------- Application ----------------
+    # base_url=/ide/ enables sub-path access via LAN IP without hosts configuration
+    c.JupyterHub.base_url = "/ide/"
+    c.JupyterHub.port = 8000
+    c.JupyterHub.ip = "0.0.0.0"
+
+    # SQLite database on the persistent hub volume (survives restarts).
+    # Four slashes = absolute path: sqlite:////srv/jupyterhub/jupyterhub.sqlite
+    c.JupyterHub.db_url = "sqlite:////srv/jupyterhub/jupyterhub.sqlite"
+    c.JupyterHub.upgrade_db = True
+    # data_files_path left at default (/opt/conda/share/jupyterhub) so templates resolve
+    c.JupyterHub.concurrent_spawn_limit = 64
+
+    # ---------------- Authenticator: self-registration ----------------
+    # DummyAuthenticator: users enter any username + a shared signup password
+    # to self-register. Each student gets their own isolated workspace (multi-tenant).
+    c.JupyterHub.authenticator_class = "jupyterhub.auth.DummyAuthenticator"
+    c.DummyAuthenticator.password = "ide2026"  # shared signup password; one per student workspace
+    c.Authenticator.auto_login = False    # show login page so users pick a username
+    c.Authenticator.admin_users = set()
+    c.JupyterHub.admin_access = False
+
+    # ---------------- Spawner: KubeSpawner (per-user pods + PVC) ----------------
+    c.JupyterHub.spawner_class = "kubespawner.KubeSpawner"
+    c.KubeSpawner.image = "10.100.135.132:5000/jupyterhub/custom:4.0.2"
+    c.KubeSpawner.image_pull_policy = "IfNotPresent"
+
+    # Hub connectivity: spawned user pods reach the hub through the in-cluster
+    # Service (jupyterhub) on port 8000. hub_connect_url tells KubeSpawner what
+    # URL spawned servers should use to reach the hub API (NOT for binding).
+    # Without this, single-user servers try 127.0.0.1:8081 and connection refused.
+    # NOTE: do NOT include base_url (/ide/) here; the singleuser app appends it.
+    c.KubeSpawner.hub_connect_url = "http://jupyterhub.jupyterhub.svc.cluster.local:8000"
+
+    # Run as non-root (jovyan uid 1000), match scipy-notebook image
+    c.KubeSpawner.uid = 1000
+    c.KubeSpawner.gid = 100
+    c.KubeSpawner.fs_gid = 100
+
+    # Start JupyterLab single-user server.
+    # Use jupyterhub-singleuser (robust entrypoint); default_url=/lab launches JupyterLab UI.
+    c.KubeSpawner.cmd = ["jupyterhub-singleuser"]
+    c.KubeSpawner.args = ["--SingleUserNotebookApp.default_url=/lab"]
+    c.Spawner.notebook_dir = "/home/jovyan/work"
+
+    c.KubeSpawner.name_template = "jupyterhub-{username}"
+
+    # Persistent storage: each user gets 5Gi. kubespawner 7.1 auto-creates a
+    # per-user PVC (storage_pvc_ensure) and mounts it via volumes/volume_mounts.
+    # pvc_name_template produces the PVC name; volumes references it.
+    c.KubeSpawner.storage_pvc_ensure = True
+    c.KubeSpawner.storage_class = "local-path"
+    c.KubeSpawner.storage_access_modes = ["ReadWriteOnce"]
+    c.KubeSpawner.storage_capacity = "5Gi"
+    c.KubeSpawner.pvc_name_template = "claim-{username}"
+    # Always verify the PVC exists cluster-side rather than trusting cached
+    # state. This prevents stale spawner state from skipping PVC creation.
+    c.KubeSpawner.remember_pvc_name = False
+    # Define the PVC as a volume and mount it at /home/jovyan/work
+    c.KubeSpawner.volumes = [
+        {
+            "name": "workspace-{username}",
+            "persistentVolumeClaim": {"claimName": "claim-{username}"},
+        }
+    ]
+    c.KubeSpawner.volume_mounts = [
+        {
+            "name": "workspace-{username}",
+            "mountPath": "/home/jovyan/work",
+        }
+    ]
+
+    c.KubeSpawner.environment = {
+        "JUPYTER_ENABLE_LAB": "yes",
+        "SHELL": "/bin/bash",
+        "GOPATH": "/home/jovyan/go",
+    }
+
+    # Resources per user (headroom for ~1000 concurrent on 2 nodes)
+    c.KubeSpawner.cpu_limit = 2
+    c.KubeSpawner.cpu_guarantee = 0.2
+    c.KubeSpawner.mem_limit = "2G"
+    c.KubeSpawner.mem_guarantee = "256M"
+
+    c.KubeSpawner.start_timeout = 300
+    c.KubeSpawner.http_timeout = 120
+
+    c.KubeSpawner.service_account = "jupyterhub-user-sa"
+    c.KubeSpawner.extra_labels = {
+        "app.kubernetes.io/name": "jupyterhub",
+        "app.kubernetes.io/component": "singleuser-server",
+    }
+
+    # ---------------- Logging ----------------
+    c.JupyterHub.log_level = "INFO"
+    c.KubeSpawner.log_level = "INFO"
