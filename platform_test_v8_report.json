@@ -1,0 +1,214 @@
+{
+  "suite": "v8",
+  "timestamp": "2026-09-09T16:48:51.980267",
+  "total": 34,
+  "passed": 33,
+  "failed": 1,
+  "pass_rate": "97%",
+  "results": [
+    {
+      "name": "A1: LMS登录页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3301
+    },
+    {
+      "name": "A2: Admin登录LMS",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 7177
+    },
+    {
+      "name": "A3: LMS面板显示16门课程",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3391
+    },
+    {
+      "name": "A4: LMS课程探索显示17门课",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3396
+    },
+    {
+      "name": "A5: LMS P1 About页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2414
+    },
+    {
+      "name": "A5: LMS A1 About页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2201
+    },
+    {
+      "name": "A5: LMS B1 About页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2177
+    },
+    {
+      "name": "A9: LMS页面Studio链接含端口号(核心修复)",
+      "status": "FAIL",
+      "detail": "No studio links with port found",
+      "duration_ms": 8249
+    },
+    {
+      "name": "A10: P1课程内容含JupyterHub链接",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 8042
+    },
+    {
+      "name": "A11: A1课程内容页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3441
+    },
+    {
+      "name": "A11: B6课程内容页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3442
+    },
+    {
+      "name": "A11: P6课程内容页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3439
+    },
+    {
+      "name": "B1: Studio首页",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 410
+    },
+    {
+      "name": "B2: Admin登录Studio",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2767
+    },
+    {
+      "name": "B3: Studio课程列表显示AIEDU课程",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3125
+    },
+    {
+      "name": "B4: Studio P1课程设置(404修复)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3973
+    },
+    {
+      "name": "B4: Studio A1课程设置(404修复)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 4928
+    },
+    {
+      "name": "B4: Studio B1课程设置(404修复)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3105
+    },
+    {
+      "name": "B7: P1课程创作MFE",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3102
+    },
+    {
+      "name": "B8: Studio页面LMS链接含端口号",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3256
+    },
+    {
+      "name": "C1: Hub登录页",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 153
+    },
+    {
+      "name": "C2: Hub OAuth重定向",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 99
+    },
+    {
+      "name": "C3: Hub API",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 54
+    },
+    {
+      "name": "C4: Hub健康检查",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 45
+    },
+    {
+      "name": "C5: Hub Spawn页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 148
+    },
+    {
+      "name": "C6: Hub管理面板",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 34
+    },
+    {
+      "name": "D1: PrairieLearn首页",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 41
+    },
+    {
+      "name": "D2: PL健康检查",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 103
+    },
+    {
+      "name": "D3: PL课程列表",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 95
+    },
+    {
+      "name": "D4: Code-Server访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 30
+    },
+    {
+      "name": "E1: 16门课程LMS About全量",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 11565
+    },
+    {
+      "name": "E2: 16门课程LMS Courseware全量",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 16952
+    },
+    {
+      "name": "E3: 16门课程Studio Settings全量(核心)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 10769
+    },
+    {
+      "name": "E4: 16门课程Studio Authoring全量",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 9627
+    }
+  ]
+}
