@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: lms-hub-sync
+  namespace: jupyterhub
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: sync
+            image: 10.100.135.132:5000/jupyterhub/custom:4.0.3
+            command:
+            - /bin/bash
+            - -c
+            - |
+              pip install PyMySQL 2>&1 &&
+              python3 /opt/sync/sync_lms_to_hub.py
+            env:
+            - name: MYSQL_HOST
+              value: "mysql.openedx.svc.cluster.local"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASS
+              value: "REDACTED_MYSQL_PASS"
+            - name: MYSQL_DB
+              value: "openedx"
+            - name: HUB_DB_PATH
+              value: "/srv/jupyterhub/jupyterhub.sqlite"
+            volumeMounts:
+            - name: sync-script
+              mountPath: /opt/sync
+              readOnly: true
+            - name: hub-db
+              mountPath: /srv/jupyterhub
+          volumes:
+          - name: sync-script
+            configMap:
+              name: cm-sync-script
+          - name: hub-db
+            persistentVolumeClaim:
+              claimName: hub-db-dir
