@@ -1,0 +1,361 @@
+{
+  "suite": "platform_test_v7",
+  "timestamp": "2026-09-09T14:35:30.458528",
+  "total": 50,
+  "passed": 47,
+  "failed": 3,
+  "skipped": 0,
+  "pass_rate": "94.0%",
+  "results": [
+    {
+      "name": "A1: LMS首页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 615,
+      "timestamp": "2026-09-09T14:33:47.356432"
+    },
+    {
+      "name": "A2: LMS登录页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 157,
+      "timestamp": "2026-09-09T14:33:47.513558"
+    },
+    {
+      "name": "A3: LMS登录表单验证",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2117,
+      "timestamp": "2026-09-09T14:33:49.630175"
+    },
+    {
+      "name": "A4: LMS仪表盘显示AIEDU课程",
+      "status": "FAIL",
+      "detail": "Dashboard doesn't show AIEDU courses",
+      "duration_ms": 3146,
+      "timestamp": "2026-09-09T14:33:52.776608"
+    },
+    {
+      "name": "A5: P1课程页面可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2502,
+      "timestamp": "2026-09-09T14:33:55.278733"
+    },
+    {
+      "name": "A6: A1课程Info页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2113,
+      "timestamp": "2026-09-09T14:33:57.391529"
+    },
+    {
+      "name": "A7: B1课程Courseware重定向",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2122,
+      "timestamp": "2026-09-09T14:33:59.513957"
+    },
+    {
+      "name": "A8: LMS OAuth2授权端点",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2106,
+      "timestamp": "2026-09-09T14:34:01.620349"
+    },
+    {
+      "name": "A9: LMS用户API端点存在",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 41,
+      "timestamp": "2026-09-09T14:34:01.661740"
+    },
+    {
+      "name": "A10: LMS登出",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2112,
+      "timestamp": "2026-09-09T14:34:03.773791"
+    },
+    {
+      "name": "B1: Studio首页可访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 441,
+      "timestamp": "2026-09-09T14:34:04.270441"
+    },
+    {
+      "name": "B2: Studio登录页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 549,
+      "timestamp": "2026-09-09T14:34:04.819830"
+    },
+    {
+      "name": "B3: Studio登录表单验证",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2292,
+      "timestamp": "2026-09-09T14:34:07.112059"
+    },
+    {
+      "name": "B4: Studio课程列表显示AIEDU课程",
+      "status": "FAIL",
+      "detail": "Studio doesn't show AIEDU courses",
+      "duration_ms": 3354,
+      "timestamp": "2026-09-09T14:34:10.466175"
+    },
+    {
+      "name": "B5: P1课程设置页面 (原404修复验证)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 4541,
+      "timestamp": "2026-09-09T14:34:15.007367"
+    },
+    {
+      "name": "B6: 课程创作MFE路由",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3122,
+      "timestamp": "2026-09-09T14:34:18.129114"
+    },
+    {
+      "name": "B7: A1课程创作页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3066,
+      "timestamp": "2026-09-09T14:34:21.194809"
+    },
+    {
+      "name": "B8: B1课程创作页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3062,
+      "timestamp": "2026-09-09T14:34:24.256766"
+    },
+    {
+      "name": "C1: Hub登录页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 89,
+      "timestamp": "2026-09-09T14:34:24.384623"
+    },
+    {
+      "name": "C2: Hub OAuth重定向到LMS",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3372,
+      "timestamp": "2026-09-09T14:34:27.756812"
+    },
+    {
+      "name": "C3: Hub首页重定向",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2152,
+      "timestamp": "2026-09-09T14:34:29.908524"
+    },
+    {
+      "name": "C4: Hub API状态",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 25,
+      "timestamp": "2026-09-09T14:34:29.933260"
+    },
+    {
+      "name": "C5: Hub健康检查",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 29,
+      "timestamp": "2026-09-09T14:34:29.961848"
+    },
+    {
+      "name": "C6: Hub指标端点",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 25,
+      "timestamp": "2026-09-09T14:34:29.986615"
+    },
+    {
+      "name": "C7: Hub OAuth登录入口",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 21,
+      "timestamp": "2026-09-09T14:34:30.007938"
+    },
+    {
+      "name": "C8: Apps子域名访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 18,
+      "timestamp": "2026-09-09T14:34:30.026391"
+    },
+    {
+      "name": "C9: Hub Spawn页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2023,
+      "timestamp": "2026-09-09T14:34:32.049682"
+    },
+    {
+      "name": "C10: Hub管理面板",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2025,
+      "timestamp": "2026-09-09T14:34:34.074992"
+    },
+    {
+      "name": "D1: PrairieLearn首页",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 32,
+      "timestamp": "2026-09-09T14:34:34.144438"
+    },
+    {
+      "name": "D2: PrairieLearn登录页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 22,
+      "timestamp": "2026-09-09T14:34:34.166804"
+    },
+    {
+      "name": "D3: PrairieLearn课程列表",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2024,
+      "timestamp": "2026-09-09T14:34:36.191208"
+    },
+    {
+      "name": "D4: PrairieLearn健康检查",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 26,
+      "timestamp": "2026-09-09T14:34:36.217671"
+    },
+    {
+      "name": "D5: PrairieLearn API端点",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 21,
+      "timestamp": "2026-09-09T14:34:36.238540"
+    },
+    {
+      "name": "D6: PrairieLearn课程实例",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2024,
+      "timestamp": "2026-09-09T14:34:38.262504"
+    },
+    {
+      "name": "D7: PrairieLearn关于页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 23,
+      "timestamp": "2026-09-09T14:34:38.285886"
+    },
+    {
+      "name": "D8: PrairieLearn工作区",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 20,
+      "timestamp": "2026-09-09T14:34:38.306273"
+    },
+    {
+      "name": "E1: Hub→LMS OAuth重定向链路",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 3346,
+      "timestamp": "2026-09-09T14:34:41.689075"
+    },
+    {
+      "name": "E2: Studio课程设置(404修复验证)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 4007,
+      "timestamp": "2026-09-09T14:34:45.696585"
+    },
+    {
+      "name": "E3: 全部16门课程Courseware访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 20941,
+      "timestamp": "2026-09-09T14:35:06.637855"
+    },
+    {
+      "name": "E4: 全部16门课程Studio创作页面",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 17170,
+      "timestamp": "2026-09-09T14:35:23.808218"
+    },
+    {
+      "name": "E5: Hub OAuth回调URL",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2138,
+      "timestamp": "2026-09-09T14:35:25.945984"
+    },
+    {
+      "name": "E6: LMS用户API(同步服务验证)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 100,
+      "timestamp": "2026-09-09T14:35:26.045741"
+    },
+    {
+      "name": "E7: LMS成绩册API(回写验证)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 107,
+      "timestamp": "2026-09-09T14:35:26.152756"
+    },
+    {
+      "name": "E8: PrairieLearn课程映射",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 2065,
+      "timestamp": "2026-09-09T14:35:28.217395"
+    },
+    {
+      "name": "F1: Code-Server HTTP访问",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 60,
+      "timestamp": "2026-09-09T14:35:28.314839"
+    },
+    {
+      "name": "F2: Code-Server页面响应",
+      "status": "FAIL",
+      "detail": "",
+      "duration_ms": 2018,
+      "timestamp": "2026-09-09T14:35:30.333125"
+    },
+    {
+      "name": "F3: Code-Server编辑器界面(跳过-需登录)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 0,
+      "timestamp": "2026-09-09T14:35:30.333141"
+    },
+    {
+      "name": "F4: Continue.dev配置(跳过-需登录)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 0,
+      "timestamp": "2026-09-09T14:35:30.333150"
+    },
+    {
+      "name": "F5: LSP补全(跳过-需登录)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 0,
+      "timestamp": "2026-09-09T14:35:30.333153"
+    },
+    {
+      "name": "F6: VS Code设置持久化(跳过-需登录)",
+      "status": "PASS",
+      "detail": "",
+      "duration_ms": 0,
+      "timestamp": "2026-09-09T14:35:30.333155"
+    }
+  ]
+}
