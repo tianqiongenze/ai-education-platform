@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pl-lms-writeback
+  namespace: jupyterhub
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: writeback
+            image: 10.100.135.132:5000/jupyterhub/custom:4.0.3
+            command:
+            - /bin/bash
+            - -c
+            - |
+              pip install psycopg2-binary PyMySQL 2>&1 &&
+              python3 /opt/writeback/writeback_grades.py
+            env:
+            - name: MYSQL_HOST
+              value: "mysql.openedx.svc.cluster.local"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASS
+              value: "REDACTED_MYSQL_PASS"
+            - name: MYSQL_DB
+              value: "openedx"
+            - name: CRDB_HOST
+              value: "cockroachdb.infra.svc.cluster.local"
+            - name: CRDB_PORT
+              value: "26257"
+            - name: CRDB_DB
+              value: "prairielearn"
+            - name: CRDB_USER
+              value: "root"
+            volumeMounts:
+            - name: writeback-script
+              mountPath: /opt/writeback
+              readOnly: true
+          volumes:
+          - name: writeback-script
+            configMap:
+              name: cm-writeback-script
