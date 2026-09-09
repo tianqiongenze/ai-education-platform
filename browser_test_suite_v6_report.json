@@ -1,0 +1,358 @@
+{
+  "date": "2026-09-08 21:10:59",
+  "suite": "browser_test_suite_v6",
+  "total": 58,
+  "passed": 58,
+  "failed": 0,
+  "pass_rate": "100%",
+  "tests": [
+    {
+      "name": "A1 LMS登录页加载+表单",
+      "status": "PASS",
+      "details": "HTTP 200 form=True",
+      "elapsed": 4.04
+    },
+    {
+      "name": "A2 LMS账号登录→Dashboard",
+      "status": "PASS",
+      "details": "url=https://openedx.10.167.2.175.nip.io:31825/dashboard",
+      "elapsed": 2.59
+    },
+    {
+      "name": "A3 Dashboard课程渲染",
+      "status": "PASS",
+      "details": "len=18405",
+      "elapsed": 3.01
+    },
+    {
+      "name": "A4 LMS会话Cookie",
+      "status": "PASS",
+      "details": "cookies=7",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A5 LMS登出",
+      "status": "PASS",
+      "details": "url=https://openedx.10.167.2.175.nip.io:31825/",
+      "elapsed": 3.06
+    },
+    {
+      "name": "A6 Studio首页(无登录跳转)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.5
+    },
+    {
+      "name": "A7 Studio→LMS OAuth重定向(带:31825)",
+      "status": "PASS",
+      "details": "url=https://openedx.10.167.2.175.nip.io:31825/login?next=/oauth2/authorize%3Fclient_",
+      "elapsed": 0.79
+    },
+    {
+      "name": "A8 OAuth回调端口修复回归(404根因)",
+      "status": "PASS",
+      "details": "url=https://openedx.10.167.2.175.nip.io:31825/login?next=/oauth2/authorize%3Fclient_",
+      "elapsed": 0.0
+    },
+    {
+      "name": "A9 Studio OAuth登录回跳",
+      "status": "PASS",
+      "details": "url=https://studio.openedx.10.167.2.175.nip.io:31825/home/",
+      "elapsed": 8.09
+    },
+    {
+      "name": "A10 Studio登录后页面渲染",
+      "status": "PASS",
+      "details": "len=19324",
+      "elapsed": 3.01
+    },
+    {
+      "name": "A11 Studio /home 页面",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.09
+    },
+    {
+      "name": "A12 Studio课程列表(/home含课程条目)",
+      "status": "PASS",
+      "details": "HTTP 200, course_entry=True",
+      "elapsed": 3.11
+    },
+    {
+      "name": "A13 教师账号LMS登录",
+      "status": "PASS",
+      "details": "url=https://openedx.10.167.2.175.nip.io:31825/dashboard",
+      "elapsed": 3.07
+    },
+    {
+      "name": "A14 教师课程页",
+      "status": "PASS",
+      "details": "len=15472",
+      "elapsed": 0.28
+    },
+    {
+      "name": "B1 MFE /learning(课程学习)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.04
+    },
+    {
+      "name": "B2 MFE /authn(认证/登录)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B3 MFE /account(账户)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.08
+    },
+    {
+      "name": "B4 MFE /profile(个人资料)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B5 MFE /gradebook(成绩册)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B6 MFE /discussions(讨论区)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.05
+    },
+    {
+      "name": "B7 MFE /course-authoring(课程制作)",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B8 MFE前端JS资源引用",
+      "status": "PASS",
+      "details": "html_len=622",
+      "elapsed": 0.07
+    },
+    {
+      "name": "B9 MFE静态资源可加载",
+      "status": "PASS",
+      "details": "asset=/learning/runtime.f4d34da75bdc5ee5e087.js HTTP 200",
+      "elapsed": 0.02
+    },
+    {
+      "name": "B10 MFE根路径响应",
+      "status": "PASS",
+      "details": "HTTP 204",
+      "elapsed": 0.03
+    },
+    {
+      "name": "C1 JupyterHub登录页",
+      "status": "PASS",
+      "details": "HTTP 200",
+      "elapsed": 0.61
+    },
+    {
+      "name": "C2 教师登录",
+      "status": "PASS",
+      "details": "url=https://10.167.2.175:31825/ide/user/teacher-zhang/lab?",
+      "elapsed": 1.5
+    },
+    {
+      "name": "C3 管理面板",
+      "status": "PASS",
+      "details": "admins=['teacher-zhang', 'lecture-p1']",
+      "elapsed": 0.64
+    },
+    {
+      "name": "C4 JupyterLab UI",
+      "status": "PASS",
+      "details": "launcher=True",
+      "elapsed": 9.45
+    },
+    {
+      "name": "C5 文件浏览器API",
+      "status": "PASS",
+      "details": "files=111",
+      "elapsed": 1.18
+    },
+    {
+      "name": "C6 内核可用",
+      "status": "PASS",
+      "details": "kernels=['python3']",
+      "elapsed": 0.01
+    },
+    {
+      "name": "C7 Ollama LLM推理",
+      "status": "PASS",
+      "details": "reply='1 + 1 equals 2.'",
+      "elapsed": 13.08
+    },
+    {
+      "name": "C8 登出",
+      "status": "PASS",
+      "details": "has_login=True",
+      "elapsed": 2.11
+    },
+    {
+      "name": "C9 学生登录+Spawn",
+      "status": "PASS",
+      "details": "url=https://10.167.2.175:31825/ide/user/student-python/lab?",
+      "elapsed": 1.45
+    },
+    {
+      "name": "C10 学生指南分发",
+      "status": "PASS",
+      "details": "files=['JUPYTERHUB-STUDENT-GUIDE.md', 'AUTOGRADER-GUIDE.md']",
+      "elapsed": 0.1
+    },
+    {
+      "name": "C11 Cookie大小安全",
+      "status": "PASS",
+      "details": "total=797B",
+      "elapsed": 0.0
+    },
+    {
+      "name": "C12 并发登录x10",
+      "status": "PASS",
+      "details": "10/10",
+      "elapsed": 64.48
+    },
+    {
+      "name": "D1 评测服务健康",
+      "status": "PASS",
+      "details": "v=2.0",
+      "elapsed": 0.05
+    },
+    {
+      "name": "D2 课程列表",
+      "status": "PASS",
+      "details": "courses=4",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D3 作业列表",
+      "status": "PASS",
+      "details": "n=2",
+      "elapsed": 0.06
+    },
+    {
+      "name": "D4 Python满分评测",
+      "status": "PASS",
+      "details": "score=100.0",
+      "elapsed": 2.7
+    },
+    {
+      "name": "D5 有错代码评测",
+      "status": "PASS",
+      "details": "score=40.0",
+      "elapsed": 2.74
+    },
+    {
+      "name": "D6 PEP8风格检查",
+      "status": "PASS",
+      "details": "errors=4",
+      "elapsed": 0.16
+    },
+    {
+      "name": "D7 API Key鉴权",
+      "status": "PASS",
+      "details": "无Key被拒绝",
+      "elapsed": 0.02
+    },
+    {
+      "name": "D8 CockroachDB成绩持久化",
+      "status": "PASS",
+      "details": "total=2980",
+      "elapsed": 0.22
+    },
+    {
+      "name": "D9 学生成绩查询",
+      "status": "PASS",
+      "details": "total=2",
+      "elapsed": 0.07
+    },
+    {
+      "name": "D10 多语言评测(Java)",
+      "status": "PASS",
+      "details": "resp={'assignment_id': 'j1', 'course_id': 'python-industrial', 'f",
+      "elapsed": 0.03
+    },
+    {
+      "name": "E1 Code-Server HTTP",
+      "status": "PASS",
+      "details": "HTTP 302",
+      "elapsed": 0.02
+    },
+    {
+      "name": "E2 Code-Server工作台加载",
+      "status": "PASS",
+      "details": "HTTP 200 title=code-server login",
+      "elapsed": 0.11
+    },
+    {
+      "name": "E3 CockroachDB健康",
+      "status": "PASS",
+      "details": "healthy",
+      "elapsed": 0.01
+    },
+    {
+      "name": "E4 全链路:提交→评测→成绩查询",
+      "status": "PASS",
+      "details": "score=100.0, total=1",
+      "elapsed": 2.42
+    },
+    {
+      "name": "E5 教师成绩报告含新提交",
+      "status": "PASS",
+      "details": "students=565",
+      "elapsed": 0.17
+    },
+    {
+      "name": "E6 向量Embedding服务",
+      "status": "PASS",
+      "details": "dim=768",
+      "elapsed": 17.27
+    },
+    {
+      "name": "E7 并发评测x5延迟",
+      "status": "PASS",
+      "details": "5/5 avg=2.23s",
+      "elapsed": 2.86
+    },
+    {
+      "name": "E8 MFE→LMS API链路",
+      "status": "PASS",
+      "details": "HTTP 301",
+      "elapsed": 0.07
+    },
+    {
+      "name": "F1 LLM推理延迟",
+      "status": "PASS",
+      "details": "63.2s",
+      "elapsed": 63.19
+    },
+    {
+      "name": "F2 评测延迟(递归代码)",
+      "status": "PASS",
+      "details": "1.82s score=100.0",
+      "elapsed": 1.82
+    },
+    {
+      "name": "F3 CRDB查询延迟",
+      "status": "PASS",
+      "details": "0.04s",
+      "elapsed": 0.04
+    },
+    {
+      "name": "F4 JupyterHub登录页延迟",
+      "status": "PASS",
+      "details": "0.04s HTTP=200",
+      "elapsed": 0.04
+    }
+  ]
+}

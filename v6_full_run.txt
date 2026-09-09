@@ -1,0 +1,146 @@
+==========================================================================================
+  Browser Test Suite v6.0 — 无头浏览器全端全链路上线验收测试
+  Open edX LMS/Studio OAuth SSO + MFE + JupyterHub + PrairieLearn + Code-Server
+  Entry: https://10.167.2.175:31825
+==========================================================================================
+[21:07:10] 
+========== Module A: Open edX LMS/Studio OAuth SSO (browser, 14 tests) ==========
+[21:07:15]   [PASS] A1 LMS登录页加载+表单 (4.0s) HTTP 200 form=True
+[21:07:17]   [PASS] A2 LMS账号登录→Dashboard (2.6s) url=https://openedx.10.167.2.175.nip.io:31825/dashboard
+[21:07:20]   [PASS] A3 Dashboard课程渲染 (3.0s) len=18405
+[21:07:20]   [PASS] A4 LMS会话Cookie (0.0s) cookies=7
+[21:07:23]   [PASS] A5 LMS登出 (3.1s) url=https://openedx.10.167.2.175.nip.io:31825/
+[21:07:24]   [PASS] A6 Studio首页(无登录跳转) (0.5s) HTTP 200
+[21:07:25]   [PASS] A7 Studio→LMS OAuth重定向(带:31825) (0.8s) url=https://openedx.10.167.2.175.nip.io:31825/login?next=/oauth2/authorize%3Fclient_
+[21:07:25]   [PASS] A8 OAuth回调端口修复回归(404根因) (0.0s) url=https://openedx.10.167.2.175.nip.io:31825/login?next=/oauth2/authorize%3Fclient_
+[21:07:33]   [PASS] A9 Studio OAuth登录回跳 (8.1s) url=https://studio.openedx.10.167.2.175.nip.io:31825/home/
+[21:07:36]   [PASS] A10 Studio登录后页面渲染 (3.0s) len=19324
+[21:07:36]   [PASS] A11 Studio /home 页面 (0.1s) HTTP 200
+[21:07:39]   [PASS] A12 Studio课程列表(/home含课程条目) (3.1s) HTTP 200, course_entry=True
+[21:07:42]   [PASS] A13 教师账号LMS登录 (3.1s) url=https://openedx.10.167.2.175.nip.io:31825/dashboard
+[21:07:42]   [PASS] A14 教师课程页 (0.3s) len=15472
+[21:07:42] 
+========== Module B: MFE SPA 路由 (10 tests) ==========
+[21:07:42]   [PASS] B1 MFE /learning(课程学习) (0.0s) HTTP 200
+[21:07:42]   [PASS] B2 MFE /authn(认证/登录) (0.0s) HTTP 200
+[21:07:42]   [PASS] B3 MFE /account(账户) (0.1s) HTTP 200
+[21:07:42]   [PASS] B4 MFE /profile(个人资料) (0.0s) HTTP 200
+[21:07:43]   [PASS] B5 MFE /gradebook(成绩册) (0.0s) HTTP 200
+[21:07:43]   [PASS] B6 MFE /discussions(讨论区) (0.1s) HTTP 200
+[21:07:43]   [PASS] B7 MFE /course-authoring(课程制作) (0.0s) HTTP 200
+[21:07:43]   [PASS] B8 MFE前端JS资源引用 (0.1s) html_len=622
+[21:07:43]   [PASS] B9 MFE静态资源可加载 (0.0s) asset=/learning/runtime.f4d34da75bdc5ee5e087.js HTTP 200
+[21:07:43]   [PASS] B10 MFE根路径响应 (0.0s) HTTP 204
+[21:07:43] 
+========== Module C: JupyterHub (browser, 12 tests) ==========
+[21:07:44]   [PASS] C1 JupyterHub登录页 (0.6s) HTTP 200
+[21:07:45]   [PASS] C2 教师登录 (1.5s) url=https://10.167.2.175:31825/ide/user/teacher-zhang/lab?
+[21:07:52]   [PASS] C3 管理面板 (0.6s) admins=['teacher-zhang', 'lecture-p1']
+[21:08:01]   [PASS] C4 JupyterLab UI (9.4s) launcher=True
+[21:08:03]   [PASS] C5 文件浏览器API (1.2s) files=111
+[21:08:03]   [PASS] C6 内核可用 (0.0s) kernels=['python3']
+[21:08:16]   [PASS] C7 Ollama LLM推理 (13.1s) reply='1 + 1 equals 2.'
+[21:08:18]   [PASS] C8 登出 (2.1s) has_login=True
+[21:08:19]   [PASS] C9 学生登录+Spawn (1.5s) url=https://10.167.2.175:31825/ide/user/student-python/lab?
+[21:08:19]   [PASS] C10 学生指南分发 (0.1s) files=['JUPYTERHUB-STUDENT-GUIDE.md', 'AUTOGRADER-GUIDE.md']
+[21:08:19]   [PASS] C11 Cookie大小安全 (0.0s) total=797B
+[21:09:24]   [PASS] C12 并发登录x10 (64.5s) 10/10
+[21:09:24] 
+========== Module D: PrairieLearn 评测 (10 tests) ==========
+[21:09:24]   [PASS] D1 评测服务健康 (0.1s) v=2.0
+[21:09:24]   [PASS] D2 课程列表 (0.0s) courses=4
+[21:09:24]   [PASS] D3 作业列表 (0.1s) n=2
+[21:09:27]   [PASS] D4 Python满分评测 (2.7s) score=100.0
+[21:09:30]   [PASS] D5 有错代码评测 (2.7s) score=40.0
+[21:09:30]   [PASS] D6 PEP8风格检查 (0.2s) errors=4
+[21:09:30]   [PASS] D7 API Key鉴权 (0.0s) 无Key被拒绝
+[21:09:30]   [PASS] D8 CockroachDB成绩持久化 (0.2s) total=2980
+[21:09:30]   [PASS] D9 学生成绩查询 (0.1s) total=2
+[21:09:30]   [PASS] D10 多语言评测(Java) (0.0s) resp={'assignment_id': 'j1', 'course_id': 'python-industrial', 'f
+[21:09:30] 
+========== Module E: Code-Server + 跨平台链路 (8 tests) ==========
+[21:09:30]   [PASS] E1 Code-Server HTTP (0.0s) HTTP 302
+[21:09:31]   [PASS] E2 Code-Server工作台加载 (0.1s) HTTP 200 title=code-server login
+[21:09:31]   [PASS] E3 CockroachDB健康 (0.0s) healthy
+[21:09:33]   [PASS] E4 全链路:提交→评测→成绩查询 (2.4s) score=100.0, total=1
+[21:09:33]   [PASS] E5 教师成绩报告含新提交 (0.2s) students=565
+[21:09:51]   [PASS] E6 向量Embedding服务 (17.3s) dim=768
+[21:09:53]   [PASS] E7 并发评测x5延迟 (2.9s) 5/5 avg=2.23s
+[21:09:54]   [PASS] E8 MFE→LMS API链路 (0.1s) HTTP 301
+[21:09:54] 
+========== Module F: 性能基准 (4 tests) ==========
+[21:10:57]   [PASS] F1 LLM推理延迟 (63.2s) 63.2s
+[21:10:59]   [PASS] F2 评测延迟(递归代码) (1.8s) 1.82s score=100.0
+[21:10:59]   [PASS] F3 CRDB查询延迟 (0.0s) 0.04s
+[21:10:59]   [PASS] F4 JupyterHub登录页延迟 (0.0s) 0.04s HTTP=200
+[21:10:59] 
+==========================================================================================
+[21:10:59]   上线验收测试报告 (Browser Test Suite v6.0)
+[21:10:59] ==========================================================================================
+[21:10:59] 
+  总计: 58 | 通过: 58 | 失败: 0 | 通过率: 100%
+[21:10:59]   总耗时: 220.7s
+[21:10:59] 
+  #    Test                                           Status  Time    Details
+[21:10:59] ----------------------------------------------------------------------------------------------------------------
+[21:10:59] 1    [OK] A1 LMS登录页加载+表单                               PASS    4.0     HTTP 200 form=True
+[21:10:59] 2    [OK] A2 LMS账号登录→Dashboard                         PASS    2.6     url=https://openedx.10.167.2.175.nip.io:31825/da
+[21:10:59] 3    [OK] A3 Dashboard课程渲染                             PASS    3.0     len=18405
+[21:10:59] 4    [OK] A4 LMS会话Cookie                               PASS    0.0     cookies=7
+[21:10:59] 5    [OK] A5 LMS登出                                     PASS    3.1     url=https://openedx.10.167.2.175.nip.io:31825/
+[21:10:59] 6    [OK] A6 Studio首页(无登录跳转)                           PASS    0.5     HTTP 200
+[21:10:59] 7    [OK] A7 Studio→LMS OAuth重定向(带:31825)              PASS    0.8     url=https://openedx.10.167.2.175.nip.io:31825/lo
+[21:10:59] 8    [OK] A8 OAuth回调端口修复回归(404根因)                      PASS    0.0     url=https://openedx.10.167.2.175.nip.io:31825/lo
+[21:10:59] 9    [OK] A9 Studio OAuth登录回跳                          PASS    8.1     url=https://studio.openedx.10.167.2.175.nip.io:3
+[21:10:59] 10   [OK] A10 Studio登录后页面渲染                            PASS    3.0     len=19324
+[21:10:59] 11   [OK] A11 Studio /home 页面                          PASS    0.1     HTTP 200
+[21:10:59] 12   [OK] A12 Studio课程列表(/home含课程条目)                   PASS    3.1     HTTP 200, course_entry=True
+[21:10:59] 13   [OK] A13 教师账号LMS登录                                PASS    3.1     url=https://openedx.10.167.2.175.nip.io:31825/da
+[21:10:59] 14   [OK] A14 教师课程页                                    PASS    0.3     len=15472
+[21:10:59] 15   [OK] B1 MFE /learning(课程学习)                       PASS    0.0     HTTP 200
+[21:10:59] 16   [OK] B2 MFE /authn(认证/登录)                         PASS    0.0     HTTP 200
+[21:10:59] 17   [OK] B3 MFE /account(账户)                          PASS    0.1     HTTP 200
+[21:10:59] 18   [OK] B4 MFE /profile(个人资料)                        PASS    0.0     HTTP 200
+[21:10:59] 19   [OK] B5 MFE /gradebook(成绩册)                       PASS    0.0     HTTP 200
+[21:10:59] 20   [OK] B6 MFE /discussions(讨论区)                     PASS    0.1     HTTP 200
+[21:10:59] 21   [OK] B7 MFE /course-authoring(课程制作)               PASS    0.0     HTTP 200
+[21:10:59] 22   [OK] B8 MFE前端JS资源引用                               PASS    0.1     html_len=622
+[21:10:59] 23   [OK] B9 MFE静态资源可加载                                PASS    0.0     asset=/learning/runtime.f4d34da75bdc5ee5e087.js 
+[21:10:59] 24   [OK] B10 MFE根路径响应                                 PASS    0.0     HTTP 204
+[21:10:59] 25   [OK] C1 JupyterHub登录页                             PASS    0.6     HTTP 200
+[21:10:59] 26   [OK] C2 教师登录                                      PASS    1.5     url=https://10.167.2.175:31825/ide/user/teacher-
+[21:10:59] 27   [OK] C3 管理面板                                      PASS    0.6     admins=['teacher-zhang', 'lecture-p1']
+[21:10:59] 28   [OK] C4 JupyterLab UI                             PASS    9.4     launcher=True
+[21:10:59] 29   [OK] C5 文件浏览器API                                  PASS    1.2     files=111
+[21:10:59] 30   [OK] C6 内核可用                                      PASS    0.0     kernels=['python3']
+[21:10:59] 31   [OK] C7 Ollama LLM推理                              PASS    13.1    reply='1 + 1 equals 2.'
+[21:10:59] 32   [OK] C8 登出                                        PASS    2.1     has_login=True
+[21:10:59] 33   [OK] C9 学生登录+Spawn                                PASS    1.4     url=https://10.167.2.175:31825/ide/user/student-
+[21:10:59] 34   [OK] C10 学生指南分发                                   PASS    0.1     files=['JUPYTERHUB-STUDENT-GUIDE.md', 'AUTOGRADE
+[21:10:59] 35   [OK] C11 Cookie大小安全                               PASS    0.0     total=797B
+[21:10:59] 36   [OK] C12 并发登录x10                                  PASS    64.5    10/10
+[21:10:59] 37   [OK] D1 评测服务健康                                    PASS    0.1     v=2.0
+[21:10:59] 38   [OK] D2 课程列表                                      PASS    0.0     courses=4
+[21:10:59] 39   [OK] D3 作业列表                                      PASS    0.1     n=2
+[21:10:59] 40   [OK] D4 Python满分评测                                PASS    2.7     score=100.0
+[21:10:59] 41   [OK] D5 有错代码评测                                    PASS    2.7     score=40.0
+[21:10:59] 42   [OK] D6 PEP8风格检查                                  PASS    0.2     errors=4
+[21:10:59] 43   [OK] D7 API Key鉴权                                 PASS    0.0     无Key被拒绝
+[21:10:59] 44   [OK] D8 CockroachDB成绩持久化                          PASS    0.2     total=2980
+[21:10:59] 45   [OK] D9 学生成绩查询                                    PASS    0.1     total=2
+[21:10:59] 46   [OK] D10 多语言评测(Java)                              PASS    0.0     resp={'assignment_id': 'j1', 'course_id': 'pytho
+[21:10:59] 47   [OK] E1 Code-Server HTTP                          PASS    0.0     HTTP 302
+[21:10:59] 48   [OK] E2 Code-Server工作台加载                          PASS    0.1     HTTP 200 title=code-server login
+[21:10:59] 49   [OK] E3 CockroachDB健康                             PASS    0.0     healthy
+[21:10:59] 50   [OK] E4 全链路:提交→评测→成绩查询                            PASS    2.4     score=100.0, total=1
+[21:10:59] 51   [OK] E5 教师成绩报告含新提交                                PASS    0.2     students=565
+[21:10:59] 52   [OK] E6 向量Embedding服务                             PASS    17.3    dim=768
+[21:10:59] 53   [OK] E7 并发评测x5延迟                                  PASS    2.9     5/5 avg=2.23s
+[21:10:59] 54   [OK] E8 MFE→LMS API链路                             PASS    0.1     HTTP 301
+[21:10:59] 55   [OK] F1 LLM推理延迟                                   PASS    63.2    63.2s
+[21:10:59] 56   [OK] F2 评测延迟(递归代码)                                PASS    1.8     1.82s score=100.0
+[21:10:59] 57   [OK] F3 CRDB查询延迟                                  PASS    0.0     0.04s
+[21:10:59] 58   [OK] F4 JupyterHub登录页延迟                           PASS    0.0     0.04s HTTP=200
+[21:10:59] ----------------------------------------------------------------------------------------------------------------
+[21:10:59] 
+  Report: D:/dify-install/browser_test_suite_v6_report.json
