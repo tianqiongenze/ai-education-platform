@@ -1,0 +1,76 @@
+{
+  "total": 14,
+  "passed": 14,
+  "results": [
+    {
+      "case": "A1: LMS登录页可访问",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A2: 管理员登录LMS",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A3: Dashboard显示课程",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A10: About页Studio链接含:31825端口(本次修复)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A11: 点击Studio链接无需手动加端口(本次修复)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "F1+F3: 16门课程图标asset 200且为合法PNG(本次修复)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "F2: 16门课程About页引用新图标(本次修复)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E1: 16课程About页全扫无404",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E2: 16课程Courseware全扫无404",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E3: 16课程Studio Settings全扫无404(本次修复)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E4: 16课程Studio Authoring全扫无404",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "B1: JupyterHub登录页",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "B2: PrairieLearn可访问",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "B3: Code-Server可访问",
+      "pass": true,
+      "err": ""
+    }
+  ]
+}
