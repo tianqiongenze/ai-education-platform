@@ -23,7 +23,7 @@
       "err": ""
     },
     {
-      "case": "A11: 点击Studio链接无需手动加端口(本次修复)",
+      "case": "A11: 点击Studio链接直达Studio课程编辑页且真实渲染(修复MFE空白)",
       "pass": true,
       "err": ""
     },
@@ -48,7 +48,7 @@
       "err": ""
     },
     {
-      "case": "E3: 16课程Studio Settings全扫无404(本次修复)",
+      "case": "E3: 16课程Studio Settings全扫无404且非空白(本次修复)",
       "pass": true,
       "err": ""
     },

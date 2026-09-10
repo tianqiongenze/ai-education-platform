@@ -3,7 +3,11 @@
 V9 全端全链路全功能测试套件 (在线编程平台)
 新增用例 (相对V8):
   A10: LMS About 页 "View About Page in Studio" 链接必须含 :31825 端口
-  A11: 点击该 Studio 链接可直接 200 (无需手动加端口)
+  A11: 点击该 Studio 链接直达 Studio 课程编辑页并真实渲染(非空白页面)
+       — 修复历史缺陷: /api/mfe_config/v1 404 → MFE i18n 崩溃白屏,
+         以及 /settings/details/* 不在 course-authoring MFE 路由表内
+         (仅 /course/:courseId)导致静默空白页。A11 现断言 body>300字符
+         且包含课程编辑器导航内容, 白屏 200 页不再可能通过测试。
   F1: 全部16门课程 About 页课程图标 asset URL 200
   F2: 全部16门课程 About 页引用的是新图标 (pN/bN/aN_course_image.png)
   F3: 图标内容为合法 PNG (魔数校验)
@@ -110,11 +114,24 @@ with sync_playwright() as pw:
         assert target, "no studio target link, found: %s" % links[:3]
         if target.startswith("//"):
             target = "https:" + target
-        pg.goto(target, wait_until="domcontentloaded", timeout=25000)
-        time.sleep(3)
-        assert "error" not in pg.title().lower(), "studio page error title: " + pg.title()
-        assert "400" not in pg.title() and "404" not in pg.title(), "studio 400/404: " + pg.title()
-    safe(browser, "A11: 点击Studio链接无需手动加端口(本次修复)", a11, 45)
+        pg.goto(target, wait_until="load", timeout=40000)
+        # 页面可能经历 302 -> studio login -> LMS oauth -> complete -> 回跳, 等最终落点
+        for _ in range(20):
+            u = pg.url
+            if "/course-authoring/" in u or "/login" in u or "/oauth2/" in u:
+                break
+            time.sleep(1)
+        # OAuth SSO 回跳后 CMS 渲染「日程 & 细节」旧页面; 若 Caddy 302 生效则落在 MFE 路由
+        # 两种合法落点都要求真实渲染非空白
+        time.sleep(6)
+        body = pg.inner_text("body").strip()
+        # 必须真实渲染出课程编辑/设置页 (MFE 曾因 /api/mfe_config/v1 404 渲染纯白 200 页, 标题正常但 body 为空)
+        assert len(body) > 300, "studio page nearly empty (blank MFE): %d chars" % len(body)
+        assert "日程" in body or "Schedule" in body or "大纲" in body or "Outline" in body or "基本信息" in body, \
+            "studio page missing course editor content: " + body[:120]
+        # i18n 崩溃不得出现
+        assert "getLocale called before" not in pg.content(), "MFE i18n crash"
+    safe(browser, "A11: 点击Studio链接直达Studio课程编辑页且真实渲染(修复MFE空白)", a11, 90)
 
     # ==== Module F: 课程图标 ====
     def f1(pg):
@@ -156,11 +173,13 @@ with sync_playwright() as pw:
     def e3(pg):
         login_studio(pg)
         for n in COURSES:
-            pg.goto("%s/settings/details/course-v1:AIEDU+%s+2026" % (STUDIO, n), wait_until="domcontentloaded", timeout=25000)
+            pg.goto("%s/settings/details/course-v1:AIEDU+%s+2026" % (STUDIO, n), wait_until="load", timeout=40000)
+            # 已登录 studio 时该路径直接由 CMS 渲染 (302 仅对未登录会话发生)
             time.sleep(2)
-            t = pg.title()
-            assert "404" not in t and "400" not in t, "%s studio settings %s" % (n, t)
-    safe(browser, "E3: 16课程Studio Settings全扫无404(本次修复)", e3, 180)
+            body = pg.inner_text("body").strip()
+            assert len(body) > 300, "%s studio settings blank: %d chars" % (n, len(body))
+            assert "404" not in pg.title() and "400" not in pg.title(), "%s studio settings %s" % (n, pg.title())
+    safe(browser, "E3: 16课程Studio Settings全扫无404且非空白(本次修复)", e3, 240)
 
     def e4(pg):
         login_studio(pg)
