@@ -1,0 +1,146 @@
+{
+  "total": 28,
+  "passed": 28,
+  "results": [
+    {
+      "case": "A1: LMS登录页元素完整",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A2: 管理员登录LMS",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A3: Dashboard显示课程",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A3b: 课程发现页列出全部16门课程",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A4: 账号设置页",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A5: 用户资料页",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A6: 静态页面6个全部200",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A7: 退出登录",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "A8: 课程搜索(探索页搜索框)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "B1: About页逐链接点击(查看课程MFE/Studio/分享/学习路径)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "C1: 16课程Learning MFE课程主页全部渲染",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "D1: Studio主页",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "D2: Studio课程列表",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "D3: Studio五个设置/工具页(细节/评分/团队/文件/高级)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "D4: Studio课程大纲页",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E1: 16课程About页无404且非空白",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E2: 16课程Courseware(MFE)无404且非空白",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "E3: 16课程Studio设置页无404且非空白",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "F1: JupyterHub登录页(OAuth按钮)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "F2: JupyterHub OAuth登录(经LMS)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "F3: JupyterHub管理页可达(未登录跳转)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "G1: PrairieLearn评测服务健康检查",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "G2: PrairieLearn课程列表(4门语言课程)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "G3: 评测API Key认证(无key 403/教师key 200)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "H1: Code-Server可访问",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "I1: MFE配置接口200且内容正确",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "I2: LMS主页匿名可访问",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "I3: Studio未登录访问不500",
+      "pass": true,
+      "err": ""
+    }
+  ]
+}
