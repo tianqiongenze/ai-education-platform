@@ -13,12 +13,13 @@ from locust import HttpUser, task, between, tag
 
 LMS_HOST = "https://openedx.10.167.2.175.nip.io:31825"
 STUDIO_HOST = "https://studio.openedx.10.167.2.175.nip.io:31825"
-HUB_HOST = "https://10.167.2.175:31825"
-PRAIRIE_HOST = "http://10.167.2.175:30093"
+HUB_HOST = "https://jupyterhub.10.167.2.175.nip.io:31825"
+PRAIRIE_HOST = "http://10.167.2.176:30093"
 
 COURSES = ['A1','A2','A3','A4','B1','B2','B3','B4','B5','B6','P1','P2','P3','P4','P5','P6']
 
 class LMSUser(HttpUser):
+    host = LMS_HOST
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client.verify = False
@@ -89,6 +90,7 @@ class LMSUser(HttpUser):
 
 
 class StudioUser(HttpUser):
+    host = STUDIO_HOST
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client.verify = False
@@ -137,6 +139,7 @@ class StudioUser(HttpUser):
 
 
 class JupyterHubUser(HttpUser):
+    host = HUB_HOST
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client.verify = False
@@ -177,7 +180,7 @@ class JupyterHubUser(HttpUser):
     @tag("hub_health")
     def hub_healthcheck(self):
         """Hub健康检查"""
-        with self.client.get(HUB_HOST + "/ide/hub/healthcheck", name="Hub健康检查", catch_response=True) as resp:
+        with self.client.get(HUB_HOST + "/ide/healthcheck", name="Hub健康检查", catch_response=True, allow_redirects=False) as resp:
             if resp.status_code in (200, 302):
                 resp.success()
             else:
@@ -185,6 +188,7 @@ class JupyterHubUser(HttpUser):
 
 
 class PrairieLearnUser(HttpUser):
+    host = PRAIRIE_HOST
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client.verify = False
@@ -195,7 +199,7 @@ class PrairieLearnUser(HttpUser):
     @tag("pl_home")
     def pl_homepage(self):
         """PrairieLearn首页"""
-        with self.client.get(PRAIRIE_HOST + "/", name="PrairieLearn首页", catch_response=True) as resp:
+        with self.client.get(PRAIRIE_HOST + "/health", name="PrairieLearn健康", catch_response=True) as resp:
             if resp.status_code in (200, 302, 301):
                 resp.success()
             else:
@@ -205,7 +209,7 @@ class PrairieLearnUser(HttpUser):
     @tag("pl_courses")
     def pl_courses(self):
         """PrairieLearn课程列表"""
-        with self.client.get(PRAIRIE_HOST + "/courses", name="PrairieLearn课程", catch_response=True) as resp:
+        with self.client.get(PRAIRIE_HOST + "/api/courses", name="PrairieLearn课程API", catch_response=True) as resp:
             if resp.status_code in (200, 302, 301):
                 resp.success()
             else:
