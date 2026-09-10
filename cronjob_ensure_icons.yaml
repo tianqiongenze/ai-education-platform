@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-ensure-icons-script
+  namespace: openedx
+data:
+  run.sh: |
+    #!/bin/bash
+    # 新课程图标自愈: 每小时检查所有课程, 缺图标的自动生成补齐
+    set -e
+    cd /openedx/edx-platform
+    export DJANGO_SETTINGS_MODULE=cms.envs.tutor.production
+    python3 /opt/icons/ensure_course_icons.py
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ensure-course-icons
+  namespace: openedx
+spec:
+  # 每小时第 7 分钟执行 (与写回/同步类任务错峰)
+  schedule: "7 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: ensure-icons
+            image: 10.100.135.132:5000/overhangio/openedx:13.3.2
+            imagePullPolicy: IfNotPresent
+            command: ["/bin/bash", "/opt/icons/run.sh"]
+            volumeMounts:
+            - mountPath: /opt/icons/run.sh
+              name: icons-runner
+              subPath: run.sh
+              readOnly: true
+            - mountPath: /opt/icons/ensure_course_icons.py
+              name: icons-script
+              subPath: ensure_course_icons.py
+              readOnly: true
+          volumes:
+          - name: icons-runner
+            configMap:
+              name: cm-ensure-icons-script
+          - name: icons-script
+            configMap:
+              name: cm-ensure-icons-code
