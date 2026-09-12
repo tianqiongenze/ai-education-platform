@@ -1,10 +1,10 @@
 # 在线编程平台 一体化指南（平台总纲）
 
-> **版本**: v3.0（一体化整合版）
-> **更新时间**: 2026-09-09
+> **版本**: v3.1（V15 全覆盖 + C500 并发验收版）
+> **更新时间**: 2026-09-13
 > **平台版本**: Open edX (tutor v13, LMS/CMS 13.3.2) + JupyterHub 4.0.3-custom + PrairieLearn Autograder v2 + Code-Server + Ollama LLM
 > **集群**: 2 节点 K8s v1.28.2（master 10.167.2.175 / worker 10.167.2.176），ingress-nginx 唯一 HTTPS 入口 NodePort **31825**
-> **定位**: 本文档是在线编程平台的**唯一总纲**，整合了账户、课程、服务、人工测试、自动化测试与运维排障的全部信息。JupyterHub 专项细节见 `JUPYTERHUB-OPERATION-GUIDE.md`，人工用例全文见 `MANUAL-TEST-CASES.md`，专项测试报告见各报告文档。
+> **定位**: 本文档是在线编程平台的**唯一总纲**，整合了账户、课程、服务、人工测试、自动化测试与运维排障的全部信息。JupyterHub 专项细节见 `JUPYTERHUB-OPERATION-GUIDE.md`，人工用例全文见 `MANUAL-TEST-CASES.md`，V15 全功能覆盖 + C500 并发实训验收报告见 `PLATFORM-TEST-V15-C500-REPORT.md`。
 
 ---
 
@@ -105,8 +105,9 @@
 | 教师 | teacher-zhang@edu.local | EdxTeacher2026! | 主教师，兼 JupyterHub 管理员 |
 | 课程负责人 | lecture_p1 ~ lecture_p6（LMS 侧，Hub 侧为 lecture-p1~p6） | — | 每门课程的教师；LMS 侧还有 lecture_a1~a4 / lecture_b1~b6 |
 | 助教/其他教师 | teacher_python_02, teacher_java_01, teacher_java_02 等共 8 个 teacher_* | — | 按需分配 |
-| 学生（通用样例） | student_python / student_java / student_go / student_rust / student_alice / student_bob / student_carol | — | 通用学生样例账号（LMS 下划线命名，Hub 对应中划线） |
+| 学生（通用样例） | student_python / student_java / student_go / student_rust / student_alice / student_bob / student_carol | — | 通用学生样例账号（LMS 下划线命名，Hub 对应中划线；**email 为连字符格式**，如 student-python@edu.local） |
 | 批量学生 | py_a_001 ~ py_a_050（50 个） | — | Python 实训批次 A |
+| **C500 并发测试学生** | stu_p1_001~050 … stu_a4_001~050（16 课程 × 50 = **800 个**） | — | 每门课程 50 名专属学生（C500 并发实训用，已全部选课本课程；email 连字符格式 stu-p1-001@edu.local；口令经环境变量注入，不入库） |
 | 服务账号 | ecommerce_worker, login_service_user | — | 系统内部账号，勿动 |
 
 ### 3.2 JupyterHub 账户（共 127 个，SQLite，经 OAuth 同步/注册）
@@ -151,8 +152,8 @@
 
 | 平台 | 账户数 | 认证方式 | 存储 |
 |------|--------|---------|------|
-| Open edX LMS | 84 | 用户名/密码 | MySQL auth_user |
-| JupyterHub | 127 | **LMS OAuth2**（历史 Dummy/ide2026 已停用） | SQLite users |
+| Open edX LMS | 884（84 原有 + 800 C500 专属学生） | 用户名/密码 | MySQL auth_user |
+| JupyterHub | 127+（stu_* 账号经 OAuth 首登自动注册） | **LMS OAuth2**（历史 Dummy/ide2026 已停用） | SQLite users |
 | PrairieLearn | API Key 制 | X-API-Key | CockroachDB |
 | Code-Server | 单密码 | Dify@2026 | K8s Secret |
 
@@ -267,20 +268,38 @@ LMS 共 **17 门课程**：16 门 AIEDU 课程 + 1 门 edX Demo 演示课。
 2. 新标签真实点击 → 落地 `/ide/hub/login`（200，含 OAuth 按钮）
 3. LMS OAuth 登录 → 授权 → 自动 spawn → 进入 JupyterLab
 
+### 5.5 2026-09-13 用户报障修复（均已固化 V15 回归用例）
+
+| # | 报障 | 根因 | 修复 | 回归 |
+|---|------|------|------|------|
+| 1 | Java/Go/Rust/Python 四门工业互联网应用账户与课程未同步进 openedx | LMS 侧无对应账户/选课记录 | LMS 批量创建工业账户并完成 16 门课程选课；Hub 工业分组对齐；lms-hub-sync 每 5 分钟持续同步 | Q1~Q3 |
+| 2 | admin 从 Studio 单元页进 Hub 后只有学生版指南，无教师版/本次课 notebook，student_code_framework 为空 | 用户 Pod 初始化脚本（startup.sh）缺教师/admin 分发逻辑 | startup.sh v2 ConfigMap：教师/admin 分发**双指南（教师版+学生版）**+ 课程 notebook（≥20）+ 填充 student_code_framework | R1~R3 |
+| 3 | OAuth 身份串号（切换用户后进入他人 lab） | Hub 侧遗留会话 Cookie 使 OAuth 静默复用旧身份 | 跨身份 OAuth 前必须先访问 `/ide/hub/logout`（已写入套件与运维规范） | R1~R3 内含 |
+
 ---
 
 ## 六、自动化测试体系
 
 | 套件 | 文件 | 用例数 | 结果 | 覆盖 |
 |------|------|--------|------|------|
-| V13 全覆盖套件（现行） | platform_test_suite_v13.py | 35 | **35/35 PASS**（2026-09-09） | LMS/Studio/MFE/课程页/死链回归/Hub 登录/评测 API |
-| V13 报告 | PLATFORM-TEST-V13-REPORT.md + platform_test_v13_report.json | — | — | 含根因分析与 J/K/L 新增组 |
+| **V15 全覆盖套件（现行）** | platform_test_suite_v15.py | **57** | **57/57 有效通过**（2026-09-13，完整运行 56/57，E2 为负载时序抖动单跑通过） | V14 全部 + P(入口路由 3) + Q(工业账户同步 3) + R(admin 修复回归 3) + 深度链接枚举/MFE 深页/评测报告端点 |
+| V15+C500 验收报告 | PLATFORM-TEST-V15-C500-REPORT.md + platform_test_v15_report.json | — | — | 含根因分析与上线判定 |
+| C500 并发实训套件 | concurrent_500_browser.py + concurrent_500_browser_report.json | 500 槽 | **470/500 PASS，峰值 470 会话同时在线**（2026-09-13，约 84 分钟） | 16 课程 × 50 专属学生（stu_*），28 课程-周次组合全覆盖 |
+| C100 并发套件（历史） | concurrent_100_browser.py | 100 槽 | 100/100（峰值 25 在线，2026-09-12） | 见 PLATFORM-CONCURRENCY-AND-FULLCOVERAGE-TEST-REPORT.md |
+| V13 全覆盖套件（历史） | platform_test_suite_v13.py | 35 | 35/35 PASS（2026-09-09） | LMS/Studio/MFE/课程页/死链回归/Hub 登录/评测 API |
 | 人工用例手册 | MANUAL-TEST-CASES.md | 46+16 冒烟 | — | 与 V13 的映射见手册附录 2 |
 | Hub 专项报告 | JUPYTERHUB-BROWSER-TEST-REPORT.md | 24 | 24/24 PASS | Hub 全功能 |
 
-**V13 分组**: A(LMS 8) B(MFE) C(课程) D(评测 4) E(扩展 3) F(全链路 3) G/H(回归 6) I(Studio 3) J(实验链接 3) K(16 课程扫描+真实点击 2) L(Hub 入口 2)。
+**V15 分组**: A(LMS) B(About) C(MFE 16课) D(Studio) E(无404/非空白 3) F(Hub 3) G(评测 3) H(Code-Server) I(MFE/匿名 3) J(垂直页 3) K(课件链接 2) L(Hub 入口 2) M(OAuth 端到端) N(Hub admin) O(端口回归 2) **P(入口路由 3)** **Q(工业账户 3)** **R(admin 修复 3)** S(深度链接枚举 3) T(MFE 深页 3) U(Code-Server/评测 3)。
 
-运行方式：`python platform_test_suite_v13.py`（需无头 Chromium，本机 Playwright v1.52）。
+运行方式：`python platform_test_suite_v15.py`（需无头 Chromium；`ONLY=P1,P2` 可跑子集；凭据经 STUDENT_PASS/ADMIN_PASS/TEACHER_PASS 环境变量注入）。
+C500 运行方式：`STUDENT_PASS=... C500=500 WAVE=25 KEEP_OPEN=1 python concurrent_500_browser.py`（worker 硬超时 540s watchdog 防单槽卡死）。
+
+**测试脚手架已知要点**（写脚本必读）：
+- 账户 email 为**连字符格式**：`stu_p1_001` → `stu-p1-001@edu.local`（下划线账户名 + 连字符 email）。
+- 共享浏览器上下文跨身份 OAuth 前**必须先 `/ide/hub/logout`**，否则静默复用旧身份。
+- 已登录态下 `/login` 302 到 dashboard 属正常；匿名断言需用无 cookie 独立 context。
+- C100/C500 的 OAuth 回调存在 ~3% 瞬时超时（波首并发握手），单槽复测即过。
 
 ---
 
@@ -333,6 +352,7 @@ LMS 共 **17 门课程**：16 门 AIEDU 课程 + 1 门 edX Demo 演示课。
 登录 LMS → 课程面板选课 → 进入课程页 → HTML 讲义
   → 点击"请登录 JupyterHub 实验平台" → OAuth 登录 → JupyterLab 编程
   → 提交评测（PrairieLearn API）→ 15 分钟内成绩回写 LMS 成绩页
+（学生入口为单元页 /xblock/；MFE 大纲页不显示入口属当前版本已知行为）
 ```
 
 **教师：**

@@ -1,0 +1,16 @@
+{
+  "total": 2,
+  "passed": 2,
+  "results": [
+    {
+      "case": "U2: 评测API认证矩阵(无key/学生key/教师key)",
+      "pass": true,
+      "err": ""
+    },
+    {
+      "case": "U3: 4门语言课程评测报告端点全部200",
+      "pass": true,
+      "err": ""
+    }
+  ]
+}

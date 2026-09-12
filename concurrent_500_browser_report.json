@@ -1,0 +1,7625 @@
+{
+ "started": "2026-09-13 04:30:39",
+ "target_concurrency": 500,
+ "wave_size": 25,
+ "workers": [
+  {
+   "wid": 0,
+   "ok": true,
+   "stages": {
+    "lms_login": 61.2,
+    "courseware_jump": 85.6,
+    "hub_oauth_lab": 60.8
+   },
+   "err": "",
+   "user": "stu_p1_001",
+   "course": "P1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 243.0
+  },
+  {
+   "wid": 1,
+   "ok": false,
+   "stages": {
+    "lms_login": 40.9
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P2+2026/jump_to/block-v1:AIEDU+P2+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p2_001",
+   "course": "P2",
+   "week": 1,
+   "duration": 131.6
+  },
+  {
+   "wid": 2,
+   "ok": false,
+   "stages": {
+    "lms_login": 42.6
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P3+2026/jump_to/block-v1:AIEDU+P3+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p3_001",
+   "course": "P3",
+   "week": 1,
+   "duration": 133.4
+  },
+  {
+   "wid": 3,
+   "ok": true,
+   "stages": {
+    "lms_login": 46.9,
+    "courseware_jump": 74.6,
+    "hub_oauth_lab": 66.3
+   },
+   "err": "",
+   "user": "stu_p4_001",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 208.0
+  },
+  {
+   "wid": 4,
+   "ok": true,
+   "stages": {
+    "lms_login": 56.6,
+    "courseware_jump": 85.0,
+    "hub_oauth_lab": 65.3
+   },
+   "err": "",
+   "user": "stu_p5_001",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 230.3
+  },
+  {
+   "wid": 5,
+   "ok": false,
+   "stages": {
+    "lms_login": 43.7
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P6+2026/jump_to/block-v1:AIEDU+P6+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p6_001",
+   "course": "P6",
+   "week": 1,
+   "duration": 134.6
+  },
+  {
+   "wid": 6,
+   "ok": true,
+   "stages": {
+    "lms_login": 51.8,
+    "courseware_jump": 85.5,
+    "hub_oauth_lab": 75.6
+   },
+   "err": "",
+   "user": "stu_b1_001",
+   "course": "B1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 244.3
+  },
+  {
+   "wid": 7,
+   "ok": true,
+   "stages": {
+    "lms_login": 43.0,
+    "courseware_jump": 51.0,
+    "hub_oauth_lab": 94.6
+   },
+   "err": "",
+   "user": "stu_b2_001",
+   "course": "B2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 208.4
+  },
+  {
+   "wid": 8,
+   "ok": true,
+   "stages": {
+    "lms_login": 52.9,
+    "courseware_jump": 83.8,
+    "hub_oauth_lab": 69.2
+   },
+   "err": "",
+   "user": "stu_b3_001",
+   "course": "B3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 238.6
+  },
+  {
+   "wid": 9,
+   "ok": true,
+   "stages": {
+    "lms_login": 51.8,
+    "courseware_jump": 87.9,
+    "hub_oauth_lab": 56.3
+   },
+   "err": "",
+   "user": "stu_b4_001",
+   "course": "B4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 218.7
+  },
+  {
+   "wid": 10,
+   "ok": true,
+   "stages": {
+    "lms_login": 39.1,
+    "courseware_jump": 86.3,
+    "hub_oauth_lab": 87.2
+   },
+   "err": "",
+   "user": "stu_b5_001",
+   "course": "B5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 239.9
+  },
+  {
+   "wid": 11,
+   "ok": true,
+   "stages": {
+    "lms_login": 45.4,
+    "courseware_jump": 73.0,
+    "hub_oauth_lab": 64.1
+   },
+   "err": "",
+   "user": "stu_b6_001",
+   "course": "B6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 205.6
+  },
+  {
+   "wid": 12,
+   "ok": true,
+   "stages": {
+    "lms_login": 51.4,
+    "courseware_jump": 83.9,
+    "hub_oauth_lab": 69.7
+   },
+   "err": "",
+   "user": "stu_a1_001",
+   "course": "A1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 227.0
+  },
+  {
+   "wid": 13,
+   "ok": false,
+   "stages": {
+    "lms_login": 39.7
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIEDU+A2+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_a2_001",
+   "course": "A2",
+   "week": 1,
+   "duration": 130.6
+  },
+  {
+   "wid": 14,
+   "ok": true,
+   "stages": {
+    "lms_login": 55.0,
+    "courseware_jump": 83.7,
+    "hub_oauth_lab": 76.0
+   },
+   "err": "",
+   "user": "stu_a3_001",
+   "course": "A3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 241.7
+  },
+  {
+   "wid": 15,
+   "ok": true,
+   "stages": {
+    "lms_login": 43.3,
+    "courseware_jump": 79.1,
+    "hub_oauth_lab": 67.0
+   },
+   "err": "",
+   "user": "stu_a4_001",
+   "course": "A4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 208.9
+  },
+  {
+   "wid": 16,
+   "ok": true,
+   "stages": {
+    "lms_login": 30.1,
+    "courseware_jump": 63.0,
+    "hub_oauth_lab": 86.7
+   },
+   "err": "",
+   "user": "stu_p1_002",
+   "course": "P1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 198.1
+  },
+  {
+   "wid": 17,
+   "ok": true,
+   "stages": {
+    "lms_login": 31.4,
+    "courseware_jump": 73.6,
+    "hub_oauth_lab": 84.6
+   },
+   "err": "",
+   "user": "stu_p2_002",
+   "course": "P2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 210.8
+  },
+  {
+   "wid": 18,
+   "ok": false,
+   "stages": {
+    "lms_login": 38.0
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P3+2026/jump_to/block-v1:AIEDU+P3+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p3_002",
+   "course": "P3",
+   "week": 1,
+   "duration": 129.0
+  },
+  {
+   "wid": 19,
+   "ok": true,
+   "stages": {
+    "lms_login": 41.8,
+    "courseware_jump": 57.1,
+    "hub_oauth_lab": 78.9
+   },
+   "err": "",
+   "user": "stu_p4_002",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 187.0
+  },
+  {
+   "wid": 20,
+   "ok": true,
+   "stages": {
+    "lms_login": 40.5,
+    "courseware_jump": 91.1,
+    "hub_oauth_lab": 59.7
+   },
+   "err": "",
+   "user": "stu_p5_002",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 223.0
+  },
+  {
+   "wid": 21,
+   "ok": true,
+   "stages": {
+    "lms_login": 41.7,
+    "courseware_jump": 65.2,
+    "hub_oauth_lab": 77.2
+   },
+   "err": "",
+   "user": "stu_p6_002",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 202.4
+  },
+  {
+   "wid": 22,
+   "ok": true,
+   "stages": {
+    "lms_login": 40.8,
+    "courseware_jump": 53.5,
+    "hub_oauth_lab": 81.7
+   },
+   "err": "",
+   "user": "stu_b1_002",
+   "course": "B1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 186.8
+  },
+  {
+   "wid": 23,
+   "ok": false,
+   "stages": {
+    "lms_login": 32.4
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B2+2026/jump_to/block-v1:AIEDU+B2+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b2_002",
+   "course": "B2",
+   "week": 2,
+   "duration": 123.5
+  },
+  {
+   "wid": 24,
+   "ok": true,
+   "stages": {
+    "lms_login": 33.0,
+    "courseware_jump": 78.3,
+    "hub_oauth_lab": 78.4
+   },
+   "err": "",
+   "user": "stu_b3_002",
+   "course": "B3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 218.0
+  },
+  {
+   "wid": 25,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 41.3,
+    "hub_oauth_lab": 122.5
+   },
+   "err": "",
+   "user": "stu_b4_002",
+   "course": "B4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 197.1
+  },
+  {
+   "wid": 26,
+   "ok": false,
+   "stages": {
+    "lms_login": 42.2
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIEDU+B5+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b5_002",
+   "course": "B5",
+   "week": 2,
+   "duration": 132.9
+  },
+  {
+   "wid": 27,
+   "ok": true,
+   "stages": {
+    "lms_login": 22.2,
+    "courseware_jump": 44.3,
+    "hub_oauth_lab": 98.7
+   },
+   "err": "",
+   "user": "stu_b6_002",
+   "course": "B6",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 210.0
+  },
+  {
+   "wid": 28,
+   "ok": true,
+   "stages": {
+    "lms_login": 46.1,
+    "courseware_jump": 42.1,
+    "hub_oauth_lab": 94.8
+   },
+   "err": "",
+   "user": "stu_a1_002",
+   "course": "A1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 211.8
+  },
+  {
+   "wid": 29,
+   "ok": false,
+   "stages": {
+    "lms_login": 31.6
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIEDU+A2+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_a2_002",
+   "course": "A2",
+   "week": 2,
+   "duration": 122.4
+  },
+  {
+   "wid": 30,
+   "ok": true,
+   "stages": {
+    "lms_login": 63.2,
+    "courseware_jump": 54.6,
+    "hub_oauth_lab": 70.0
+   },
+   "err": "",
+   "user": "stu_a3_002",
+   "course": "A3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 233.8
+  },
+  {
+   "wid": 31,
+   "ok": true,
+   "stages": {
+    "lms_login": 55.7,
+    "courseware_jump": 82.4,
+    "hub_oauth_lab": 87.8
+   },
+   "err": "",
+   "user": "stu_a4_002",
+   "course": "A4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 247.9
+  },
+  {
+   "wid": 32,
+   "ok": true,
+   "stages": {
+    "lms_login": 38.0,
+    "courseware_jump": 66.2,
+    "hub_oauth_lab": 83.9
+   },
+   "err": "",
+   "user": "stu_p1_003",
+   "course": "P1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 227.9
+  },
+  {
+   "wid": 33,
+   "ok": true,
+   "stages": {
+    "lms_login": 129.3,
+    "courseware_jump": 41.7,
+    "hub_oauth_lab": 66.1
+   },
+   "err": "",
+   "user": "stu_p2_003",
+   "course": "P2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 248.7
+  },
+  {
+   "wid": 34,
+   "ok": true,
+   "stages": {
+    "lms_login": 40.9,
+    "courseware_jump": 58.7,
+    "hub_oauth_lab": 84.3
+   },
+   "err": "",
+   "user": "stu_p3_003",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 221.4
+  },
+  {
+   "wid": 35,
+   "ok": true,
+   "stages": {
+    "lms_login": 41.5,
+    "courseware_jump": 79.5,
+    "hub_oauth_lab": 78.2
+   },
+   "err": "",
+   "user": "stu_p4_003",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 239.9
+  },
+  {
+   "wid": 36,
+   "ok": false,
+   "stages": {
+    "lms_login": 33.6
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P5+2026/jump_to/block-v1:AIEDU+P5+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p5_003",
+   "course": "P5",
+   "week": 1,
+   "duration": 124.6
+  },
+  {
+   "wid": 37,
+   "ok": true,
+   "stages": {
+    "lms_login": 41.4,
+    "courseware_jump": 86.6,
+    "hub_oauth_lab": 64.0
+   },
+   "err": "",
+   "user": "stu_p6_003",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 222.7
+  },
+  {
+   "wid": 38,
+   "ok": true,
+   "stages": {
+    "lms_login": 37.2,
+    "courseware_jump": 93.5,
+    "hub_oauth_lab": 67.7
+   },
+   "err": "",
+   "user": "stu_b1_003",
+   "course": "B1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 244.4
+  },
+  {
+   "wid": 39,
+   "ok": true,
+   "stages": {
+    "lms_login": 54.0,
+    "courseware_jump": 76.1,
+    "hub_oauth_lab": 58.1
+   },
+   "err": "",
+   "user": "stu_b2_003",
+   "course": "B2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 226.2
+  },
+  {
+   "wid": 40,
+   "ok": true,
+   "stages": {
+    "lms_login": 55.0,
+    "courseware_jump": 74.9,
+    "hub_oauth_lab": 64.4
+   },
+   "err": "",
+   "user": "stu_b3_003",
+   "course": "B3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 218.7
+  },
+  {
+   "wid": 41,
+   "ok": true,
+   "stages": {
+    "lms_login": 44.6,
+    "courseware_jump": 68.8,
+    "hub_oauth_lab": 84.5
+   },
+   "err": "",
+   "user": "stu_b4_003",
+   "course": "B4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 233.2
+  },
+  {
+   "wid": 42,
+   "ok": false,
+   "stages": {
+    "lms_login": 39.9
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIEDU+B5+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b5_003",
+   "course": "B5",
+   "week": 1,
+   "duration": 130.9
+  },
+  {
+   "wid": 43,
+   "ok": true,
+   "stages": {
+    "lms_login": 54.3,
+    "courseware_jump": 83.3,
+    "hub_oauth_lab": 83.6
+   },
+   "err": "",
+   "user": "stu_b6_003",
+   "course": "B6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 239.1
+  },
+  {
+   "wid": 44,
+   "ok": true,
+   "stages": {
+    "lms_login": 40.8,
+    "courseware_jump": 91.4,
+    "hub_oauth_lab": 87.3
+   },
+   "err": "",
+   "user": "stu_a1_003",
+   "course": "A1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 242.3
+  },
+  {
+   "wid": 45,
+   "ok": false,
+   "stages": {
+    "lms_login": 37.4
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIEDU+A2+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_a2_003",
+   "course": "A2",
+   "week": 1,
+   "duration": 128.4
+  },
+  {
+   "wid": 46,
+   "ok": true,
+   "stages": {
+    "lms_login": 132.0,
+    "courseware_jump": 47.5,
+    "hub_oauth_lab": 67.4
+   },
+   "err": "",
+   "user": "stu_a3_003",
+   "course": "A3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 249.4
+  },
+  {
+   "wid": 47,
+   "ok": true,
+   "stages": {
+    "lms_login": 39.8,
+    "courseware_jump": 76.1,
+    "hub_oauth_lab": 72.7
+   },
+   "err": "",
+   "user": "stu_a4_003",
+   "course": "A4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 211.8
+  },
+  {
+   "wid": 48,
+   "ok": true,
+   "stages": {
+    "lms_login": 41.1,
+    "courseware_jump": 85.3,
+    "hub_oauth_lab": 73.4
+   },
+   "err": "",
+   "user": "stu_p1_004",
+   "course": "P1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 245.3
+  },
+  {
+   "wid": 49,
+   "ok": true,
+   "stages": {
+    "lms_login": 36.5,
+    "courseware_jump": 80.5,
+    "hub_oauth_lab": 67.9
+   },
+   "err": "",
+   "user": "stu_p2_004",
+   "course": "P2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 200.9
+  },
+  {
+   "wid": 50,
+   "ok": true,
+   "stages": {
+    "lms_login": 22.8,
+    "courseware_jump": 41.5,
+    "hub_oauth_lab": 114.8
+   },
+   "err": "",
+   "user": "stu_p3_004",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 187.6
+  },
+  {
+   "wid": 51,
+   "ok": true,
+   "stages": {
+    "lms_login": 35.1,
+    "courseware_jump": 84.4,
+    "hub_oauth_lab": 67.1
+   },
+   "err": "",
+   "user": "stu_p4_004",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 216.8
+  },
+  {
+   "wid": 52,
+   "ok": false,
+   "stages": {
+    "lms_login": 33.4,
+    "courseware_jump": 90.1
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=w0nkXhFK8KOsiVF1w4c29Ydhdv3p0z&state=eyJzdGF0ZV",
+   "user": "stu_p5_004",
+   "course": "P5",
+   "week": 1,
+   "duration": 362.6
+  },
+  {
+   "wid": 53,
+   "ok": true,
+   "stages": {
+    "lms_login": 33.7,
+    "courseware_jump": 62.9,
+    "hub_oauth_lab": 90.4
+   },
+   "err": "",
+   "user": "stu_p6_004",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 221.7
+  },
+  {
+   "wid": 54,
+   "ok": true,
+   "stages": {
+    "lms_login": 51.5,
+    "courseware_jump": 80.0,
+    "hub_oauth_lab": 62.1
+   },
+   "err": "",
+   "user": "stu_b1_004",
+   "course": "B1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 232.1
+  },
+  {
+   "wid": 55,
+   "ok": true,
+   "stages": {
+    "lms_login": 37.6,
+    "courseware_jump": 76.0,
+    "hub_oauth_lab": 73.4
+   },
+   "err": "",
+   "user": "stu_b2_004",
+   "course": "B2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 210.6
+  },
+  {
+   "wid": 56,
+   "ok": false,
+   "stages": {
+    "lms_login": 35.3
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B3+2026/jump_to/block-v1:AIEDU+B3+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b3_004",
+   "course": "B3",
+   "week": 2,
+   "duration": 126.2
+  },
+  {
+   "wid": 57,
+   "ok": true,
+   "stages": {
+    "lms_login": 49.6,
+    "courseware_jump": 80.0,
+    "hub_oauth_lab": 62.8
+   },
+   "err": "",
+   "user": "stu_b4_004",
+   "course": "B4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 208.5
+  },
+  {
+   "wid": 58,
+   "ok": false,
+   "stages": {
+    "lms_login": 35.9
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIEDU+B5+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b5_004",
+   "course": "B5",
+   "week": 2,
+   "duration": 126.8
+  },
+  {
+   "wid": 59,
+   "ok": false,
+   "stages": {
+    "lms_login": 48.5
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B6+2026/jump_to/block-v1:AIEDU+B6+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b6_004",
+   "course": "B6",
+   "week": 2,
+   "duration": 139.4
+  },
+  {
+   "wid": 60,
+   "ok": true,
+   "stages": {
+    "lms_login": 37.2,
+    "courseware_jump": 59.2,
+    "hub_oauth_lab": 84.2
+   },
+   "err": "",
+   "user": "stu_a1_004",
+   "course": "A1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 194.0
+  },
+  {
+   "wid": 61,
+   "ok": true,
+   "stages": {
+    "lms_login": 43.2,
+    "courseware_jump": 34.7,
+    "hub_oauth_lab": 97.4
+   },
+   "err": "",
+   "user": "stu_a2_004",
+   "course": "A2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 183.7
+  },
+  {
+   "wid": 62,
+   "ok": true,
+   "stages": {
+    "lms_login": 42.7,
+    "courseware_jump": 56.1,
+    "hub_oauth_lab": 88.5
+   },
+   "err": "",
+   "user": "stu_a3_004",
+   "course": "A3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 217.4
+  },
+  {
+   "wid": 63,
+   "ok": false,
+   "stages": {
+    "lms_login": 50.0
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A4+2026/jump_to/block-v1:AIEDU+A4+2026+type@sequential+block@sequential2\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_a4_004",
+   "course": "A4",
+   "week": 2,
+   "duration": 140.9
+  },
+  {
+   "wid": 64,
+   "ok": false,
+   "stages": {
+    "lms_login": 51.4
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P1+2026/jump_to/block-v1:AIEDU+P1+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p1_005",
+   "course": "P1",
+   "week": 1,
+   "duration": 142.5
+  },
+  {
+   "wid": 65,
+   "ok": true,
+   "stages": {
+    "lms_login": 51.6,
+    "courseware_jump": 89.7,
+    "hub_oauth_lab": 52.8
+   },
+   "err": "",
+   "user": "stu_p2_005",
+   "course": "P2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 218.1
+  },
+  {
+   "wid": 66,
+   "ok": true,
+   "stages": {
+    "lms_login": 56.0,
+    "courseware_jump": 63.2,
+    "hub_oauth_lab": 69.6
+   },
+   "err": "",
+   "user": "stu_p3_005",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 214.8
+  },
+  {
+   "wid": 67,
+   "ok": true,
+   "stages": {
+    "lms_login": 46.2,
+    "courseware_jump": 37.3,
+    "hub_oauth_lab": 96.1
+   },
+   "err": "",
+   "user": "stu_p4_005",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 195.2
+  },
+  {
+   "wid": 68,
+   "ok": false,
+   "stages": {
+    "lms_login": 37.1
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P5+2026/jump_to/block-v1:AIEDU+P5+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_p5_005",
+   "course": "P5",
+   "week": 1,
+   "duration": 128.1
+  },
+  {
+   "wid": 69,
+   "ok": true,
+   "stages": {
+    "lms_login": 56.6,
+    "courseware_jump": 73.1,
+    "hub_oauth_lab": 58.7
+   },
+   "err": "",
+   "user": "stu_p6_005",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 207.3
+  },
+  {
+   "wid": 70,
+   "ok": false,
+   "stages": {
+    "lms_login": 50.4
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B1+2026/jump_to/block-v1:AIEDU+B1+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b1_005",
+   "course": "B1",
+   "week": 1,
+   "duration": 141.4
+  },
+  {
+   "wid": 71,
+   "ok": true,
+   "stages": {
+    "lms_login": 59.8,
+    "courseware_jump": 88.3,
+    "hub_oauth_lab": 68.9
+   },
+   "err": "",
+   "user": "stu_b2_005",
+   "course": "B2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 227.5
+  },
+  {
+   "wid": 72,
+   "ok": false,
+   "stages": {
+    "lms_login": 52.7
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B3+2026/jump_to/block-v1:AIEDU+B3+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b3_005",
+   "course": "B3",
+   "week": 1,
+   "duration": 143.7
+  },
+  {
+   "wid": 73,
+   "ok": true,
+   "stages": {
+    "lms_login": 49.1,
+    "courseware_jump": 60.6,
+    "hub_oauth_lab": 74.4
+   },
+   "err": "",
+   "user": "stu_b4_005",
+   "course": "B4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 204.7
+  },
+  {
+   "wid": 74,
+   "ok": false,
+   "stages": {
+    "lms_login": 46.4
+   },
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIEDU+B5+2026+type@sequential+block@sequential1\", waiting until \"domcontentloaded\"\n",
+   "user": "stu_b5_005",
+   "course": "B5",
+   "week": 1,
+   "duration": 137.3
+  },
+  {
+   "wid": 75,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.6,
+    "courseware_jump": 14.0,
+    "hub_oauth_lab": 20.9
+   },
+   "err": "",
+   "user": "stu_b6_005",
+   "course": "B6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 57.4
+  },
+  {
+   "wid": 76,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.5,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 13.8
+   },
+   "err": "",
+   "user": "stu_a1_005",
+   "course": "A1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 35.2
+  },
+  {
+   "wid": 77,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.2,
+    "courseware_jump": 13.5,
+    "hub_oauth_lab": 18.7
+   },
+   "err": "",
+   "user": "stu_a2_005",
+   "course": "A2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 53.0
+  },
+  {
+   "wid": 78,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.3,
+    "courseware_jump": 13.5,
+    "hub_oauth_lab": 63.0
+   },
+   "err": "",
+   "user": "stu_a3_005",
+   "course": "A3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 97.7
+  },
+  {
+   "wid": 79,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.7,
+    "courseware_jump": 13.9,
+    "hub_oauth_lab": 20.2
+   },
+   "err": "",
+   "user": "stu_a4_005",
+   "course": "A4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 56.4
+  },
+  {
+   "wid": 80,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.2,
+    "courseware_jump": 13.1,
+    "hub_oauth_lab": 21.4
+   },
+   "err": "",
+   "user": "stu_p1_006",
+   "course": "P1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 56.3
+  },
+  {
+   "wid": 81,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.4,
+    "courseware_jump": 13.8,
+    "hub_oauth_lab": 19.7
+   },
+   "err": "",
+   "user": "stu_p2_006",
+   "course": "P2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 55.6
+  },
+  {
+   "wid": 82,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.1,
+    "courseware_jump": 14.0,
+    "hub_oauth_lab": 19.2
+   },
+   "err": "",
+   "user": "stu_p3_006",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 54.6
+  },
+  {
+   "wid": 83,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.4,
+    "courseware_jump": 13.4,
+    "hub_oauth_lab": 17.8
+   },
+   "err": "",
+   "user": "stu_p4_006",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 52.4
+  },
+  {
+   "wid": 84,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.5,
+    "courseware_jump": 12.6,
+    "hub_oauth_lab": 17.7
+   },
+   "err": "",
+   "user": "stu_p5_006",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 51.5
+  },
+  {
+   "wid": 85,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.1,
+    "courseware_jump": 11.4,
+    "hub_oauth_lab": 20.4
+   },
+   "err": "",
+   "user": "stu_p6_006",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 53.4
+  },
+  {
+   "wid": 86,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.0,
+    "courseware_jump": 13.2,
+    "hub_oauth_lab": 19.8
+   },
+   "err": "",
+   "user": "stu_b1_006",
+   "course": "B1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 54.4
+  },
+  {
+   "wid": 87,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.5,
+    "courseware_jump": 11.9,
+    "hub_oauth_lab": 17.0
+   },
+   "err": "",
+   "user": "stu_b2_006",
+   "course": "B2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 47.2
+  },
+  {
+   "wid": 88,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 12.9,
+    "hub_oauth_lab": 17.3
+   },
+   "err": "",
+   "user": "stu_b3_006",
+   "course": "B3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 49.7
+  },
+  {
+   "wid": 89,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.7,
+    "courseware_jump": 13.6,
+    "hub_oauth_lab": 20.7
+   },
+   "err": "",
+   "user": "stu_b4_006",
+   "course": "B4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 54.1
+  },
+  {
+   "wid": 90,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.8,
+    "courseware_jump": 13.2,
+    "hub_oauth_lab": 21.8
+   },
+   "err": "",
+   "user": "stu_b5_006",
+   "course": "B5",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 53.7
+  },
+  {
+   "wid": 91,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.6,
+    "courseware_jump": 11.8,
+    "hub_oauth_lab": 20.2
+   },
+   "err": "",
+   "user": "stu_b6_006",
+   "course": "B6",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 51.8
+  },
+  {
+   "wid": 92,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.9,
+    "courseware_jump": 13.4,
+    "hub_oauth_lab": 18.3
+   },
+   "err": "",
+   "user": "stu_a1_006",
+   "course": "A1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 51.2
+  },
+  {
+   "wid": 93,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.8,
+    "courseware_jump": 12.7,
+    "hub_oauth_lab": 20.8
+   },
+   "err": "",
+   "user": "stu_a2_006",
+   "course": "A2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 52.7
+  },
+  {
+   "wid": 94,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.7,
+    "courseware_jump": 11.4,
+    "hub_oauth_lab": 17.4
+   },
+   "err": "",
+   "user": "stu_a3_006",
+   "course": "A3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 46.4
+  },
+  {
+   "wid": 95,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.5,
+    "courseware_jump": 13.3,
+    "hub_oauth_lab": 17.0
+   },
+   "err": "",
+   "user": "stu_a4_006",
+   "course": "A4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 47.6
+  },
+  {
+   "wid": 96,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.5,
+    "courseware_jump": 12.1,
+    "hub_oauth_lab": 17.3
+   },
+   "err": "",
+   "user": "stu_p1_007",
+   "course": "P1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 46.7
+  },
+  {
+   "wid": 97,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.1,
+    "courseware_jump": 14.0,
+    "hub_oauth_lab": 20.1
+   },
+   "err": "",
+   "user": "stu_p2_007",
+   "course": "P2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 52.5
+  },
+  {
+   "wid": 98,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.3,
+    "courseware_jump": 14.2,
+    "hub_oauth_lab": 17.9
+   },
+   "err": "",
+   "user": "stu_p3_007",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 48.1
+  },
+  {
+   "wid": 99,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.1,
+    "courseware_jump": 14.5,
+    "hub_oauth_lab": 20.2
+   },
+   "err": "",
+   "user": "stu_p4_007",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 51.4
+  },
+  {
+   "wid": 100,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 5.6,
+    "hub_oauth_lab": 16.1
+   },
+   "err": "",
+   "user": "stu_p5_007",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 27.6
+  },
+  {
+   "wid": 101,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.4,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 15.9
+   },
+   "err": "",
+   "user": "stu_p6_007",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 31.4
+  },
+  {
+   "wid": 102,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.5,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 15.4
+   },
+   "err": "",
+   "user": "stu_b1_007",
+   "course": "B1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 30.8
+  },
+  {
+   "wid": 103,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 15.5
+   },
+   "err": "",
+   "user": "stu_b2_007",
+   "course": "B2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 30.8
+  },
+  {
+   "wid": 104,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 14.2
+   },
+   "err": "",
+   "user": "stu_b3_007",
+   "course": "B3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 27.7
+  },
+  {
+   "wid": 105,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 14.5
+   },
+   "err": "",
+   "user": "stu_b4_007",
+   "course": "B4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 27.9
+  },
+  {
+   "wid": 106,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.8,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 13.4
+   },
+   "err": "",
+   "user": "stu_b5_007",
+   "course": "B5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 27.7
+  },
+  {
+   "wid": 107,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.6,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 14.6
+   },
+   "err": "",
+   "user": "stu_b6_007",
+   "course": "B6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 32.7
+  },
+  {
+   "wid": 108,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.5,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 15.6
+   },
+   "err": "",
+   "user": "stu_a1_007",
+   "course": "A1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 35.1
+  },
+  {
+   "wid": 109,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.1,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 15.2
+   },
+   "err": "",
+   "user": "stu_a2_007",
+   "course": "A2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 33.4
+  },
+  {
+   "wid": 110,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.0,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 15.1
+   },
+   "err": "",
+   "user": "stu_a3_007",
+   "course": "A3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 35.2
+  },
+  {
+   "wid": 111,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.5,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 15.6
+   },
+   "err": "",
+   "user": "stu_a4_007",
+   "course": "A4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 35.3
+  },
+  {
+   "wid": 112,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.7,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 15.0
+   },
+   "err": "",
+   "user": "stu_p1_008",
+   "course": "P1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 32.5
+  },
+  {
+   "wid": 113,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.8,
+    "courseware_jump": 9.0,
+    "hub_oauth_lab": 15.3
+   },
+   "err": "",
+   "user": "stu_p2_008",
+   "course": "P2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 34.4
+  },
+  {
+   "wid": 114,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.5,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 12.8
+   },
+   "err": "",
+   "user": "stu_p3_008",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 35.2
+  },
+  {
+   "wid": 115,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.0,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 13.3
+   },
+   "err": "",
+   "user": "stu_p4_008",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 34.7
+  },
+  {
+   "wid": 116,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.0,
+    "courseware_jump": 10.0,
+    "hub_oauth_lab": 12.9
+   },
+   "err": "",
+   "user": "stu_p5_008",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 38.4
+  },
+  {
+   "wid": 117,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.6,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 13.2
+   },
+   "err": "",
+   "user": "stu_p6_008",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 38.4
+  },
+  {
+   "wid": 118,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.3,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 13.8
+   },
+   "err": "",
+   "user": "stu_b1_008",
+   "course": "B1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 38.1
+  },
+  {
+   "wid": 119,
+   "ok": true,
+   "stages": {
+    "lms_login": 71.7,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 7.3
+   },
+   "err": "",
+   "user": "stu_b2_008",
+   "course": "B2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 85.6
+  },
+  {
+   "wid": 120,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.1,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 12.0
+   },
+   "err": "",
+   "user": "stu_b3_008",
+   "course": "B3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 39.4
+  },
+  {
+   "wid": 121,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.0,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 11.9
+   },
+   "err": "",
+   "user": "stu_b4_008",
+   "course": "B4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 39.0
+  },
+  {
+   "wid": 122,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.6,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 13.7
+   },
+   "err": "",
+   "user": "stu_b5_008",
+   "course": "B5",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 39.9
+  },
+  {
+   "wid": 123,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.4,
+    "courseware_jump": 9.4,
+    "hub_oauth_lab": 12.4
+   },
+   "err": "",
+   "user": "stu_b6_008",
+   "course": "B6",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 37.9
+  },
+  {
+   "wid": 124,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.6,
+    "courseware_jump": 9.7,
+    "hub_oauth_lab": 13.0
+   },
+   "err": "",
+   "user": "stu_a1_008",
+   "course": "A1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 38.9
+  },
+  {
+   "wid": 125,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 23.3
+   },
+   "err": "",
+   "user": "stu_a2_008",
+   "course": "A2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 36.9
+  },
+  {
+   "wid": 126,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 23.3
+   },
+   "err": "",
+   "user": "stu_a3_008",
+   "course": "A3",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 37.1
+  },
+  {
+   "wid": 127,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 11.2,
+    "hub_oauth_lab": 23.7
+   },
+   "err": "",
+   "user": "stu_a4_008",
+   "course": "A4",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 40.1
+  },
+  {
+   "wid": 128,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 10.6,
+    "hub_oauth_lab": 23.9
+   },
+   "err": "",
+   "user": "stu_p1_009",
+   "course": "P1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 43.8
+  },
+  {
+   "wid": 129,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 10.5,
+    "hub_oauth_lab": 204.6
+   },
+   "err": "",
+   "user": "stu_p2_009",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.8
+  },
+  {
+   "wid": 130,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 22.8
+   },
+   "err": "",
+   "user": "stu_p3_009",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 37.9
+  },
+  {
+   "wid": 131,
+   "ok": false,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 10.6
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=Rb3XUOOqAbzjI2p0AyzohU6pN1D1jA&state=eyJzdGF0ZV",
+   "user": "stu_p4_009",
+   "course": "P4",
+   "week": 1,
+   "duration": 220.9
+  },
+  {
+   "wid": 132,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.0,
+    "courseware_jump": 9.6,
+    "hub_oauth_lab": 23.5
+   },
+   "err": "",
+   "user": "stu_p5_009",
+   "course": "P5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 42.7
+  },
+  {
+   "wid": 133,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 9.3,
+    "hub_oauth_lab": 23.2
+   },
+   "err": "",
+   "user": "stu_p6_009",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 43.1
+  },
+  {
+   "wid": 134,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.2,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 23.2
+   },
+   "err": "",
+   "user": "stu_b1_009",
+   "course": "B1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 38.7
+  },
+  {
+   "wid": 135,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 24.3
+   },
+   "err": "",
+   "user": "stu_b2_009",
+   "course": "B2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 41.9
+  },
+  {
+   "wid": 136,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.9,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 22.3
+   },
+   "err": "",
+   "user": "stu_b3_009",
+   "course": "B3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 40.0
+  },
+  {
+   "wid": 137,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 23.4
+   },
+   "err": "",
+   "user": "stu_b4_009",
+   "course": "B4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 43.4
+  },
+  {
+   "wid": 138,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.6,
+    "courseware_jump": 8.7,
+    "hub_oauth_lab": 22.7
+   },
+   "err": "",
+   "user": "stu_b5_009",
+   "course": "B5",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 41.0
+  },
+  {
+   "wid": 139,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 21.5
+   },
+   "err": "",
+   "user": "stu_b6_009",
+   "course": "B6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 38.2
+  },
+  {
+   "wid": 140,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.3,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 22.5
+   },
+   "err": "",
+   "user": "stu_a1_009",
+   "course": "A1",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 42.9
+  },
+  {
+   "wid": 141,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.0,
+    "courseware_jump": 8.4,
+    "hub_oauth_lab": 22.5
+   },
+   "err": "",
+   "user": "stu_a2_009",
+   "course": "A2",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 42.0
+  },
+  {
+   "wid": 142,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.3,
+    "courseware_jump": 8.7,
+    "hub_oauth_lab": 204.5
+   },
+   "err": "",
+   "user": "stu_a3_009",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 221.5
+  },
+  {
+   "wid": 143,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.1,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 21.9
+   },
+   "err": "",
+   "user": "stu_a4_009",
+   "course": "A4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 42.1
+  },
+  {
+   "wid": 144,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 21.7
+   },
+   "err": "",
+   "user": "stu_p1_010",
+   "course": "P1",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 41.3
+  },
+  {
+   "wid": 145,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.0,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 20.8
+   },
+   "err": "",
+   "user": "stu_p2_010",
+   "course": "P2",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 41.4
+  },
+  {
+   "wid": 146,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.7,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 21.2
+   },
+   "err": "",
+   "user": "stu_p3_010",
+   "course": "P3",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 41.2
+  },
+  {
+   "wid": 147,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.4,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 21.8
+   },
+   "err": "",
+   "user": "stu_p4_010",
+   "course": "P4",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 40.6
+  },
+  {
+   "wid": 148,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.6,
+    "courseware_jump": 8.4,
+    "hub_oauth_lab": 201.8
+   },
+   "err": "",
+   "user": "stu_p5_010",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.5
+  },
+  {
+   "wid": 149,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.5,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 21.2
+   },
+   "err": "",
+   "user": "stu_p6_010",
+   "course": "P6",
+   "week": 1,
+   "landing": "jupyterlab",
+   "duration": 41.0
+  },
+  {
+   "wid": 150,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.3,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 195.0
+   },
+   "err": "",
+   "user": "stu_b1_010",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 208.5
+  },
+  {
+   "wid": 151,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.2,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 195.8
+   },
+   "err": "",
+   "user": "stu_b2_010",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 209.1
+  },
+  {
+   "wid": 152,
+   "ok": true,
+   "stages": {
+    "lms_login": 72.1,
+    "courseware_jump": 4.9,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_b3_010",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 268.3
+  },
+  {
+   "wid": 153,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.5,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 192.2
+   },
+   "err": "",
+   "user": "stu_b4_010",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 209.4
+  },
+  {
+   "wid": 154,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.1,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_b5_010",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 210.8
+  },
+  {
+   "wid": 155,
+   "ok": false,
+   "stages": {
+    "lms_login": 7.4,
+    "courseware_jump": 7.9
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=MSr1sIRZSAcBmdUj0KoATXbPysZtJk&state=eyJzdGF0ZV",
+   "user": "stu_b6_010",
+   "course": "B6",
+   "week": 2,
+   "duration": 207.5
+  },
+  {
+   "wid": 156,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 192.3
+   },
+   "err": "",
+   "user": "stu_a1_010",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 208.6
+  },
+  {
+   "wid": 157,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.4,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 194.2
+   },
+   "err": "",
+   "user": "stu_a2_010",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 210.8
+  },
+  {
+   "wid": 158,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.1,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 194.1
+   },
+   "err": "",
+   "user": "stu_a3_010",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 210.5
+  },
+  {
+   "wid": 159,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.0,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 193.6
+   },
+   "err": "",
+   "user": "stu_a4_010",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 214.2
+  },
+  {
+   "wid": 160,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.7,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 193.6
+   },
+   "err": "",
+   "user": "stu_p1_011",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.0
+  },
+  {
+   "wid": 161,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.2,
+    "courseware_jump": 8.7,
+    "hub_oauth_lab": 192.9
+   },
+   "err": "",
+   "user": "stu_p2_011",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.8
+  },
+  {
+   "wid": 162,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.2,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 193.7
+   },
+   "err": "",
+   "user": "stu_p3_011",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.9
+  },
+  {
+   "wid": 163,
+   "ok": true,
+   "stages": {
+    "lms_login": 72.1,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 190.5
+   },
+   "err": "",
+   "user": "stu_p4_011",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 270.9
+  },
+  {
+   "wid": 164,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.8,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 192.3
+   },
+   "err": "",
+   "user": "stu_p5_011",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.9
+  },
+  {
+   "wid": 165,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.5,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_p6_011",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.7
+  },
+  {
+   "wid": 166,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.1,
+    "courseware_jump": 8.4,
+    "hub_oauth_lab": 192.0
+   },
+   "err": "",
+   "user": "stu_b1_011",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.3
+  },
+  {
+   "wid": 167,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.1,
+    "courseware_jump": 6.6,
+    "hub_oauth_lab": 191.6
+   },
+   "err": "",
+   "user": "stu_b2_011",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.4
+  },
+  {
+   "wid": 168,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.9,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 191.2
+   },
+   "err": "",
+   "user": "stu_b3_011",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.6
+  },
+  {
+   "wid": 169,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.2,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 191.2
+   },
+   "err": "",
+   "user": "stu_b4_011",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.1
+  },
+  {
+   "wid": 170,
+   "ok": true,
+   "stages": {
+    "lms_login": 76.9,
+    "courseware_jump": 4.9,
+    "hub_oauth_lab": 190.2
+   },
+   "err": "",
+   "user": "stu_b5_011",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 273.5
+  },
+  {
+   "wid": 171,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.1,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 191.4
+   },
+   "err": "",
+   "user": "stu_b6_011",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.4
+  },
+  {
+   "wid": 172,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.2,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 191.4
+   },
+   "err": "",
+   "user": "stu_a1_011",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.7
+  },
+  {
+   "wid": 173,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.0,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 191.7
+   },
+   "err": "",
+   "user": "stu_a2_011",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.2
+  },
+  {
+   "wid": 174,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.0,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 191.5
+   },
+   "err": "",
+   "user": "stu_a3_011",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.9
+  },
+  {
+   "wid": 175,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.6,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 199.3
+   },
+   "err": "",
+   "user": "stu_a4_011",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.1
+  },
+  {
+   "wid": 176,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.4,
+    "courseware_jump": 4.9,
+    "hub_oauth_lab": 198.6
+   },
+   "err": "",
+   "user": "stu_p1_012",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.6
+  },
+  {
+   "wid": 177,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.0,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 199.4
+   },
+   "err": "",
+   "user": "stu_p2_012",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.6
+  },
+  {
+   "wid": 178,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.5,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 196.8
+   },
+   "err": "",
+   "user": "stu_p3_012",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.6
+  },
+  {
+   "wid": 179,
+   "ok": false,
+   "stages": {
+    "lms_login": 9.2,
+    "courseware_jump": 6.9
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=mDKQgYpkIKWyKJhdrazQd1nhYuvo86&state=eyJzdGF0ZV",
+   "user": "stu_p4_012",
+   "course": "P4",
+   "week": 1,
+   "duration": 213.8
+  },
+  {
+   "wid": 180,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.9,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 203.8
+   },
+   "err": "",
+   "user": "stu_p5_012",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.7
+  },
+  {
+   "wid": 181,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.5,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 203.7
+   },
+   "err": "",
+   "user": "stu_p6_012",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.5
+  },
+  {
+   "wid": 182,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.6,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 203.8
+   },
+   "err": "",
+   "user": "stu_b1_012",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 223.3
+  },
+  {
+   "wid": 183,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.0,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 202.3
+   },
+   "err": "",
+   "user": "stu_b2_012",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.6
+  },
+  {
+   "wid": 184,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.5,
+    "courseware_jump": 11.0,
+    "hub_oauth_lab": 196.5
+   },
+   "err": "",
+   "user": "stu_b3_012",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 227.9
+  },
+  {
+   "wid": 185,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_b4_012",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.5
+  },
+  {
+   "wid": 186,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.9,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 200.5
+   },
+   "err": "",
+   "user": "stu_b5_012",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.3
+  },
+  {
+   "wid": 187,
+   "ok": true,
+   "stages": {
+    "lms_login": 21.6,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 195.6
+   },
+   "err": "",
+   "user": "stu_b6_012",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 228.1
+  },
+  {
+   "wid": 188,
+   "ok": true,
+   "stages": {
+    "lms_login": 21.2,
+    "courseware_jump": 10.7,
+    "hub_oauth_lab": 195.4
+   },
+   "err": "",
+   "user": "stu_a1_012",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 228.3
+  },
+  {
+   "wid": 189,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.9,
+    "courseware_jump": 10.7,
+    "hub_oauth_lab": 196.2
+   },
+   "err": "",
+   "user": "stu_a2_012",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 228.8
+  },
+  {
+   "wid": 190,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.3,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 199.2
+   },
+   "err": "",
+   "user": "stu_a3_012",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.0
+  },
+  {
+   "wid": 191,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.1,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 199.0
+   },
+   "err": "",
+   "user": "stu_a4_012",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 221.4
+  },
+  {
+   "wid": 192,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.7,
+    "courseware_jump": 11.8,
+    "hub_oauth_lab": 195.7
+   },
+   "err": "",
+   "user": "stu_p1_013",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 227.1
+  },
+  {
+   "wid": 193,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.9,
+    "courseware_jump": 11.9,
+    "hub_oauth_lab": 195.5
+   },
+   "err": "",
+   "user": "stu_p2_013",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.2
+  },
+  {
+   "wid": 194,
+   "ok": true,
+   "stages": {
+    "lms_login": 72.8,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_p3_013",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 269.3
+  },
+  {
+   "wid": 195,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 12.0,
+    "hub_oauth_lab": 195.7
+   },
+   "err": "",
+   "user": "stu_p4_013",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 227.0
+  },
+  {
+   "wid": 196,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 200.0
+   },
+   "err": "",
+   "user": "stu_p5_013",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.3
+  },
+  {
+   "wid": 197,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.4,
+    "courseware_jump": 11.5,
+    "hub_oauth_lab": 195.4
+   },
+   "err": "",
+   "user": "stu_p6_013",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.1
+  },
+  {
+   "wid": 198,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.8,
+    "courseware_jump": 11.9,
+    "hub_oauth_lab": 196.0
+   },
+   "err": "",
+   "user": "stu_b1_013",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.4
+  },
+  {
+   "wid": 199,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.0,
+    "courseware_jump": 11.7,
+    "hub_oauth_lab": 196.4
+   },
+   "err": "",
+   "user": "stu_b2_013",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.8
+  },
+  {
+   "wid": 200,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 6.1,
+    "hub_oauth_lab": 197.5
+   },
+   "err": "",
+   "user": "stu_b3_013",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 209.0
+  },
+  {
+   "wid": 201,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 5.6,
+    "hub_oauth_lab": 196.4
+   },
+   "err": "",
+   "user": "stu_b4_013",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 207.4
+  },
+  {
+   "wid": 202,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.3,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 197.6
+   },
+   "err": "",
+   "user": "stu_b5_013",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.1
+  },
+  {
+   "wid": 203,
+   "ok": true,
+   "stages": {
+    "lms_login": 69.6,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 193.7
+   },
+   "err": "",
+   "user": "stu_b6_013",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 268.9
+  },
+  {
+   "wid": 204,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 5.5,
+    "hub_oauth_lab": 200.0
+   },
+   "err": "",
+   "user": "stu_a1_013",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.5
+  },
+  {
+   "wid": 205,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.1,
+    "courseware_jump": 6.6,
+    "hub_oauth_lab": 197.8
+   },
+   "err": "",
+   "user": "stu_a2_013",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.3
+  },
+  {
+   "wid": 206,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.0,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 198.1
+   },
+   "err": "",
+   "user": "stu_a3_013",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.5
+  },
+  {
+   "wid": 207,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.3,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 195.0
+   },
+   "err": "",
+   "user": "stu_a4_013",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.2
+  },
+  {
+   "wid": 208,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.7,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 194.8
+   },
+   "err": "",
+   "user": "stu_p1_014",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.8
+  },
+  {
+   "wid": 209,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.9,
+    "courseware_jump": 13.5,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_p2_014",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.2
+  },
+  {
+   "wid": 210,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.6,
+    "courseware_jump": 10.5,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_p3_014",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.1
+  },
+  {
+   "wid": 211,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 195.9
+   },
+   "err": "",
+   "user": "stu_p4_014",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.5
+  },
+  {
+   "wid": 212,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.9,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 194.8
+   },
+   "err": "",
+   "user": "stu_p5_014",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.1
+  },
+  {
+   "wid": 213,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 194.5
+   },
+   "err": "",
+   "user": "stu_p6_014",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.1
+  },
+  {
+   "wid": 214,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.1,
+    "courseware_jump": 12.7,
+    "hub_oauth_lab": 193.0
+   },
+   "err": "",
+   "user": "stu_b1_014",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.4
+  },
+  {
+   "wid": 215,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.3,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 191.8
+   },
+   "err": "",
+   "user": "stu_b2_014",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 268.3
+  },
+  {
+   "wid": 216,
+   "ok": false,
+   "stages": {
+    "lms_login": 12.3,
+    "courseware_jump": 11.5
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=z7mWIdhuRO37E9t8wIdNCIz23yLZkj&state=eyJzdGF0ZV",
+   "user": "stu_b3_014",
+   "course": "B3",
+   "week": 2,
+   "duration": 217.8
+  },
+  {
+   "wid": 217,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.0,
+    "courseware_jump": 11.7,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_b4_014",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.1
+  },
+  {
+   "wid": 218,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.8,
+    "courseware_jump": 11.2,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_b5_014",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.7
+  },
+  {
+   "wid": 219,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 10.4,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_b6_014",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.8
+  },
+  {
+   "wid": 220,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.2,
+    "courseware_jump": 11.0,
+    "hub_oauth_lab": 194.4
+   },
+   "err": "",
+   "user": "stu_a1_014",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.3
+  },
+  {
+   "wid": 221,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.8,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 193.1
+   },
+   "err": "",
+   "user": "stu_a2_014",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.6
+  },
+  {
+   "wid": 222,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.7,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 194.0
+   },
+   "err": "",
+   "user": "stu_a3_014",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.2
+  },
+  {
+   "wid": 223,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.2,
+    "courseware_jump": 10.8,
+    "hub_oauth_lab": 193.7
+   },
+   "err": "",
+   "user": "stu_a4_014",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.4
+  },
+  {
+   "wid": 224,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.1,
+    "courseware_jump": 10.7,
+    "hub_oauth_lab": 194.4
+   },
+   "err": "",
+   "user": "stu_p1_015",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 225,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 197.9
+   },
+   "err": "",
+   "user": "stu_p2_015",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.4
+  },
+  {
+   "wid": 226,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 197.9
+   },
+   "err": "",
+   "user": "stu_p3_015",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.5
+  },
+  {
+   "wid": 227,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 197.7
+   },
+   "err": "",
+   "user": "stu_p4_015",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.0
+  },
+  {
+   "wid": 228,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.4,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 195.3
+   },
+   "err": "",
+   "user": "stu_p5_015",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.7
+  },
+  {
+   "wid": 229,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 5.3,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_p6_015",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.6
+  },
+  {
+   "wid": 230,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.7,
+    "courseware_jump": 5.4,
+    "hub_oauth_lab": 196.5
+   },
+   "err": "",
+   "user": "stu_b1_015",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.9
+  },
+  {
+   "wid": 231,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 5.4,
+    "hub_oauth_lab": 197.1
+   },
+   "err": "",
+   "user": "stu_b2_015",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.4
+  },
+  {
+   "wid": 232,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.5,
+    "courseware_jump": 10.3,
+    "hub_oauth_lab": 193.6
+   },
+   "err": "",
+   "user": "stu_b3_015",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.4
+  },
+  {
+   "wid": 233,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 194.9
+   },
+   "err": "",
+   "user": "stu_b4_015",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.0
+  },
+  {
+   "wid": 234,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.0,
+    "courseware_jump": 10.8,
+    "hub_oauth_lab": 193.0
+   },
+   "err": "",
+   "user": "stu_b5_015",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.9
+  },
+  {
+   "wid": 235,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.7,
+    "courseware_jump": 11.9,
+    "hub_oauth_lab": 193.2
+   },
+   "err": "",
+   "user": "stu_b6_015",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.0
+  },
+  {
+   "wid": 236,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.9,
+    "courseware_jump": 11.3,
+    "hub_oauth_lab": 192.6
+   },
+   "err": "",
+   "user": "stu_a1_015",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.2
+  },
+  {
+   "wid": 237,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.0,
+    "courseware_jump": 12.4,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_a2_015",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.5
+  },
+  {
+   "wid": 238,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.9,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 193.3
+   },
+   "err": "",
+   "user": "stu_a3_015",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 270.4
+  },
+  {
+   "wid": 239,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.5,
+    "courseware_jump": 5.9,
+    "hub_oauth_lab": 191.8
+   },
+   "err": "",
+   "user": "stu_a4_015",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.9
+  },
+  {
+   "wid": 240,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.9,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_p1_016",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.6
+  },
+  {
+   "wid": 241,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.7,
+    "courseware_jump": 7.2,
+    "hub_oauth_lab": 191.0
+   },
+   "err": "",
+   "user": "stu_p2_016",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.6
+  },
+  {
+   "wid": 242,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.3,
+    "courseware_jump": 10.3,
+    "hub_oauth_lab": 193.6
+   },
+   "err": "",
+   "user": "stu_p3_016",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.1
+  },
+  {
+   "wid": 243,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.7,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 191.0
+   },
+   "err": "",
+   "user": "stu_p4_016",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.7
+  },
+  {
+   "wid": 244,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.3,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_p5_016",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.5
+  },
+  {
+   "wid": 245,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.3,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_p6_016",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.3
+  },
+  {
+   "wid": 246,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.3,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_b1_016",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.9
+  },
+  {
+   "wid": 247,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.9,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_b2_016",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.3
+  },
+  {
+   "wid": 248,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.2,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 191.9
+   },
+   "err": "",
+   "user": "stu_b3_016",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 211.9
+  },
+  {
+   "wid": 249,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.8,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_b4_016",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.2
+  },
+  {
+   "wid": 250,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_b5_016",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 206.8
+  },
+  {
+   "wid": 251,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.3,
+    "courseware_jump": 11.4,
+    "hub_oauth_lab": 193.0
+   },
+   "err": "",
+   "user": "stu_b6_016",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.4
+  },
+  {
+   "wid": 252,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.6,
+    "courseware_jump": 10.9,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_a1_016",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.7
+  },
+  {
+   "wid": 253,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.7,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_a2_016",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.5
+  },
+  {
+   "wid": 254,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_a3_016",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 206.1
+  },
+  {
+   "wid": 255,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.5,
+    "courseware_jump": 10.2,
+    "hub_oauth_lab": 193.4
+   },
+   "err": "",
+   "user": "stu_a4_016",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.0
+  },
+  {
+   "wid": 256,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 11.1,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_p1_017",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.8
+  },
+  {
+   "wid": 257,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 11.0,
+    "hub_oauth_lab": 194.4
+   },
+   "err": "",
+   "user": "stu_p2_017",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.8
+  },
+  {
+   "wid": 258,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.5,
+    "courseware_jump": 11.3,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_p3_017",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.8
+  },
+  {
+   "wid": 259,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.8,
+    "courseware_jump": 9.4,
+    "hub_oauth_lab": 193.0
+   },
+   "err": "",
+   "user": "stu_p4_017",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.4
+  },
+  {
+   "wid": 260,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 9.7,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_p5_017",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.3
+  },
+  {
+   "wid": 261,
+   "ok": true,
+   "stages": {
+    "lms_login": 71.8,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 191.3
+   },
+   "err": "",
+   "user": "stu_p6_017",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 269.2
+  },
+  {
+   "wid": 262,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.9,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 191.7
+   },
+   "err": "",
+   "user": "stu_b1_017",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 269.0
+  },
+  {
+   "wid": 263,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.1,
+    "courseware_jump": 11.0,
+    "hub_oauth_lab": 191.3
+   },
+   "err": "",
+   "user": "stu_b2_017",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.1
+  },
+  {
+   "wid": 264,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.5,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 193.2
+   },
+   "err": "",
+   "user": "stu_b3_017",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.1
+  },
+  {
+   "wid": 265,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.7,
+    "courseware_jump": 10.9,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_b4_017",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.1
+  },
+  {
+   "wid": 266,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 11.6,
+    "hub_oauth_lab": 191.6
+   },
+   "err": "",
+   "user": "stu_b5_017",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 267,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.8,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 192.2
+   },
+   "err": "",
+   "user": "stu_b6_017",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.2
+  },
+  {
+   "wid": 268,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.7,
+    "courseware_jump": 9.5,
+    "hub_oauth_lab": 191.8
+   },
+   "err": "",
+   "user": "stu_a1_017",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.6
+  },
+  {
+   "wid": 269,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.6,
+    "courseware_jump": 9.7,
+    "hub_oauth_lab": 191.7
+   },
+   "err": "",
+   "user": "stu_a2_017",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.5
+  },
+  {
+   "wid": 270,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.3,
+    "courseware_jump": 11.1,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_a3_017",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.9
+  },
+  {
+   "wid": 271,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.2,
+    "courseware_jump": 10.5,
+    "hub_oauth_lab": 191.2
+   },
+   "err": "",
+   "user": "stu_a4_017",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.3
+  },
+  {
+   "wid": 272,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.2,
+    "courseware_jump": 10.5,
+    "hub_oauth_lab": 191.8
+   },
+   "err": "",
+   "user": "stu_p1_018",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.9
+  },
+  {
+   "wid": 273,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.9,
+    "courseware_jump": 10.5,
+    "hub_oauth_lab": 191.5
+   },
+   "err": "",
+   "user": "stu_p2_018",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.3
+  },
+  {
+   "wid": 274,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.9,
+    "courseware_jump": 10.6,
+    "hub_oauth_lab": 191.6
+   },
+   "err": "",
+   "user": "stu_p3_018",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.3
+  },
+  {
+   "wid": 275,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 5.4,
+    "hub_oauth_lab": 200.0
+   },
+   "err": "",
+   "user": "stu_p4_018",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.4
+  },
+  {
+   "wid": 276,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.4,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 201.1
+   },
+   "err": "",
+   "user": "stu_p5_018",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.1
+  },
+  {
+   "wid": 277,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 6.6,
+    "hub_oauth_lab": 203.4
+   },
+   "err": "",
+   "user": "stu_p6_018",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.4
+  },
+  {
+   "wid": 278,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 203.2
+   },
+   "err": "",
+   "user": "stu_b1_018",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.7
+  },
+  {
+   "wid": 279,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 6.1,
+    "hub_oauth_lab": 201.5
+   },
+   "err": "",
+   "user": "stu_b2_018",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.3
+  },
+  {
+   "wid": 280,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 203.7
+   },
+   "err": "",
+   "user": "stu_b3_018",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.1
+  },
+  {
+   "wid": 281,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 10.3,
+    "hub_oauth_lab": 202.3
+   },
+   "err": "",
+   "user": "stu_b4_018",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.4
+  },
+  {
+   "wid": 282,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.0,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_b5_018",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.6
+  },
+  {
+   "wid": 283,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 9.3,
+    "hub_oauth_lab": 202.4
+   },
+   "err": "",
+   "user": "stu_b6_018",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.0
+  },
+  {
+   "wid": 284,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.7,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 190.6
+   },
+   "err": "",
+   "user": "stu_a1_018",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 267.5
+  },
+  {
+   "wid": 285,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 202.2
+   },
+   "err": "",
+   "user": "stu_a2_018",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 286,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.5,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 202.9
+   },
+   "err": "",
+   "user": "stu_a3_018",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.7
+  },
+  {
+   "wid": 287,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 201.6
+   },
+   "err": "",
+   "user": "stu_a4_018",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 288,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.3,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 194.0
+   },
+   "err": "",
+   "user": "stu_p1_019",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.1
+  },
+  {
+   "wid": 289,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.8,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 195.5
+   },
+   "err": "",
+   "user": "stu_p2_019",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.4
+  },
+  {
+   "wid": 290,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.2,
+    "courseware_jump": 10.2,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_p3_019",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.9
+  },
+  {
+   "wid": 291,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.8,
+    "courseware_jump": 11.6,
+    "hub_oauth_lab": 195.6
+   },
+   "err": "",
+   "user": "stu_p4_019",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.9
+  },
+  {
+   "wid": 292,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.6,
+    "courseware_jump": 10.2,
+    "hub_oauth_lab": 196.8
+   },
+   "err": "",
+   "user": "stu_p5_019",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.6
+  },
+  {
+   "wid": 293,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.9,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 195.3
+   },
+   "err": "",
+   "user": "stu_p6_019",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.3
+  },
+  {
+   "wid": 294,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.8,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 195.2
+   },
+   "err": "",
+   "user": "stu_b1_019",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.0
+  },
+  {
+   "wid": 295,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.4,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 195.6
+   },
+   "err": "",
+   "user": "stu_b2_019",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.9
+  },
+  {
+   "wid": 296,
+   "ok": true,
+   "stages": {
+    "lms_login": 22.0,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 194.7
+   },
+   "err": "",
+   "user": "stu_b3_019",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.3
+  },
+  {
+   "wid": 297,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.2,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 194.8
+   },
+   "err": "",
+   "user": "stu_b4_019",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.5
+  },
+  {
+   "wid": 298,
+   "ok": false,
+   "stages": {
+    "lms_login": 20.2,
+    "courseware_jump": 7.7
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=BfhrGdDunteAHqDfsfRqX5ngy57jez&state=eyJzdGF0ZV",
+   "user": "stu_b5_019",
+   "course": "B5",
+   "week": 1,
+   "duration": 224.2
+  },
+  {
+   "wid": 299,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.2,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 195.3
+   },
+   "err": "",
+   "user": "stu_b6_019",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.1
+  },
+  {
+   "wid": 300,
+   "ok": false,
+   "stages": {
+    "lms_login": 13.5,
+    "courseware_jump": 7.1
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=wc6epHWG0BGRgBOyaIR5Yp06FINFHf&state=eyJzdGF0ZV",
+   "user": "stu_a1_019",
+   "course": "A1",
+   "week": 1,
+   "duration": 215.1
+  },
+  {
+   "wid": 301,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.1,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 198.6
+   },
+   "err": "",
+   "user": "stu_a2_019",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.8
+  },
+  {
+   "wid": 302,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.1,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 199.2
+   },
+   "err": "",
+   "user": "stu_a3_019",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.0
+  },
+  {
+   "wid": 303,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.9,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 195.1
+   },
+   "err": "",
+   "user": "stu_a4_019",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.2
+  },
+  {
+   "wid": 304,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.5,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 199.1
+   },
+   "err": "",
+   "user": "stu_p1_020",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.7
+  },
+  {
+   "wid": 305,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.6,
+    "courseware_jump": 9.7,
+    "hub_oauth_lab": 194.0
+   },
+   "err": "",
+   "user": "stu_p2_020",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 306,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 194.5
+   },
+   "err": "",
+   "user": "stu_p3_020",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.9
+  },
+  {
+   "wid": 307,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 10.0,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_p4_020",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.7
+  },
+  {
+   "wid": 308,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 10.8,
+    "hub_oauth_lab": 194.1
+   },
+   "err": "",
+   "user": "stu_p5_020",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.9
+  },
+  {
+   "wid": 309,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.9,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_p6_020",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 310,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.2,
+    "courseware_jump": 5.2,
+    "hub_oauth_lab": 191.2
+   },
+   "err": "",
+   "user": "stu_b1_020",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 267.9
+  },
+  {
+   "wid": 311,
+   "ok": false,
+   "stages": {
+    "lms_login": 8.1,
+    "courseware_jump": 5.8
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=1N8el1HULlHpy1IA34Iyr4Q3Qjp8XI&state=eyJzdGF0ZV",
+   "user": "stu_b2_020",
+   "course": "B2",
+   "week": 2,
+   "duration": 209.7
+  },
+  {
+   "wid": 312,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.5,
+    "courseware_jump": 5.4,
+    "hub_oauth_lab": 196.4
+   },
+   "err": "",
+   "user": "stu_b3_020",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.9
+  },
+  {
+   "wid": 313,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.4,
+    "courseware_jump": 9.5,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_b4_020",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.5
+  },
+  {
+   "wid": 314,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.1,
+    "courseware_jump": 9.4,
+    "hub_oauth_lab": 194.3
+   },
+   "err": "",
+   "user": "stu_b5_020",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.8
+  },
+  {
+   "wid": 315,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.9,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_b6_020",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.5
+  },
+  {
+   "wid": 316,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.2,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 194.4
+   },
+   "err": "",
+   "user": "stu_a1_020",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 317,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.1,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 193.9
+   },
+   "err": "",
+   "user": "stu_a2_020",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.6
+  },
+  {
+   "wid": 318,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.8,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_a3_020",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.8
+  },
+  {
+   "wid": 319,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.6,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 191.7
+   },
+   "err": "",
+   "user": "stu_a4_020",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.0
+  },
+  {
+   "wid": 320,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.4,
+    "courseware_jump": 6.2,
+    "hub_oauth_lab": 193.6
+   },
+   "err": "",
+   "user": "stu_p1_021",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.2
+  },
+  {
+   "wid": 321,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.0,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_p2_021",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.5
+  },
+  {
+   "wid": 322,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.6,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 191.1
+   },
+   "err": "",
+   "user": "stu_p3_021",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.1
+  },
+  {
+   "wid": 323,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.8,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 191.4
+   },
+   "err": "",
+   "user": "stu_p4_021",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.8
+  },
+  {
+   "wid": 324,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.1,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_p5_021",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.2
+  },
+  {
+   "wid": 325,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.9,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 206.0
+   },
+   "err": "",
+   "user": "stu_p6_021",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 221.3
+  },
+  {
+   "wid": 326,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.7,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 206.6
+   },
+   "err": "",
+   "user": "stu_b1_021",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 221.8
+  },
+  {
+   "wid": 327,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.4,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 206.2
+   },
+   "err": "",
+   "user": "stu_b2_021",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 221.6
+  },
+  {
+   "wid": 328,
+   "ok": false,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 7.0
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=ZNVh1uwMvbRdbh3KsHeT3tAneu0ENf&state=eyJzdGF0ZV",
+   "user": "stu_b3_021",
+   "course": "B3",
+   "week": 1,
+   "duration": 217.1
+  },
+  {
+   "wid": 329,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.5,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 205.8
+   },
+   "err": "",
+   "user": "stu_b4_021",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.7
+  },
+  {
+   "wid": 330,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 206.6
+   },
+   "err": "",
+   "user": "stu_b5_021",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.4
+  },
+  {
+   "wid": 331,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 205.6
+   },
+   "err": "",
+   "user": "stu_b6_021",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.8
+  },
+  {
+   "wid": 332,
+   "ok": true,
+   "stages": {
+    "lms_login": 71.2,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 190.6
+   },
+   "err": "",
+   "user": "stu_a1_021",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 267.6
+  },
+  {
+   "wid": 333,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.2,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 205.7
+   },
+   "err": "",
+   "user": "stu_a2_021",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.7
+  },
+  {
+   "wid": 334,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.7,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 205.5
+   },
+   "err": "",
+   "user": "stu_a3_021",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.8
+  },
+  {
+   "wid": 335,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 205.8
+   },
+   "err": "",
+   "user": "stu_a4_021",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 220.2
+  },
+  {
+   "wid": 336,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.7,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 203.0
+   },
+   "err": "",
+   "user": "stu_p1_022",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 220.0
+  },
+  {
+   "wid": 337,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.5,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 201.6
+   },
+   "err": "",
+   "user": "stu_p2_022",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.2
+  },
+  {
+   "wid": 338,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.0,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 202.0
+   },
+   "err": "",
+   "user": "stu_p3_022",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.1
+  },
+  {
+   "wid": 339,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.8,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 202.1
+   },
+   "err": "",
+   "user": "stu_p4_022",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.7
+  },
+  {
+   "wid": 340,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.3,
+    "courseware_jump": 12.4,
+    "hub_oauth_lab": 192.8
+   },
+   "err": "",
+   "user": "stu_p5_022",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.0
+  },
+  {
+   "wid": 341,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.5,
+    "courseware_jump": 11.2,
+    "hub_oauth_lab": 193.2
+   },
+   "err": "",
+   "user": "stu_p6_022",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.3
+  },
+  {
+   "wid": 342,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.9,
+    "courseware_jump": 11.9,
+    "hub_oauth_lab": 193.3
+   },
+   "err": "",
+   "user": "stu_b1_022",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 224.2
+  },
+  {
+   "wid": 343,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.8,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 195.8
+   },
+   "err": "",
+   "user": "stu_b2_022",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 344,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.2,
+    "courseware_jump": 10.6,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_b3_022",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 223.8
+  },
+  {
+   "wid": 345,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.5,
+    "courseware_jump": 11.5,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_b4_022",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 223.1
+  },
+  {
+   "wid": 346,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.2,
+    "courseware_jump": 10.0,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_b5_022",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 223.3
+  },
+  {
+   "wid": 347,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.9,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 193.4
+   },
+   "err": "",
+   "user": "stu_b6_022",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 223.0
+  },
+  {
+   "wid": 348,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.4,
+    "courseware_jump": 10.2,
+    "hub_oauth_lab": 193.8
+   },
+   "err": "",
+   "user": "stu_a1_022",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.9
+  },
+  {
+   "wid": 349,
+   "ok": true,
+   "stages": {
+    "lms_login": 19.3,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 193.3
+   },
+   "err": "",
+   "user": "stu_a2_022",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.6
+  },
+  {
+   "wid": 350,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.4,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 199.1
+   },
+   "err": "",
+   "user": "stu_a3_022",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 211.4
+  },
+  {
+   "wid": 351,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 198.3
+   },
+   "err": "",
+   "user": "stu_a4_022",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 211.4
+  },
+  {
+   "wid": 352,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 197.0
+   },
+   "err": "",
+   "user": "stu_p1_023",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.4
+  },
+  {
+   "wid": 353,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 9.0,
+    "hub_oauth_lab": 197.2
+   },
+   "err": "",
+   "user": "stu_p2_023",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.7
+  },
+  {
+   "wid": 354,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_p3_023",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.0
+  },
+  {
+   "wid": 355,
+   "ok": true,
+   "stages": {
+    "lms_login": 72.1,
+    "courseware_jump": 5.1,
+    "hub_oauth_lab": 193.1
+   },
+   "err": "",
+   "user": "stu_p4_023",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 271.4
+  },
+  {
+   "wid": 356,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 197.0
+   },
+   "err": "",
+   "user": "stu_p5_023",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.6
+  },
+  {
+   "wid": 357,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 9.0,
+    "hub_oauth_lab": 197.6
+   },
+   "err": "",
+   "user": "stu_p6_023",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.7
+  },
+  {
+   "wid": 358,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.4,
+    "courseware_jump": 4.8,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_b1_023",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 267.3
+  },
+  {
+   "wid": 359,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 196.3
+   },
+   "err": "",
+   "user": "stu_b2_023",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.5
+  },
+  {
+   "wid": 360,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_b3_023",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 210.9
+  },
+  {
+   "wid": 361,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.7,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 200.3
+   },
+   "err": "",
+   "user": "stu_b4_023",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.5
+  },
+  {
+   "wid": 362,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_b5_023",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.2
+  },
+  {
+   "wid": 363,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 199.1
+   },
+   "err": "",
+   "user": "stu_b6_023",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.5
+  },
+  {
+   "wid": 364,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 8.4,
+    "hub_oauth_lab": 199.3
+   },
+   "err": "",
+   "user": "stu_a1_023",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.5
+  },
+  {
+   "wid": 365,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.4,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 201.2
+   },
+   "err": "",
+   "user": "stu_a2_023",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.6
+  },
+  {
+   "wid": 366,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.5,
+    "courseware_jump": 6.1,
+    "hub_oauth_lab": 198.5
+   },
+   "err": "",
+   "user": "stu_a3_023",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.3
+  },
+  {
+   "wid": 367,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.5,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 198.2
+   },
+   "err": "",
+   "user": "stu_a4_023",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.1
+  },
+  {
+   "wid": 368,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.5,
+    "courseware_jump": 7.2,
+    "hub_oauth_lab": 197.4
+   },
+   "err": "",
+   "user": "stu_p1_024",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.0
+  },
+  {
+   "wid": 369,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.0,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 196.3
+   },
+   "err": "",
+   "user": "stu_p2_024",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 214.8
+  },
+  {
+   "wid": 370,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.1,
+    "courseware_jump": 6.5,
+    "hub_oauth_lab": 198.7
+   },
+   "err": "",
+   "user": "stu_p3_024",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.7
+  },
+  {
+   "wid": 371,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.7,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 197.4
+   },
+   "err": "",
+   "user": "stu_p4_024",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.4
+  },
+  {
+   "wid": 372,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.6,
+    "courseware_jump": 7.2,
+    "hub_oauth_lab": 195.0
+   },
+   "err": "",
+   "user": "stu_p5_024",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.0
+  },
+  {
+   "wid": 373,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.4,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 198.5
+   },
+   "err": "",
+   "user": "stu_p6_024",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.8
+  },
+  {
+   "wid": 374,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.6,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 195.9
+   },
+   "err": "",
+   "user": "stu_b1_024",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.7
+  },
+  {
+   "wid": 375,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 206.5
+   },
+   "err": "",
+   "user": "stu_b2_024",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.0
+  },
+  {
+   "wid": 376,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 202.9
+   },
+   "err": "",
+   "user": "stu_b3_024",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 214.9
+  },
+  {
+   "wid": 377,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.0,
+    "courseware_jump": 6.0,
+    "hub_oauth_lab": 205.2
+   },
+   "err": "",
+   "user": "stu_b4_024",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.0
+  },
+  {
+   "wid": 378,
+   "ok": true,
+   "stages": {
+    "lms_login": 71.8,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 192.6
+   },
+   "err": "",
+   "user": "stu_b5_024",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 270.0
+  },
+  {
+   "wid": 379,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.8,
+    "courseware_jump": 6.0,
+    "hub_oauth_lab": 205.1
+   },
+   "err": "",
+   "user": "stu_b6_024",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 380,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.7,
+    "courseware_jump": 5.5,
+    "hub_oauth_lab": 205.8
+   },
+   "err": "",
+   "user": "stu_a1_024",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.0
+  },
+  {
+   "wid": 381,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.7,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 204.2
+   },
+   "err": "",
+   "user": "stu_a2_024",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.4
+  },
+  {
+   "wid": 382,
+   "ok": true,
+   "stages": {
+    "lms_login": 71.9,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 192.6
+   },
+   "err": "",
+   "user": "stu_a3_024",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 270.3
+  },
+  {
+   "wid": 383,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.4,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 201.9
+   },
+   "err": "",
+   "user": "stu_a4_024",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.7
+  },
+  {
+   "wid": 384,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.7,
+    "courseware_jump": 6.0,
+    "hub_oauth_lab": 202.7
+   },
+   "err": "",
+   "user": "stu_p1_025",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.7
+  },
+  {
+   "wid": 385,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.3,
+    "courseware_jump": 6.6,
+    "hub_oauth_lab": 202.1
+   },
+   "err": "",
+   "user": "stu_p2_025",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.4
+  },
+  {
+   "wid": 386,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.9,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 197.8
+   },
+   "err": "",
+   "user": "stu_p3_025",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.6
+  },
+  {
+   "wid": 387,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.6,
+    "courseware_jump": 10.9,
+    "hub_oauth_lab": 198.7
+   },
+   "err": "",
+   "user": "stu_p4_025",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.6
+  },
+  {
+   "wid": 388,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.5,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_p5_025",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.4
+  },
+  {
+   "wid": 389,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.1,
+    "courseware_jump": 9.3,
+    "hub_oauth_lab": 197.4
+   },
+   "err": "",
+   "user": "stu_p6_025",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 221.2
+  },
+  {
+   "wid": 390,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.6,
+    "courseware_jump": 7.2,
+    "hub_oauth_lab": 200.7
+   },
+   "err": "",
+   "user": "stu_b1_025",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.1
+  },
+  {
+   "wid": 391,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.3,
+    "courseware_jump": 10.7,
+    "hub_oauth_lab": 198.1
+   },
+   "err": "",
+   "user": "stu_b2_025",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.6
+  },
+  {
+   "wid": 392,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.2,
+    "courseware_jump": 10.2,
+    "hub_oauth_lab": 196.6
+   },
+   "err": "",
+   "user": "stu_b3_025",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.6
+  },
+  {
+   "wid": 393,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.1,
+    "courseware_jump": 9.3,
+    "hub_oauth_lab": 198.1
+   },
+   "err": "",
+   "user": "stu_b4_025",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.2
+  },
+  {
+   "wid": 394,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.1,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 197.0
+   },
+   "err": "",
+   "user": "stu_b5_025",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.9
+  },
+  {
+   "wid": 395,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.4,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_b6_025",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.7
+  },
+  {
+   "wid": 396,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.5,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 196.7
+   },
+   "err": "",
+   "user": "stu_a1_025",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 223.0
+  },
+  {
+   "wid": 397,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.7,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 196.8
+   },
+   "err": "",
+   "user": "stu_a2_025",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.7
+  },
+  {
+   "wid": 398,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.0,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 196.9
+   },
+   "err": "",
+   "user": "stu_a3_025",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.9
+  },
+  {
+   "wid": 399,
+   "ok": true,
+   "stages": {
+    "lms_login": 16.1,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 196.8
+   },
+   "err": "",
+   "user": "stu_a4_025",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.6
+  },
+  {
+   "wid": 400,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 198.1
+   },
+   "err": "",
+   "user": "stu_p1_026",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.0
+  },
+  {
+   "wid": 401,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 5.4,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_p2_026",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 208.4
+  },
+  {
+   "wid": 402,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.1,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 199.1
+   },
+   "err": "",
+   "user": "stu_p3_026",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.8
+  },
+  {
+   "wid": 403,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.3,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 198.2
+   },
+   "err": "",
+   "user": "stu_p4_026",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.7
+  },
+  {
+   "wid": 404,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 7.4,
+    "hub_oauth_lab": 199.6
+   },
+   "err": "",
+   "user": "stu_p5_026",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.1
+  },
+  {
+   "wid": 405,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.0,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 199.7
+   },
+   "err": "",
+   "user": "stu_p6_026",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 406,
+   "ok": true,
+   "stages": {
+    "lms_login": 10.1,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 201.0
+   },
+   "err": "",
+   "user": "stu_b1_026",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.9
+  },
+  {
+   "wid": 407,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.8,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 197.9
+   },
+   "err": "",
+   "user": "stu_b2_026",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.7
+  },
+  {
+   "wid": 408,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.5,
+    "courseware_jump": 6.6,
+    "hub_oauth_lab": 198.9
+   },
+   "err": "",
+   "user": "stu_b3_026",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.1
+  },
+  {
+   "wid": 409,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.4,
+    "courseware_jump": 6.9,
+    "hub_oauth_lab": 203.4
+   },
+   "err": "",
+   "user": "stu_b4_026",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 410,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.8,
+    "courseware_jump": 6.3,
+    "hub_oauth_lab": 197.9
+   },
+   "err": "",
+   "user": "stu_b5_026",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.2
+  },
+  {
+   "wid": 411,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.0,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_b6_026",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.0
+  },
+  {
+   "wid": 412,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.3,
+    "courseware_jump": 6.3,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_a1_026",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 268.7
+  },
+  {
+   "wid": 413,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.2,
+    "courseware_jump": 7.0,
+    "hub_oauth_lab": 202.2
+   },
+   "err": "",
+   "user": "stu_a2_026",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.8
+  },
+  {
+   "wid": 414,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.1,
+    "courseware_jump": 11.3,
+    "hub_oauth_lab": 194.7
+   },
+   "err": "",
+   "user": "stu_a3_026",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 220.5
+  },
+  {
+   "wid": 415,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.4,
+    "courseware_jump": 11.6,
+    "hub_oauth_lab": 195.1
+   },
+   "err": "",
+   "user": "stu_a4_026",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 221.7
+  },
+  {
+   "wid": 416,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.0,
+    "courseware_jump": 12.5,
+    "hub_oauth_lab": 198.6
+   },
+   "err": "",
+   "user": "stu_p1_027",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.0
+  },
+  {
+   "wid": 417,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.1,
+    "courseware_jump": 12.6,
+    "hub_oauth_lab": 197.4
+   },
+   "err": "",
+   "user": "stu_p2_027",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.2
+  },
+  {
+   "wid": 418,
+   "ok": true,
+   "stages": {
+    "lms_login": 12.7,
+    "courseware_jump": 12.1,
+    "hub_oauth_lab": 197.3
+   },
+   "err": "",
+   "user": "stu_p3_027",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 224.0
+  },
+  {
+   "wid": 419,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.7,
+    "courseware_jump": 10.0,
+    "hub_oauth_lab": 198.0
+   },
+   "err": "",
+   "user": "stu_p4_027",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.6
+  },
+  {
+   "wid": 420,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.6,
+    "courseware_jump": 10.3,
+    "hub_oauth_lab": 198.1
+   },
+   "err": "",
+   "user": "stu_p5_027",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 226.1
+  },
+  {
+   "wid": 421,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 197.7
+   },
+   "err": "",
+   "user": "stu_p6_027",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.5
+  },
+  {
+   "wid": 422,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.0,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 197.4
+   },
+   "err": "",
+   "user": "stu_b1_027",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.0
+  },
+  {
+   "wid": 423,
+   "ok": true,
+   "stages": {
+    "lms_login": 17.0,
+    "courseware_jump": 8.8,
+    "hub_oauth_lab": 197.7
+   },
+   "err": "",
+   "user": "stu_b2_027",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.1
+  },
+  {
+   "wid": 424,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.2,
+    "courseware_jump": 10.4,
+    "hub_oauth_lab": 197.9
+   },
+   "err": "",
+   "user": "stu_b3_027",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 225.1
+  },
+  {
+   "wid": 425,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 196.4
+   },
+   "err": "",
+   "user": "stu_b4_027",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 209.9
+  },
+  {
+   "wid": 426,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 7.9,
+    "hub_oauth_lab": 196.2
+   },
+   "err": "",
+   "user": "stu_b5_027",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 209.6
+  },
+  {
+   "wid": 427,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.7,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 194.5
+   },
+   "err": "",
+   "user": "stu_b6_027",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.0
+  },
+  {
+   "wid": 428,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.8,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 195.8
+   },
+   "err": "",
+   "user": "stu_a1_027",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.3
+  },
+  {
+   "wid": 429,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.6,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 194.9
+   },
+   "err": "",
+   "user": "stu_a2_027",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.5
+  },
+  {
+   "wid": 430,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.1,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 194.3
+   },
+   "err": "",
+   "user": "stu_a3_027",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 211.8
+  },
+  {
+   "wid": 431,
+   "ok": true,
+   "stages": {
+    "lms_login": 69.9,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 193.5
+   },
+   "err": "",
+   "user": "stu_a4_027",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 269.1
+  },
+  {
+   "wid": 432,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.6,
+    "courseware_jump": 8.4,
+    "hub_oauth_lab": 194.1
+   },
+   "err": "",
+   "user": "stu_p1_028",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 211.1
+  },
+  {
+   "wid": 433,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.5,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 195.3
+   },
+   "err": "",
+   "user": "stu_p2_028",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.9
+  },
+  {
+   "wid": 434,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.4,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 195.5
+   },
+   "err": "",
+   "user": "stu_p3_028",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.0
+  },
+  {
+   "wid": 435,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.2,
+    "courseware_jump": 10.4,
+    "hub_oauth_lab": 193.1
+   },
+   "err": "",
+   "user": "stu_p4_028",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.0
+  },
+  {
+   "wid": 436,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.9,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 195.5
+   },
+   "err": "",
+   "user": "stu_p5_028",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 212.5
+  },
+  {
+   "wid": 437,
+   "ok": false,
+   "stages": {
+    "lms_login": 12.6,
+    "courseware_jump": 6.7
+   },
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=WiqwY1zCNsljomIKKPg9PksHfD2O8A&state=eyJzdGF0ZV",
+   "user": "stu_p6_028",
+   "course": "P6",
+   "week": 1,
+   "duration": 212.5
+  },
+  {
+   "wid": 438,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.2,
+    "courseware_jump": 9.9,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_b1_028",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.4
+  },
+  {
+   "wid": 439,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.0,
+    "courseware_jump": 10.3,
+    "hub_oauth_lab": 192.7
+   },
+   "err": "",
+   "user": "stu_b2_028",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.6
+  },
+  {
+   "wid": 440,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.8,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 191.1
+   },
+   "err": "",
+   "user": "stu_b3_028",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.4
+  },
+  {
+   "wid": 441,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.7,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 192.9
+   },
+   "err": "",
+   "user": "stu_b4_028",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.6
+  },
+  {
+   "wid": 442,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.6,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 192.6
+   },
+   "err": "",
+   "user": "stu_b5_028",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 212.1
+  },
+  {
+   "wid": 443,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.7,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 191.0
+   },
+   "err": "",
+   "user": "stu_b6_028",
+   "course": "B6",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 213.3
+  },
+  {
+   "wid": 444,
+   "ok": true,
+   "stages": {
+    "lms_login": 14.1,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 190.5
+   },
+   "err": "",
+   "user": "stu_a1_028",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.5
+  },
+  {
+   "wid": 445,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.8,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_a2_028",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 214.6
+  },
+  {
+   "wid": 446,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.4,
+    "courseware_jump": 9.5,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_a3_028",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.1
+  },
+  {
+   "wid": 447,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.3,
+    "courseware_jump": 9.5,
+    "hub_oauth_lab": 190.9
+   },
+   "err": "",
+   "user": "stu_a4_028",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.1
+  },
+  {
+   "wid": 448,
+   "ok": true,
+   "stages": {
+    "lms_login": 15.2,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_p1_029",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.5
+  },
+  {
+   "wid": 449,
+   "ok": true,
+   "stages": {
+    "lms_login": 13.4,
+    "courseware_jump": 8.3,
+    "hub_oauth_lab": 191.1
+   },
+   "err": "",
+   "user": "stu_p2_029",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.0
+  },
+  {
+   "wid": 450,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 203.3
+   },
+   "err": "",
+   "user": "stu_p3_029",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.7
+  },
+  {
+   "wid": 451,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 6.3,
+    "hub_oauth_lab": 202.6
+   },
+   "err": "",
+   "user": "stu_p4_029",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.2
+  },
+  {
+   "wid": 452,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 202.8
+   },
+   "err": "",
+   "user": "stu_p5_029",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.9
+  },
+  {
+   "wid": 453,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 8.6,
+    "hub_oauth_lab": 199.8
+   },
+   "err": "",
+   "user": "stu_p6_029",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 213.8
+  },
+  {
+   "wid": 454,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 203.7
+   },
+   "err": "",
+   "user": "stu_b1_029",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.2
+  },
+  {
+   "wid": 455,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 200.3
+   },
+   "err": "",
+   "user": "stu_b2_029",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 214.7
+  },
+  {
+   "wid": 456,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 7.8,
+    "hub_oauth_lab": 203.8
+   },
+   "err": "",
+   "user": "stu_b3_029",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.5
+  },
+  {
+   "wid": 457,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.4,
+    "courseware_jump": 6.3,
+    "hub_oauth_lab": 201.5
+   },
+   "err": "",
+   "user": "stu_b4_029",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.4
+  },
+  {
+   "wid": 458,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.4,
+    "courseware_jump": 5.9,
+    "hub_oauth_lab": 201.1
+   },
+   "err": "",
+   "user": "stu_b5_029",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.7
+  },
+  {
+   "wid": 459,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 202.7
+   },
+   "err": "",
+   "user": "stu_b6_029",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.4
+  },
+  {
+   "wid": 460,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.0,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 201.9
+   },
+   "err": "",
+   "user": "stu_a1_029",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.1
+  },
+  {
+   "wid": 461,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.3,
+    "courseware_jump": 6.1,
+    "hub_oauth_lab": 201.1
+   },
+   "err": "",
+   "user": "stu_a2_029",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 215.2
+  },
+  {
+   "wid": 462,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.6,
+    "courseware_jump": 10.1,
+    "hub_oauth_lab": 196.3
+   },
+   "err": "",
+   "user": "stu_a3_029",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.6
+  },
+  {
+   "wid": 463,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.4,
+    "courseware_jump": 8.8,
+    "hub_oauth_lab": 197.6
+   },
+   "err": "",
+   "user": "stu_a4_029",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.4
+  },
+  {
+   "wid": 464,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.2,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 196.8
+   },
+   "err": "",
+   "user": "stu_p1_030",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 465,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.6,
+    "courseware_jump": 9.1,
+    "hub_oauth_lab": 196.3
+   },
+   "err": "",
+   "user": "stu_p2_030",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.9
+  },
+  {
+   "wid": 466,
+   "ok": true,
+   "stages": {
+    "lms_login": 11.7,
+    "courseware_jump": 8.7,
+    "hub_oauth_lab": 194.7
+   },
+   "err": "",
+   "user": "stu_p3_030",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.0
+  },
+  {
+   "wid": 467,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.5,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 191.1
+   },
+   "err": "",
+   "user": "stu_p4_030",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.2
+  },
+  {
+   "wid": 468,
+   "ok": true,
+   "stages": {
+    "lms_login": 18.0,
+    "courseware_jump": 8.0,
+    "hub_oauth_lab": 191.7
+   },
+   "err": "",
+   "user": "stu_p5_030",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.8
+  },
+  {
+   "wid": 469,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.5,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_p6_030",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 222.4
+  },
+  {
+   "wid": 470,
+   "ok": true,
+   "stages": {
+    "lms_login": 20.5,
+    "courseware_jump": 8.7,
+    "hub_oauth_lab": 190.6
+   },
+   "err": "",
+   "user": "stu_b1_030",
+   "course": "B1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 221.9
+  },
+  {
+   "wid": 471,
+   "ok": true,
+   "stages": {
+    "lms_login": 23.9,
+    "courseware_jump": 6.0,
+    "hub_oauth_lab": 190.6
+   },
+   "err": "",
+   "user": "stu_b2_030",
+   "course": "B2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 222.3
+  },
+  {
+   "wid": 472,
+   "ok": true,
+   "stages": {
+    "lms_login": 21.1,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 190.8
+   },
+   "err": "",
+   "user": "stu_b3_030",
+   "course": "B3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 220.9
+  },
+  {
+   "wid": 473,
+   "ok": true,
+   "stages": {
+    "lms_login": 21.1,
+    "courseware_jump": 8.2,
+    "hub_oauth_lab": 190.6
+   },
+   "err": "",
+   "user": "stu_b4_030",
+   "course": "B4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 221.6
+  },
+  {
+   "wid": 474,
+   "ok": true,
+   "stages": {
+    "lms_login": 23.0,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 190.7
+   },
+   "err": "",
+   "user": "stu_b5_030",
+   "course": "B5",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 221.9
+  },
+  {
+   "wid": 475,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.5,
+    "courseware_jump": 6.8,
+    "hub_oauth_lab": 164.2
+   },
+   "err": "",
+   "user": "stu_b6_030",
+   "course": "B6",
+   "week": 2,
+   "landing": "jupyterlab",
+   "duration": 176.0
+  },
+  {
+   "wid": 476,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 8.1,
+    "hub_oauth_lab": 202.2
+   },
+   "err": "",
+   "user": "stu_a1_030",
+   "course": "A1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 215.6
+  },
+  {
+   "wid": 477,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.0,
+    "courseware_jump": 9.8,
+    "hub_oauth_lab": 202.6
+   },
+   "err": "",
+   "user": "stu_a2_030",
+   "course": "A2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 220.3
+  },
+  {
+   "wid": 478,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.6,
+    "courseware_jump": 9.7,
+    "hub_oauth_lab": 201.7
+   },
+   "err": "",
+   "user": "stu_a3_030",
+   "course": "A3",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 216.8
+  },
+  {
+   "wid": 479,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.7,
+    "courseware_jump": 10.6,
+    "hub_oauth_lab": 201.6
+   },
+   "err": "",
+   "user": "stu_a4_030",
+   "course": "A4",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 217.9
+  },
+  {
+   "wid": 480,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.9,
+    "courseware_jump": 10.0,
+    "hub_oauth_lab": 202.5
+   },
+   "err": "",
+   "user": "stu_p1_031",
+   "course": "P1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.5
+  },
+  {
+   "wid": 481,
+   "ok": true,
+   "stages": {
+    "lms_login": 4.8,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 202.3
+   },
+   "err": "",
+   "user": "stu_p2_031",
+   "course": "P2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.7
+  },
+  {
+   "wid": 482,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 9.4,
+    "hub_oauth_lab": 202.1
+   },
+   "err": "",
+   "user": "stu_p3_031",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.9
+  },
+  {
+   "wid": 483,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 9.4,
+    "hub_oauth_lab": 202.0
+   },
+   "err": "",
+   "user": "stu_p4_031",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.2
+  },
+  {
+   "wid": 484,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.1,
+    "courseware_jump": 8.8,
+    "hub_oauth_lab": 203.8
+   },
+   "err": "",
+   "user": "stu_p5_031",
+   "course": "P5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.3
+  },
+  {
+   "wid": 485,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.0,
+    "courseware_jump": 8.5,
+    "hub_oauth_lab": 201.1
+   },
+   "err": "",
+   "user": "stu_p6_031",
+   "course": "P6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.3
+  },
+  {
+   "wid": 486,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.0,
+    "courseware_jump": 9.5,
+    "hub_oauth_lab": 202.3
+   },
+   "err": "",
+   "user": "stu_b1_031",
+   "course": "B1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.6
+  },
+  {
+   "wid": 487,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.3,
+    "courseware_jump": 9.2,
+    "hub_oauth_lab": 202.6
+   },
+   "err": "",
+   "user": "stu_b2_031",
+   "course": "B2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.8
+  },
+  {
+   "wid": 488,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.2,
+    "courseware_jump": 8.9,
+    "hub_oauth_lab": 201.3
+   },
+   "err": "",
+   "user": "stu_b3_031",
+   "course": "B3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.4
+  },
+  {
+   "wid": 489,
+   "ok": true,
+   "stages": {
+    "lms_login": 70.2,
+    "courseware_jump": 4.7,
+    "hub_oauth_lab": 190.4
+   },
+   "err": "",
+   "user": "stu_b4_031",
+   "course": "B4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 267.3
+  },
+  {
+   "wid": 490,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.7,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 201.9
+   },
+   "err": "",
+   "user": "stu_b5_031",
+   "course": "B5",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.3
+  },
+  {
+   "wid": 491,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.4,
+    "courseware_jump": 7.7,
+    "hub_oauth_lab": 200.7
+   },
+   "err": "",
+   "user": "stu_b6_031",
+   "course": "B6",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.0
+  },
+  {
+   "wid": 492,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.9,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 201.7
+   },
+   "err": "",
+   "user": "stu_a1_031",
+   "course": "A1",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 219.8
+  },
+  {
+   "wid": 493,
+   "ok": true,
+   "stages": {
+    "lms_login": 5.4,
+    "courseware_jump": 7.3,
+    "hub_oauth_lab": 201.2
+   },
+   "err": "",
+   "user": "stu_a2_031",
+   "course": "A2",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 216.7
+  },
+  {
+   "wid": 494,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.3,
+    "courseware_jump": 7.6,
+    "hub_oauth_lab": 200.9
+   },
+   "err": "",
+   "user": "stu_a3_031",
+   "course": "A3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.6
+  },
+  {
+   "wid": 495,
+   "ok": true,
+   "stages": {
+    "lms_login": 7.7,
+    "courseware_jump": 7.2,
+    "hub_oauth_lab": 200.6
+   },
+   "err": "",
+   "user": "stu_a4_031",
+   "course": "A4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 218.2
+  },
+  {
+   "wid": 496,
+   "ok": true,
+   "stages": {
+    "lms_login": 6.8,
+    "courseware_jump": 7.5,
+    "hub_oauth_lab": 202.4
+   },
+   "err": "",
+   "user": "stu_p1_032",
+   "course": "P1",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 219.2
+  },
+  {
+   "wid": 497,
+   "ok": true,
+   "stages": {
+    "lms_login": 9.3,
+    "courseware_jump": 7.1,
+    "hub_oauth_lab": 200.3
+   },
+   "err": "",
+   "user": "stu_p2_032",
+   "course": "P2",
+   "week": 2,
+   "landing": "spawn",
+   "duration": 218.9
+  },
+  {
+   "wid": 498,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.9,
+    "courseware_jump": 6.7,
+    "hub_oauth_lab": 199.8
+   },
+   "err": "",
+   "user": "stu_p3_032",
+   "course": "P3",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.6
+  },
+  {
+   "wid": 499,
+   "ok": true,
+   "stages": {
+    "lms_login": 8.0,
+    "courseware_jump": 6.4,
+    "hub_oauth_lab": 200.7
+   },
+   "err": "",
+   "user": "stu_p4_032",
+   "course": "P4",
+   "week": 1,
+   "landing": "spawn",
+   "duration": 217.3
+  }
+ ],
+ "phase_max": {
+  "lms_login": 25,
+  "courseware_jump": 25,
+  "hub_oauth_lab": 25
+ },
+ "active_now": 0,
+ "max_active": 25,
+ "open_sessions": 470,
+ "max_open_sessions": 470,
+ "errors": [
+  {
+   "wid": 23,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B2+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 1,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P2+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 18,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P3+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 13,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 2,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P3+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 5,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P6+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 29,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 36,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 45,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A2+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 26,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 42,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 56,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B3+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 58,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 68,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 59,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B6+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 74,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B5+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 63,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+A4+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 64,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+P1+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 70,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B1+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 72,
+   "err": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://openedx.10.167.2.175.nip.io:31825/courses/course-v1:AIEDU+B3+2026/jump_to/block-v1:AIE"
+  },
+  {
+   "wid": 52,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=w0nkXhFK8KOsiVF1w4c29Ydhdv3p0z&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 131,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=Rb3XUOOqAbzjI2p0AyzohU6pN1D1jA&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 155,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=MSr1sIRZSAcBmdUj0KoATXbPysZtJk&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 179,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=mDKQgYpkIKWyKJhdrazQd1nhYuvo86&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 216,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=z7mWIdhuRO37E9t8wIdNCIz23yLZkj&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 298,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=BfhrGdDunteAHqDfsfRqX5ngy57jez&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 311,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=1N8el1HULlHpy1IA34Iyr4Q3Qjp8XI&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 300,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=wc6epHWG0BGRgBOyaIR5Yp06FINFHf&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 328,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=ZNVh1uwMvbRdbh3KsHeT3tAneu0ENf&state=eyJzdGF0ZV"
+  },
+  {
+   "wid": 437,
+   "err": "no lab/spawn landing; final: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback?code=WiqwY1zCNsljomIKKPg9PksHfD2O8A&state=eyJzdGF0ZV"
+  }
+ ],
+ "finished": "2026-09-13 05:54:34",
+ "total": 500,
+ "passed": 470,
+ "failed": 30,
+ "max_active_flow": 25,
+ "course_week_coverage": {
+  "A1": [
+   1,
+   2
+  ],
+  "A2": [
+   1,
+   2
+  ],
+  "A3": [
+   1,
+   2
+  ],
+  "A4": [
+   1,
+   2
+  ],
+  "B1": [
+   1,
+   2
+  ],
+  "B2": [
+   1,
+   2
+  ],
+  "B3": [
+   1,
+   2
+  ],
+  "B4": [
+   1,
+   2
+  ],
+  "B5": [
+   1,
+   2
+  ],
+  "B6": [
+   1,
+   2
+  ],
+  "P1": [
+   1,
+   2
+  ],
+  "P2": [
+   1,
+   2
+  ],
+  "P3": [
+   1
+  ],
+  "P4": [
+   1
+  ],
+  "P5": [
+   1
+  ],
+  "P6": [
+   1
+  ]
+ }
+}
