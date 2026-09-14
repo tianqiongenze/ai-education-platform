@@ -1,10 +1,10 @@
 # 在线编程平台 一体化指南（平台总纲）
 
-> **版本**: v3.1（V15 全覆盖 + C500 并发验收版）
-> **更新时间**: 2026-09-13
+> **版本**: v3.3（V2 账户体系 + C500-V2 并发验收版）
+> **更新时间**: 2026-09-14
 > **平台版本**: Open edX (tutor v13, LMS/CMS 13.3.2) + JupyterHub 4.0.3-custom + PrairieLearn Autograder v2 + Code-Server + Ollama LLM
 > **集群**: 2 节点 K8s v1.28.2（master 10.167.2.175 / worker 10.167.2.176），ingress-nginx 唯一 HTTPS 入口 NodePort **31825**
-> **定位**: 本文档是在线编程平台的**唯一总纲**，整合了账户、课程、服务、人工测试、自动化测试与运维排障的全部信息。JupyterHub 专项细节见 `JUPYTERHUB-OPERATION-GUIDE.md`，人工用例全文见 `MANUAL-TEST-CASES.md`，V15 全功能覆盖 + C500 并发实训验收报告见 `PLATFORM-TEST-V15-C500-REPORT.md`。
+> **定位**: 本文档是在线编程平台的**唯一总纲**，整合了账户、课程、服务、人工测试、自动化测试与运维排障的全部信息。JupyterHub 专项细节见 `JUPYTERHUB-OPERATION-GUIDE.md`，人工用例全文见 `MANUAL-TEST-CASES.md`，V15 全功能覆盖 + C570 并发实训验收报告见 `PLATFORM-TEST-V15-C500-REPORT.md`，账户体系 v2 设计与实施见 `ACCOUNT-SYSTEM-DESIGN-V2.md`，V2 账户体系功能 + C500-V2 并发验收报告见 `PLATFORM-TEST-V2-C500-REPORT.md`。
 
 ---
 
@@ -97,7 +97,24 @@
 > **认证现状（2026-09-09 实测核验）**: JupyterHub 当前使用 **GenericOAuthenticator（LMS OAuth2 SSO）**，登录页只有 "Sign in with OAuth 2.0" 按钮，跳转 LMS 认证。
 > ⚠️ **历史变更**: 早期版本使用 DummyAuthenticator 共享密码 `ide2026`（见旧版《JUPYTERHUB-OPERATION-GUIDE》/《MANUAL-TEST-CASES》）。**该方式已停用**——凡文档写"用户名+ide2026 登录 Hub"的均为历史记录，现在一律通过 LMS 账号经 OAuth 登录。Hub 侧历史账号名（student-python 等）不变，OAuth 登录时使用 LMS 对应账号即可。
 
-### 3.1 Open edX LMS 账户（共 84 个，MySQL auth_user）
+### 3.0 账户体系 v2 机制（2026-09-14 上线，默认激活 + 自动挂载）
+
+> 设计与实施全文见 `ACCOUNT-SYSTEM-DESIGN-V2.md`。本节为运维速查。
+
+| 机制 | 配置位置 | 行为 |
+|------|---------|------|
+| 新用户默认激活 | LMS 设置 ConfigMap `openedx-settings-lms-c9mmh48c87` → production.py：`FEATURES['SKIP_EMAIL_VALIDATION']=True` | 首次注册即 `is_active=True`，不再发激活邮件、不会卡在未激活态 |
+| 自动挂载（选课+入班） | 同 ConfigMap 内 `AUTOMOUNT_PREFIX_MAP`（22 条前缀规则）+ `post_save(User)` 全局信号（dispatch_uid=automount_user_global_post_save） | 用户创建/激活即自动 `CourseEnrollment.enroll(mode='honor')` + 加入对应班级 Cohort，幂等可重复触发 |
+| 仅见本班课程 | 16 门 AIEDU 课全部 `invitation_only=True` + `catalog_visibility=about` | 未匹配前缀的新用户 0 门课可见（课程目录页公开列表≠选课）；学生 Dashboard 仅显示被挂载的 1 门课 |
+| 多教师多班级 | 每门课 ≥2 名 staff 教师 + 2 个手动班级 Cohort（p1-class1/2 … 共 32 个） | 同一课程 2 名教师各绑定一个班级，可平行/串行、同/不同时间与教室授课；换班=迁移 Cohort |
+| Cohort 并发竞态修复 | 同 production.py：信号内 `get_cohort(user, ck, assign=False) is None` 守卫 | 高并发注册下同一用户不会重复入班/报错（2026-09-14 修复并 rollout） |
+| 空"默认组"清理 | — | 已删除 random 分配产生的空 Cohort 2 个（P1/B2），全部 32 个班级 Cohort 均为 manual |
+
+**前缀规则（22 条）**：`stu_p1..p6`→P1..P6/class1；`stu_b1..b6`→B1..B6/class2；`stu_a1..a4`→A1..A4/class1；`py_a1..a4`→A1..A4/class1；`py_a`→P1/class1（历史批次）；`py_b`→P2/class2。用户名用下划线、邮箱用连字符（stu_p1_601 → stu-p1-601@edu.local）。
+
+**多教师排课矩阵**（16 门课全部满足"同一课程 ≥2 教师"）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。P1-P6/B1-B6/A1-A4 每门课均为 teacher_zhang + 协讲（teacher_python_02/teacher_java_01/02/teacher_go_01/02/teacher_rust_01/02）+ 主讲 lecture_xx（instructor 角色），班级 Cohort 为 {课程码}-class1 / {课程码}-class2。
+
+### 3.1 Open edX LMS 账户（原有 84 + C500 800 + C500-V2 800 = 共 1684 个，MySQL auth_user）
 
 | 类别 | 账号 | 密码 | 说明 |
 |------|------|------|------|
@@ -108,6 +125,7 @@
 | 学生（通用样例） | student_python / student_java / student_go / student_rust / student_alice / student_bob / student_carol | — | 通用学生样例账号（LMS 下划线命名，Hub 对应中划线；**email 为连字符格式**，如 student-python@edu.local） |
 | 批量学生 | py_a_001 ~ py_a_050（50 个） | — | Python 实训批次 A |
 | **C500 并发测试学生** | stu_p1_001~050 … stu_a4_001~050（16 课程 × 50 = **800 个**） | — | 每门课程 50 名专属学生（C500 并发实训用，已全部选课本课程；email 连字符格式 stu-p1-001@edu.local；口令经环境变量注入，不入库） |
+| **C500-V2 测试学生（v2 体系验证）** | stu_p1_601~650 … stu_a4_601~650（16 课程 × 50 = **800 个**，编号 601~650） | — | 经**真实注册页链路**（AccountCreationForm）创建，验证 v2 机制：注册即激活 + 自动挂载选课 + 自动入班级 Cohort；email 连字符格式 stu-p1-601@edu.local；口令经环境变量注入，不入库 |
 | 服务账号 | ecommerce_worker, login_service_user | — | 系统内部账号，勿动 |
 
 ### 3.2 JupyterHub 账户（共 127 个，SQLite，经 OAuth 同步/注册）
@@ -152,7 +170,7 @@
 
 | 平台 | 账户数 | 认证方式 | 存储 |
 |------|--------|---------|------|
-| Open edX LMS | 884（84 原有 + 800 C500 专属学生） | 用户名/密码 | MySQL auth_user |
+| Open edX LMS | 1684（84 原有 + 800 C500 + 800 C500-V2） | 用户名/密码（新用户注册即激活） | MySQL auth_user |
 | JupyterHub | 127+（stu_* 账号经 OAuth 首登自动注册） | **LMS OAuth2**（历史 Dummy/ide2026 已停用） | SQLite users |
 | PrairieLearn | API Key 制 | X-API-Key | CockroachDB |
 | Code-Server | 单密码 | Dify@2026 | K8s Secret |
@@ -276,6 +294,17 @@ LMS 共 **17 门课程**：16 门 AIEDU 课程 + 1 门 edX Demo 演示课。
 | 2 | admin 从 Studio 单元页进 Hub 后只有学生版指南，无教师版/本次课 notebook，student_code_framework 为空 | 用户 Pod 初始化脚本（startup.sh）缺教师/admin 分发逻辑 | startup.sh v2 ConfigMap：教师/admin 分发**双指南（教师版+学生版）**+ 课程 notebook（≥20）+ 填充 student_code_framework | R1~R3 |
 | 3 | OAuth 身份串号（切换用户后进入他人 lab） | Hub 侧遗留会话 Cookie 使 OAuth 静默复用旧身份 | 跨身份 OAuth 前必须先访问 `/ide/hub/logout`（已写入套件与运维规范） | R1~R3 内含 |
 
+### 5.6 账户体系 V2 验收摘要（2026-09-14，详情见 `PLATFORM-TEST-V2-C500-REPORT.md`）
+
+| 项 | 结果 |
+|---|---|
+| 工业四语言（Java/Go/Rust/Python）账户与课程同步进 Open edX | ✅ 已核实（教师账户 6+2 个 active=True，16 门课程选课/分组齐全） |
+| py_a_051 "未激活却见所有课程" | ✅ 排查结论：实际 is_active=True；"看到所有课程"为公开课程目录页展示，Dashboard 仅 1 门课（P1）；已用 SKIP_EMAIL_VALIDATION 根除未激活可能 |
+| 新用户默认激活 | ✅ 真实注册链路验证：注册即 is_active=True |
+| 自动挂载（免选课入指定教师班级） | ✅ 800 个 v2 账户注册即自动选课 + 入班级 Cohort，抽样 3/3 |
+| 功能测试（13 用例） | ✅ 13/13 PASS |
+| C500-V2 并发验收（≥500） | ✅ 有效 500/500：首跑 420/500（客户端网络抖动）+ 80 失败槽复测 80/80；峰值 420 会话同时在线、615 Hub 用户 Pod 并存；平台侧 0 worker 超时、无 OOM/重启 |
+
 ---
 
 ## 六、自动化测试体系
@@ -284,7 +313,9 @@ LMS 共 **17 门课程**：16 门 AIEDU 课程 + 1 门 edX Demo 演示课。
 |------|------|--------|------|------|
 | **V15 全覆盖套件（现行）** | platform_test_suite_v15.py | **57** | **57/57 有效通过**（2026-09-13，完整运行 56/57，E2 为负载时序抖动单跑通过） | V14 全部 + P(入口路由 3) + Q(工业账户同步 3) + R(admin 修复回归 3) + 深度链接枚举/MFE 深页/评测报告端点 |
 | V15+C500 验收报告 | PLATFORM-TEST-V15-C500-REPORT.md + platform_test_v15_report.json | — | — | 含根因分析与上线判定 |
-| C500 并发实训套件 | concurrent_500_browser.py + concurrent_500_browser_report.json | 500 槽 | **470/500 PASS，峰值 470 会话同时在线**（2026-09-13，约 84 分钟） | 16 课程 × 50 专属学生（stu_*），28 课程-周次组合全覆盖 |
+| **V2 功能套件（现行）** | func_test_v2.py（.scratch） | 13 | **13/13 PASS**（2026-09-14，Pod lms-6d8b948f45-jh6xh） | v2 机制断言（SKIP_EMAIL_VALIDATION、AUTOMOUNT=22 条、cohort 竞态守卫）+ 真实注册即激活/自动选课/自动入班/仅 1 门课 + 匿名 0 课 + 16 门课 ≥2 教师 + 32 班级 Cohort + 0 未激活用户 |
+| **C500-V2 并发套件（最新）** | concurrent_500_v2.py + c500_v2_retry.py + concurrent_500_v2_report.json | 500 槽 | **首跑 420/500 + 复测 80/80 → 有效 500/500 全部通过**；峰值 **420 会话同时在线**、集群侧 **615 个 Hub 用户 Pod 并存**（2026-09-14，约 100 分钟） | 800 个 v2 新账户（stu_*_601~650）经真实注册链路创建；16 课程全覆盖、P3-P6 周次 1、其余周次 1-2；报告见 `PLATFORM-TEST-V2-C500-REPORT.md` |
+| C500 并发实训套件（前轮） | concurrent_500_browser.py + concurrent_500_browser_report.json | 500 槽 | **470/500 PASS，峰值 470 会话同时在线**（2026-09-13，约 84 分钟） | 16 课程 × 50 专属学生（stu_*），28 课程-周次组合全覆盖 |
 | C100 并发套件（历史） | concurrent_100_browser.py | 100 槽 | 100/100（峰值 25 在线，2026-09-12） | 见 PLATFORM-CONCURRENCY-AND-FULLCOVERAGE-TEST-REPORT.md |
 | V13 全覆盖套件（历史） | platform_test_suite_v13.py | 35 | 35/35 PASS（2026-09-09） | LMS/Studio/MFE/课程页/死链回归/Hub 登录/评测 API |
 | 人工用例手册 | MANUAL-TEST-CASES.md | 46+16 冒烟 | — | 与 V13 的映射见手册附录 2 |
@@ -342,6 +373,9 @@ C500 运行方式：`STUDENT_PASS=... C500=500 WAVE=25 KEEP_OPEN=1 python concur
 | 评测连接拒绝 | 端口用错 | Autograder API = 30093（30087 是 code-server） |
 | MFE 全部路由 404 | Caddyfile ConfigMap 挂载丢失 | 检查 mfe 部署卷挂载 /etc/caddy/Caddyfile |
 | 证书警告 | 自签证书（预期） | 高级→继续前往 |
+| 新注册用户看不到课程 | 用户名前缀不在 AUTOMOUNT_PREFIX_MAP 内（16 门课 invitation_only，未挂载即 0 课可见） | 按 §3.0 前缀规范命名账户，或按 `ACCOUNT-SYSTEM-DESIGN-V2.md` §5 增加/检查前缀映射后 `rollout restart deployment/lms` |
+| 同一用户 cohort 重复入班/注册高峰报错 | 旧版 automount 信号无 cohort 守卫 | 已修复（`get_cohort(assign=False)` 守卫已固化在 LMS 设置 ConfigMap production.py）；如复现检查该配置是否被回滚 |
+| 课程出现空"默认组" Cohort | cohort random 分配残留 | 已清理 2 个；如再出现可安全删除 0 成员的默认组 |
 
 ---
 
