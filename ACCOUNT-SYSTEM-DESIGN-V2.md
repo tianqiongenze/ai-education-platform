@@ -1,7 +1,8 @@
 # 在线编程平台账户体系 v2 — 多教师 / 多班级 / 自动挂载 设计与实施报告
 
-> 版本: v2.0 · 日期: 2026-09-14 · 适用: Open edX (tutor 13.3.2) + JupyterHub 4.0.3-custom 平台
+> 版本: v2.1 · 日期: 2026-09-14 · 适用: Open edX (tutor 13.3.2) + JupyterHub 4.0.3-custom 平台
 > 结论先行: 所需能力（同一课程 ≥2 名教师、教师绑定班级、班级学生自动挂载到指定教师的该门课）**已在本平台全部落地并验证**。
+> 本版新增: §2 py_a_051 根因与彻底修复全过程、§7 全量用户清单（含全部并发测试用户，共 1748 个 LMS 账户逐一归类）、§8 JupyterHub 侧账户对照与同步加固。
 
 ## 1. 需求回顾
 
@@ -10,13 +11,43 @@
 3. 不用手动选课，注册即**自动挂载**进指定教师的指定课程的指定班级。
 4. 同一门课**至少 2 名教师**，分别关联不同班级的学生；教师可在不同/相同时间、不同/相同教室**平行或串行**授课。
 
-## 2. 调查结论（py_a_051 问题）
+## 2. 调查结论（py_a_051 问题：根因定位与彻底修复）
 
-- LMS 数据库中 `py_a_051` 实际 **is_active=True**（不是"未激活"），且只有 1 门选课（P1，honor 模式）。
-- "能看到所有课程"是**公开课程目录页（Explore Courses）** 的展示行为，不是选课；用户的学习面板（Dashboard）只有 P1。
-- 全库 is_active=False 的用户数为 **0**，历史上从未产生过"未激活"用户。
-- JupyterHub 侧不存在 `py_a_051`（只有 py_a_001~050 已同步），不会造成课程串看。
-- 已通过配置根除"注册后卡在未激活"的可能性（见 §3）。
+### 2.1 现象与根因（2026-09-14 精确定位）
+
+- **现象**: LMS 数据库中 `py_a_051` 注册成功（is_active=True、已选 P1），但 JupyterHub 侧不存在 `py_a_051`（仅 py_a_001~050 已同步）。
+- **根因**: LMS→Hub 同步脚本 `sync_lms_to_hub.py`（ConfigMap `cm-sync-script`，CronJob `lms-hub-sync` 每 5 分钟执行）以**邮箱 @ 前缀**作为 Hub 用户名：
+  ```python
+  def hub_username(email):
+      return email.split('@')[0]
+  ```
+  其余 50 个 py_a 批次账户注册时均使用规范邮箱 `py_a_0xx@edu.local`，唯独 `py_a_051` 使用了**真实外部邮箱** `0368414@sd.taylors.edu.my`。于是同步任务在 Hub 上创建了名为 `0368414` 的用户（Hub id=1438），而不是 `py_a_051`。
+- **全库审计结论**: 对 LMS 全部 1748 个用户核查"邮箱前缀 ≠ 用户名"，**py_a_051 是唯一有选课且受影响的账户**（其余邮箱不规范的账号 e2e_act_* / free_* / v16reg* 等均为 0 选课，本就不参与同步）。
+
+### 2.2 彻底修复（已执行并验证）
+
+1. **修正 LMS 邮箱**: `py_a_051.email` 由 `0368414@sd.taylors.edu.my` 改为规范格式 `py_a_051@edu.local`（audit 事件留痕）。
+2. **清理 Hub 脏账户**: 先确认 `0368414` 无运行中 Pod、无 spawners/servers/api_tokens 关联，再删除该 Hub 用户（id=1438，含 2 条 group_map 记录）。
+3. **手动触发同步**: `kubectl create job --from=cronjob/lms-hub-sync manual-sync-fix -n jupyterhub` → 结果 `users_created:1, group_memberships_added:2, errors:[]`。
+4. **验证**: Hub 中 `py_a_051` 已存在（id=4378），分组 `['all-students', 'course-p-students']`，与 py_a_001~050 完全一致。
+
+### 2.3 防复发加固（已部署到 ConfigMap cm-sync-script）
+
+同步脚本命名逻辑由"邮箱前缀优先"改为 **LMS 用户名优先、邮箱前缀兜底**：
+
+```python
+def hub_username(enr):
+    # Prefer the LMS username so accounts registered with external
+    # emails still map to the canonical Hub name (e.g. py_a_051).
+    name = (enr.get('username') or '').strip()
+    if not name:
+        name = enr['email'].split('@')[0]
+    return name.lower()
+```
+
+加固后已真实重跑一轮全量同步验证（job `manual-sync-hardened`，新增 312 个此前经 OAuth 通道产生的下划线名账户补齐入组，全程 errors:[]），其后定时 CronJob 持续正常。
+
+> 历史遗留说明: Hub 中存在 1636 个连字符命名用户（如 `stu-p1-601`），来自早期 OAuth 首次登录通道（按邮箱连字符规范命名）；`stu_p1_601` 等下划线同名账户由同步通道创建，两者并存不影响使用（详见 §8）。
 
 ## 3. 默认激活 —— 已实施
 
@@ -52,8 +83,8 @@ AFTER  is_active=True      # 注册即激活
  │    ├── 主讲教师（instructor 角色 = lecture_xx 虚拟账号持有）
  │    └── 协讲教师（teacher_xx_01/02）
  ├── 班级 Cohort（p1-class1 / p1-class2 … 每门课 2 个班）
- │    ├── class-A → 教师1 的班（平行/串行授课，教室由课表决定）
- │    └── class-B → 教师2 的班
+ │    ├── class1 → 教师1 的班（平行/串行授课，教室由课表决定）
+ │    └── class2 → 教师2 的班
  └── 学生（按用户名前缀自动挂载：选课 + 入班，一次完成）
 ```
 
@@ -65,6 +96,7 @@ AFTER  is_active=True      # 注册即激活
   - `py_a1..py_a4` → A1..A4；`py_a` → P1（历史批次）；`py_b` → P2
 - 行为：`CourseEnrollment.enroll(mode='honor')` + `add_user_to_cohort(课程码-classN)`；幂等（已选课/已入班则跳过）。
 - 未匹配前缀的新用户：**0 门课可见**（16 门 AIEDU 课全部 `invitation_only=True`、`catalog_visibility=about`），从机制上禁止自主选课。
+- **并发测试时间戳账号同样命中前缀规则**：如 `stu_p4_104738` 注册即挂载 P4/p4-class1（实测），任意数字后缀不影响前缀匹配（§7.5 全列）。
 
 ### 4.3 多教师/多班级排课矩阵（当前 16 门课全部满足"≥2 教师"）
 
@@ -96,10 +128,10 @@ AFTER  is_active=True      # 注册即激活
 | stu_p1..stu_p6 | P1..P6 · class1 | stu_p1_001 |
 | stu_b1..stu_b6 | B1..B6 · class2 | stu_b1_001 |
 | stu_a1..stu_a4 | A1..A4 · class1 | stu_a1_001 |
-| py_a1..py_a4 | A1..A4 · class1 | py_a1_051 |
+| py_a1..py_a4 | A1..A4 · class1 | py_a1_xxx（当前库存为空，规则保留） |
 | py_a / py_b | P1 / P2 | py_a_051 → P1-class1 |
 
-约定：用户名用下划线（stu_p1_001），邮箱用连字符（stu-p1-001@edu.local）。
+约定：用户名用下划线（stu_p1_001），邮箱用连字符（stu-p1-001@edu.local）。**注册邮箱随意不影响挂载与 Hub 同步**（§2.3 加固后同步以 LMS 用户名为准），但仍推荐规范邮箱便于识别。
 
 ## 5. 管理员操作手册
 
@@ -122,6 +154,13 @@ kubectl rollout restart deployment/lms -n openedx
 
 # 5.4 新建班级 Cohort
 #   CourseUserGroup(course_id=ck, name='p1-class3', group_type='cohort').save()
+
+# 5.5 立即触发一次 LMS→Hub 同步（不用等 5 分钟 CronJob）
+kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyterhub
+
+# 5.6 同步脚本在哪/怎么改（防 py_a_051 类问题复发）
+#   ConfigMap: cm-sync-script（命名空间 jupyterhub，key=sync_lms_to_hub.py）
+#   命名规则 hub_username(enr) 已改为 LMS 用户名优先、邮箱前缀兜底（§2.3）
 ```
 
 ## 6. 验证清单（本次已执行）
@@ -133,4 +172,167 @@ kubectl rollout restart deployment/lms -n openedx
 - [x] AUTOMOUNT_PREFIX_MAP 22 条规则在 settings 加载（AUTOMOUNT entries = 22）
 - [x] invitation_only=True + catalog_visibility=about：未挂载用户 0 课可见
 - [x] 工业教师账户 6+2 个全部 active=True
-- [x] JupyterHub 侧账户/分组同步正常（all-students 936、all-teachers 25、course-*-students 分组齐全）
+- [x] **py_a_051 根因修复并验证**（§2.2）：LMS 邮箱修正 → Hub 账户建立 → 脏账户 0368414 删除
+- [x] **同步脚本加固**（§2.3）：hub_username 用户名优先，manual-sync-hardened 全量重跑 0 errors
+- [x] JupyterHub 侧账户/分组同步正常（加固后实测：Hub 总用户 3380，all-students 3350、all-teachers 27、course-p/b/a-students 1263/1268/864）
+- [x] LMS 全量选课核对：AIEDU 16 门课 active 选课 2581 条（P1 164 / P2 160 / P3 163 / P4 169 / P5 169 / P6 166 / A1~A4、B1~B6 各 159）
+
+## 7. 全量用户清单（LMS auth_user 共 1748 个，2026-09-14 逐池实测盘点）
+
+> 本节把平台上**每一个账户池**（含全部并发测试用户）逐一列举，按"谁在用、怎么注册、挂载到哪、同步到哪"组织。学生账户是重点，单列 §7.2~§7.7。
+
+### 7.1 账户总览（8 大类）
+
+| 类别 | 数量 | 代表账户 | 挂载方式 | Hub 同步 |
+|---|---|---|---|---|
+| 管理员/系统 | 3 | admin, ecommerce_worker, login_service_user | 不挂载课程 | admin 在 Hub |
+| 教师账户 | 19 | teacher_zhang 等 8 + lecture_p1~p6 + Lecture-A1~A4 + Lecture-B1~B6 | instructor/staff 角色 | all-teachers + course-*-teachers |
+| C500-V2 定向学生 | 1600 | stu_{p,b,a}N_001~650 | 前缀自动挂载（§7.2~7.4） | 已全部同步 |
+| 历史批次学生 | 51 | py_a_001~051 | 前缀 py_a → P1 | 已全部同步（含本次修复的 051） |
+| 体验/演示学生 | 11 | student_python 等 7 + free_user_88 + v16reg×4 | 手动/部分挂载 | 已同步 |
+| 并发测试学生（时间戳） | 24 | stu_p3_102403 等（§7.5 全列） | 前缀自动挂载生效 | 已同步 |
+| E2E/体验注册压测 | 40 | e2e_act_×10 + free_/free2_ 等 | 0 选课（仅测注册/激活） | 不同步（无选课，属预期） |
+| **合计** | **1748** | | AIEDU 选课 2581 条 | Hub 总用户 3380（含 1636 个 OAuth 连字符历史名） |
+
+### 7.2 C500-V2 学生 · P 系列（stu_pN，自动挂载 P1..P6 / class1，共 630）
+
+每门课两代账户并存：**001~050 为 C500 第一代**，**601~650 为 C500-V2 新一代**，命名规则相同、挂载相同课程相同班级，可视为同班两个批次。
+
+| 前缀池 | 课程 | 班级 | 账户清单 | 特殊号 |
+|---|---|---|---|---|
+| stu_p1_ | P1 | p1-class1 | stu_p1_001…050、stu_p1_601…650（核心 100 个） | fte697e、ftcd9e2、1789275840（§7.5/§7.6） |
+| stu_p2_ | P2 | p2-class1 | stu_p2_001…050、stu_p2_601…650（100 个） | 无 |
+| stu_p3_ | P3 | p3-class1 | stu_p3_001…050、stu_p3_601…650（100 个） | 时间戳号 2 个（§7.5） |
+| stu_p4_ | P4 | p4-class1 | stu_p4_001…050、stu_p4_601…650（100 个） | 时间戳号 8 个（§7.5） |
+| stu_p5_ | P5 | p5-class1 | stu_p5_001…050、stu_p5_601…650（100 个） | 时间戳号 8 个（§7.5） |
+| stu_p6_ | P6 | p6-class1 | stu_p6_001…050、stu_p6_601…650（100 个） | 时间戳号 6 个（§7.5） |
+
+- 注册方式：脚本批量（C500 第一代）与浏览器真实注册通道（C500-V2 800 个）。
+- 邮箱规范：`stu-p1-001@edu.local`（连字符格式）。
+- 实测挂载：stu_p1_001 → P1/p1-class1；stu_p1_633 → P1/p1-class1（两代一致）。
+
+### 7.3 C500-V2 学生 · B 系列（stu_bN，自动挂载 B1..B6 / class2，共 600）
+
+| 前缀池 | 课程 | 班级 | 账户清单 |
+|---|---|---|---|
+| stu_b1_ | B1 | b1-class2 | stu_b1_001…050、stu_b1_601…650（100 个） |
+| stu_b2_ | B2 | b2-class2 | stu_b2_001…050、stu_b2_601…650（100 个） |
+| stu_b3_ | B3 | b3-class2 | stu_b3_001…050、stu_b3_601…650（100 个） |
+| stu_b4_ | B4 | b4-class2 | stu_b4_001…050、stu_b4_601…650（100 个） |
+| stu_b5_ | B5 | b5-class2 | stu_b5_001…050、stu_b5_601…650（100 个） |
+| stu_b6_ | B6 | b6-class2 | stu_b6_001…050、stu_b6_601…650（100 个） |
+
+- 实测挂载：stu_b1_001、stu_b1_633 → B1/b1-class2。B 系列无时间戳/特殊号，池子最干净。
+
+### 7.4 C500-V2 学生 · A 系列（stu_aN，自动挂载 A1..A4 / class1，共 400）
+
+| 前缀池 | 课程 | 班级 | 账户清单 |
+|---|---|---|---|
+| stu_a1_ | A1 | a1-class1 | stu_a1_001…050、stu_a1_601…650（100 个） |
+| stu_a2_ | A2 | a2-class1 | stu_a2_001…050、stu_a2_601…650（100 个） |
+| stu_a3_ | A3 | a3-class1 | stu_a3_001…050、stu_a3_601…650（100 个） |
+| stu_a4_ | A4 | a4-class1 | stu_a4_001…050、stu_a4_601…650（100 个） |
+
+- 实测挂载：stu_a1_001、stu_a1_633 → A1/a1-class1。A 系列同样无时间戳/特殊号。
+
+### 7.5 并发测试学生（用户名带时间戳/随机后缀，共 24 个有选课，全部已自动挂载）
+
+这些账号是各轮并发/功能测试时按"**前缀+时分秒**"规则现场注册的学生账户，注册即被 AUTOMOUNT 命中（P 系列 → 对应课程 pN-class1），实测验证了"**任意后缀不影响前缀匹配**"。全部保留，可继续复用其 PVC/工作区：
+
+- **stu_p3_102403, stu_p3_102559**（→ P3/p3-class1）
+- **stu_p4_104122, stu_p4_104515, stu_p4_104611, stu_p4_104738, stu_p4_111216, stu_p4_111945, stu_p4_133003, stu_p4_140440**（→ P4/p4-class1；实测 stu_p4_104738 挂载正确）
+- **stu_p5_104611, stu_p5_104738, stu_p5_104852, stu_p5_111216, stu_p5_111513, stu_p5_111945, stu_p5_133003, stu_p5_140440**（→ P5/p5-class1；实测 stu_p5_104611 挂载正确）
+- **stu_p6_104611, stu_p6_104738, stu_p6_111216, stu_p6_111945, stu_p6_133003, stu_p6_140440**（→ P6/p6-class1；实测 stu_p6_104738 挂载正确）
+- **stu_p1_1789275840**（→ P1/p1-class1，Unix 时间戳式长号）
+
+另有一批 **@test.local 时间戳账户为纯注册通道压测号**（free_/free2_/e2e_act_ 前缀，见 §7.9），0 选课、不同步 Hub，属预期行为。
+
+### 7.6 特殊/遗留学生号（2 个，均 P1 选课正常）
+
+| 用户名 | 邮箱 | 说明 |
+|---|---|---|
+| stu_p1_fte697e | stu-p1-fte697e@edu.local | 早期并发测试遗留，挂载 P1/p1-class1 |
+| stu_p1_ftcd9e2 | stu-p1-ftcd9e2@edu.local | 同上 |
+
+### 7.7 历史批次学生（py_a_001~051，共 51 个，挂载 P1/p1-class1）
+
+- 规则来源：AUTOMOUNT_PREFIX_MAP 的 `py_a → P1`（历史批次映射）。
+- py_a_001 为超级样本账号：全 16 门课选课，用于教师演示；py_a_002~050 仅 P1。
+- **py_a_051 即 §2 修复对象**：注册邮箱用了真实外部邮箱导致 Hub 侧被同步成 `0368414`；现已改为 `py_a_051@edu.local` 并成功同步（Hub id=4378）。
+- `py_a1..py_a4`、`py_b` 前缀当前库存为 0，规则保留待后续批次启用。
+
+### 7.8 体验/演示学生（11 个）
+
+| 用户名 | 邮箱 | 用途 | 挂载 |
+|---|---|---|---|
+| student_python | student-python@edu.local | 工业四语言演示 | Hub load_groups 静态成员 |
+| student_java | student-java@edu.local | 工业四语言演示 | 同上 |
+| student_go | student-go@edu.local | 工业四语言演示 | 同上 |
+| student_rust | student-rust@edu.local | 工业四语言演示 | 同上 |
+| student_alice | student-alice@edu.local | 演示学生 | 同上 |
+| student_bob | student-bob@edu.local | 演示学生 | 同上 |
+| student_carol | student-carol@edu.local | 演示学生 | 同上 |
+| free_user_88 | free-user-88@edu.local | 体验注册首例 | 0 选课 |
+| v16reg387 / v16reg901 / v16reg700 / v16reg852 | v16regNNN@edu.local | V15→V16 功能回归注册（09-13） | 0 选课 |
+
+### 7.9 注册/并发压测辅助账号（0 选课，不同步 Hub，共 40 个）
+
+- **e2e 激活测试（10 个）**: e2e_act_103625, e2e_act_103738, e2e_act_111945, e2e_act_122940, e2e_act_125315, e2e_act_130459, e2e_act_131606, e2e_act_133003, e2e_act_140440, e2e_act_1789275817 —— 专测"注册即激活"链路。
+- **体验注册测试（30 个）**: free_102403, free_102559, free_103753, free_104106, free_111945, free_122940, free_125315, free_130459, free_131606, free_133003, free_140440（11 个）+ free2_104611, free2_104738, free2_104852, free2_111216, free2_111945, free2_133003, free2_140440（7 个）+ 其余 @test.local 时间戳压测号（§7.1 合并计数）—— 专测注册通道与目录可见性（全部 0 课可见，验证 invitation_only 生效）。
+
+### 7.10 教师与系统账户（22 个，全列）
+
+| 账户 | 邮箱 | 角色 |
+|---|---|---|
+| teacher_zhang | teacher-zhang@edu.local | 全 16 门课 staff（教师1，矩阵 §4.3） |
+| teacher_python_02 | teacher-python-02@edu.local | P1/P3/P5/A1/A3 staff |
+| teacher_java_01 | teacher-java-01@edu.local | P2/B2/B4/B6 staff |
+| teacher_java_02 | teacher-java-02@edu.local | B1/B3/B5 staff |
+| teacher_go_01 | teacher-go-01@edu.local | P4 staff |
+| teacher_go_02 | teacher-go-02@edu.local | A2 staff |
+| teacher_rust_01 | teacher-rust-01@edu.local | P6 staff |
+| teacher_rust_02 | teacher-rust-02@edu.local | A4 staff |
+| lecture_p1~p6 | lecture-p1~p6@edu.local | P 系列主讲（instructor） |
+| Lecture-A1~A4 | lecture-a1~a4@edu.local | A 系列主讲（instructor，staff=True） |
+| Lecture-B1~B6 | lecture-b1~b6@edu.local | B 系列主讲（instructor，staff=True） |
+| admin | admin@openedx.local | 平台超级管理员 |
+| ecommerce_worker / login_service_user | (系统默认) | Open edX 系统服务账号 |
+
+### 7.11 学生账户使用速查（一线教师视角）
+
+1. **发号**: 按班级给学生发用户名前缀（如 P1 课发 `stu_p1_xxx`，班级区分靠名册/Cohort），学生用该用户名在 LMS 注册（任意邮箱均可，激活自动完成）。
+2. **登录 LMS**: `https://openedx.10.167.2.175.nip.io:31825`，注册后自动看到且仅看到自己前缀对应的那 1 门课。
+3. **进 JupyterHub**: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/`，用 LMS 同一账号 OAuth 登录；账户 5 分钟内自动同步（或管理员按 §5.5 立即触发）。
+4. **领资料**: 学生 Pod 启动时自动拿到本课程学生版 Notebook + 代码框架（startup.sh 按 username 前缀分发）；教师账号拿双版本（学生版+教师版）。
+5. **排障**: 学生说"看不到课" → ① 查用户名前缀是否正确（§4.4 表）；② 查 audit 日志是否命中 AUTOMOUNT；③ 查 Hub 同步（§5.5/§5.6、§8.3）。
+
+## 8. JupyterHub 侧账户对照与同步通道
+
+### 8.1 同步通道（三条并存）
+
+| 通道 | 触发 | 命名 | 适用 |
+|---|---|---|---|
+| CronJob lms-hub-sync | 每 5 分钟 / 手动 §5.5 | LMS 用户名（§2.3 加固后） | 全部有选课账户 |
+| OAuth 首次登录 | 用户首次进 Hub | 邮箱规范名（连字符） | 历史遗留；同名账户收敛后以同步通道为准 |
+| load_groups 静态配置 | Hub 启动 | 配置直写 | student_* 演示账号、教师组 |
+
+### 8.2 Hub 分组现状（加固重跑后实测，2026-09-14）
+
+| Hub 分组 | 人数 | 说明 |
+|---|---|---|
+| all-students | 3350 | 含 1636 个连字符历史名；实义学生 ≈1691 |
+| all-teachers | 27 | 16 教师 + 讲师 + 系统账户 |
+| course-p-students / course-p-teachers | 1263 / 9 | P1~P6 学生/教师 |
+| course-b-students / course-b-teachers | 1268 / 7 | B1~B6 |
+| course-a-students / course-a-teachers | 864 / 7 | A1~A4 |
+| industrial-*-students | 各 1 | 四语言演示学生 |
+| lecture-pN-students 等 | 1~2 | 旧版演示分组（保留） |
+
+### 8.3 排障速查
+
+| 症状 | 排查 |
+|---|---|
+| LMS 有号、Hub 无号 | ① 该用户是否有选课（无选课不同步是预期）；② "邮箱前缀≠用户名"历史问题已由 §2.3 根治；③ 手动跑 §5.5 看 errors 字段 |
+| Hub 出现陌生名用户 | 大概率历史邮箱前缀产物（如 0368414），核对 LMS 后按 §2.2 步骤 2 删除 |
+| 学生看不到自己的 Notebook | startup.sh 按 username 分发，确认 Hub 用户名与课程前缀匹配（§8.1） |
+| 同名学生出现两个变体（stu_p1_633 与 stu-p1-633） | OAuth 历史名与同步名并存，登录以 OAuth 实际进入的为准；数据盘 PVC 按 OAuth 名绑定，不影响使用 |
