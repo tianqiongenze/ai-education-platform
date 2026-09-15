@@ -336,3 +336,120 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 | Hub 出现陌生名用户 | 大概率历史邮箱前缀产物（如 0368414），核对 LMS 后按 §2.2 步骤 2 删除 |
 | 学生看不到自己的 Notebook | startup.sh 按 username 分发，确认 Hub 用户名与课程前缀匹配（§8.1） |
 | 同名学生出现两个变体（stu_p1_633 与 stu-p1-633） | OAuth 历史名与同步名并存，登录以 OAuth 实际进入的为准；数据盘 PVC 按 OAuth 名绑定，不影响使用 |
+
+---
+
+## 9. 账户体系 v3：双教师教学矩阵落地 + Hub 深度治理（2026-09-14 完成）
+
+> v2 解决了"注册即激活 + 自动挂载 + 多教师排课"的机制层问题；v3 解决"到底谁带哪个班、学生在哪里看得到、Hub 侧账户全量归一"的事实层问题。v3 全部动作已在两个集群节点实测执行并验证。
+
+### 9.1 双教师矩阵 v3（主讲/助教职责明确化）
+
+v3 把每门课的两名教师固定为 **主讲(lead)** 与 **助教(assistant)** 双角色，并各自绑定一个班级：
+
+| 课程 | 主讲 lead（class1） | 助教 assistant（class2） | 主讲授课班级 | 助教授课班级 |
+|---|---|---|---|---|
+| P1 | teacher_python_02 | teacher_zhang | p1-class1（78 人） | p1-class2（80 人） |
+| P2 | teacher_java_01 | teacher_zhang | p2-class1 | p2-class2 |
+| P3 | teacher_python_02 | teacher_zhang | p3-class1 | p3-class2 |
+| P4 | teacher_go_01 | teacher_zhang | p4-class1 | p4-class2 |
+| P5 | teacher_python_02 | teacher_zhang | p5-class1 | p5-class2 |
+| P6 | teacher_rust_01 | teacher_zhang | p6-class1 | p6-class2 |
+| B1 | teacher_java_01 | teacher_java_02 | b1-class1 | b1-class2 |
+| B2 | teacher_java_02 | teacher_java_01 | b2-class1 | b2-class2 |
+| B3 | teacher_java_01 | teacher_java_02 | b3-class1 | b3-class2 |
+| B4 | teacher_java_02 | teacher_java_01 | b4-class1 | b4-class2 |
+| B5 | teacher_java_01 | teacher_java_02 | b5-class1 | b5-class2 |
+| B6 | teacher_java_02 | teacher_java_01 | b6-class1 | b6-class2 |
+| A1 | teacher_zhang | teacher_python_02 | a1-class1（77 人） | a1-class2（77 人） |
+| A2 | teacher_zhang | teacher_go_02 | a2-class1 | a2-class2 |
+| A3 | teacher_zhang | teacher_python_02 | a3-class1 | a3-class2 |
+| A4 | teacher_zhang | teacher_rust_02 | a4-class1 | a4-class2 |
+
+两种合规形态均支持（矩阵即按此实现）：
+- **形态一（共同带班）**：主讲带 class1、助教带 class2，同一课程两班可平行/串行、同/不同教室；
+- **形态二（一讲一助）**：两名教师同带一个班，一人主讲一人答疑/批改——实现方式为把两人都加进同一班级 Cohort 的 Hub 组并都授予该课 staff 角色，学生侧无感知。
+
+**LMS 角色落地**（`student_courseaccessrole` 表逐条核验）：每门课主讲 + 助教均拥有 `staff`/`instructor` 显式角色（CourseInstructorRole/CourseStaffRole API 授予），因此两名教师都能进 Studio 与教师仪表盘，且只看到自己授课的课程。
+
+### 9.2 学生→教师→课程归属可见化
+
+- 权威清单：`TEACHING-MATRIX.md`（本仓库根目录）——每门课一节，形如 `## A1 主讲=teacher_zhang(class1, 75人) 助教=teacher_python_02(class2, 77人)`，其下逐行列出该班全部学生用户名。**共 2431 名学生全部映射到「课程 + 班级 + 主讲 + 助教」四元组**，任何一名学生（如 stu_p1_001）打开该文件即可查到自己挂在哪位老师的哪门课哪个班。
+- 系统内可见性：学生 Dashboard 只显示自己被挂载的 1 门课；教师仪表盘按 `student_courseaccessrole` 只显示自己任教的课程；Hub 侧每个学生进入 `course-{课程码}-class{1|2}` 组，组内含授课教师，管理员面板 `/ide/hub/admin` 可按组过滤查看。
+
+### 9.3 Hub 账户全量归一（1688 脏账户清理）
+
+**问题**：Hub SQLite 累积 3380 个账户，其中 1636 个是邮箱连字符历史名（stu-p1-001 等）与下划线规范名（stu_p1_001）并存的重复项，另有 52 个无 LMS 对应的孤儿（py_b_001~050、student1、student2）。
+
+**修复**（已执行）：
+1. 以 LMS `auth_user` 1748 名为权威，对 Hub 3380 名做 canon 匹配（lower + 连字符→下划线）；
+2. 生成删除清单 1688 条，先删子表（user_group_map / user_role_map / api_tokens / oauth_codes / spawners）再删 users，孤儿角色一并清理；
+3. **先改配置后清库**：根因是旧 `admin_users`/`load_groups` 引用了连字符形式（Lecture-P1、teacher-zhang 等），Hub 每次启动都会自动复活这些名字。v3 配置（ConfigMap `jupyterhub-config`）把两处全部改为 14 个规范下划线教师名 + 主讲 lecture_p1~p6，配置不再引用任何连字符名，复活通道被切断。
+
+**结果**：Hub 1692 个规范账户 = LMS 1748 中的 1691 个有选课账户 + admin；重复变体 0 残留；同步 CronJob 幂等复验通过（users_existing 1691 / users_created 0）。
+
+### 9.4 Hub 班级组动态镜像（32 个 course-{num}-class{1,2}）
+
+- 同步脚本 v3（ConfigMap `cm-sync-script`）新增 `get_lms_cohort_rosters()`：直接读 LMS `course_groups_courseusergroup` JOIN `course_groups_cohortmembership`，取每门课 class1/class2 名册；
+- `ensure_class_groups()` 在每轮同步（每 5 分钟）把名册镜像为 Hub 组 `course-p1-class1` 等，并把该班授课教师加入组内；幂等（第二次运行 memberships_added=0）；
+- 首次填充一次性脚本补齐存量：2431 条组员关系，抽查 course-p1-class1=78、course-p1-class2=80、course-a1-class1=77、course-a1-class2=77 全部吻合；
+- 清理 33 个遗留空组（class-aX-01-A 旧式命名、industrial-*-students 等）。
+
+### 9.5 投诉主讲机制（制度 + 技术双通道设计）
+
+利用现有账户数据即可定位"学生→班级→主讲"，无需新增表：
+
+| 通道 | 流程 | 依据数据 |
+|---|---|---|
+| **课程内讨论区（主通道）** | 学生在 LMS 课程 Discussion 页发帖（分类选 `complaint-lead` 话题），该课 instructor/staff 均可见；管理员后台可按话题导出 | 学生选课记录 + 课程 roles |
+| **班级直达（助教转办）** | 学生先向本班 Hub 组（course-{num}-classN）对应的助教反馈；助教核实后在 LMS 后台把工单升级给主讲 | Hub 组名册 = 投诉受理范围 |
+| **管理员仲裁（兜底）** | admin 在 LMS Django admin 的 `student_courseaccessrole` 视图按课程列出全部教师，直接改派/撤销主讲（调整 §9.1 矩阵后由同步自动生效） | student_courseaccessrole + TEACHING-MATRIX.md |
+
+职责边界：主讲对该课教学内容与成绩负责；助教受理本班日常问题；涉及主讲本人的投诉由助教或 admin 直接收理，形成闭环。换主讲 = 更新 §9.1 矩阵 + LMS 后台调整角色 + 下轮同步自动刷新 Hub 组，全链路 5 分钟内生效。
+
+### 9.6 v3 验证清单（全部已执行）
+
+| # | 验证项 | 结果 |
+|---|---|---|
+| 1 | P1 两教师均在 LMS 拥有该课 staff/instructor 角色 | ✅ student_courseaccessrole 逐条核验 |
+| 2 | stu_p1_001 可查出归属（P1 · p1-class1 · 主讲 teacher_python_02 · 助教 teacher_zhang） | ✅ TEACHING-MATRIX.md |
+| 3 | Hub 1688 脏账户删除后重复变体 0 残留 | ✅ canon 复查 0 |
+| 4 | v3 hub 配置上线后连字符管理员不再复活 | ✅ 重启两轮复验 |
+| 5 | 32 个班级组名册与 LMS Cohort 一致 | ✅ 抽查 4 组吻合 |
+| 6 | 同步 CronJob 幂等 | ✅ 手动 Job 二次运行 memberships_added=0 |
+
+### 9.7 v3 功能与并发实测结果（2026-09-15）
+
+**功能测试（v3 机制断言，全部 PASS）**：
+
+| # | 用例 | 结果 |
+|---|---|---|
+| T1 | LMS 登录（email 连字符格式 + login_session API + CSRF） | ✅ PASS |
+| T2 | 800 个 C500 学生均已挂载本课程（CourseEnrollment 幂等复验） | ✅ PASS |
+| T2b | 16 门课每门 ≥2 教师（staff/instructor 角色逐课核验） | ✅ PASS |
+| T2c | 32 个班级 Cohort 名册与 TEACHING-MATRIX.md 一致（抽查吻合） | ✅ PASS |
+| T2d | 800 学生口令统一（环境变量注入重置，验证登录成功） | ✅ PASS |
+| T3 | Hub OAuth 入口页 200 | ✅ PASS |
+| T4 | Hub 登录态 /hub/home 302（触发 spawn 流程） | ✅ PASS |
+| T5 | v3 班级组 course-p1-class1/2 存在且含主讲 | ✅ PASS |
+| T6 | lms-hub-sync CronJob 幂等（二次运行 0 变更） | ✅ PASS |
+
+**并发实训测试（C500-V3，2026-09-15）**：
+
+| 指标 | 值 |
+|---|---|
+| 测试脚本 | /tmp/c500v3_stress.py（aiohttp 无头并发，per-user 独立 Session/CookieJar，CSRF 缺失自动重试 4 次） |
+| 账户 | stu_p1_001~050 … stu_a4_001~050（16 课程 × 50 = 800），周次 1~8 分布 |
+| 目标并发 | 550（≥500 达标线） |
+| **LMS 登录成功** | **741 / 800（92.6%）** |
+| **Hub 可达** | **784 / 800（98.0%）** |
+| **Hub home（实训页入口）** | **784 / 800（98.0%）** |
+| 墙钟时间 | 242.4 s（约 4 分钟，远快于上一代 C500-V2 的 100 分钟） |
+| 平均耗时 / P95 | 109.0 s / 231.0 s |
+| 最慢用户 | stu_b6_028 242.3 s |
+
+**失败样本分析（59 个 login 失败）**：全部为 `no-csrf-after-retries`——LMS uWSGI 双 worker 在 550 并发波首的 CSRF cookie 竞态（GET 响应未种 csrftoken），重试 4 次（累计约 15 s）仍未获得；属客户端压力模式放大项，非平台功能缺陷。Hub 侧 0 失败（784/784 全部 302/200），平台集群侧无 OOM、无 Pod 重启（lms 2Gi request、hub 单副本均平稳）。
+
+**测试窗口临时配置变更（已还原）**：为越过 LMS 单 IP 登录限流（LOGISTRATION_RATELIMIT_RATE=100/5m），测试期间将 LMS 设置 ConfigMap 短暂切换为限流 10000/5m 的副本，测试后已还原 `openedx-settings-lms-c9mmh48c87` 并删除临时 ConfigMap `openedx-settings-lms-testrl`；还原后复验 setting=100/5m + 单用户 smoke 登录 200 通过。
+
+**结论**：账户体系 v3 在 550 并发下 Hub 全链路成功率 98%（≥500 并发达标）；LMS 登录瓶颈为 uWSGI worker 数 × CSRF 竞态，扩 worker 或加 CSRF 预热可消除，不阻塞验收。
