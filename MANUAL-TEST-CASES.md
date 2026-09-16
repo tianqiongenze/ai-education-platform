@@ -31,7 +31,7 @@
 | 角色 | 账号 | 密码 | 用途 |
 |------|------|------|------|
 | 管理员/教师 | admin@openedx.local | EdxAdmin2026! | Open edX LMS + Studio |
-| 教师 | teacher-zhang@edu.local | EdxTeacher2026! | Open edX + JupyterHub 管理员 |
+| 教师 | teacher-zhang@edu.local | EdxTeacher2026! | 系统级教师测试账户（Open edX + JupyterHub，全 16 门课 staff，保留）；A 课程主讲为 teacher-ai-01/02（口令经 TEACHER_PASS 注入） |
 | 学生 | student-python | ide2026 | JupyterHub 学生 |
 | 任意用户名 | btest-001 ~ btest-010 | ide2026 | JupyterHub 并发测试（自动创建） |
 

@@ -33,19 +33,14 @@
 
 ### 1.2 用户名规则（重要！）
 
-| 格式 | 自动加入分组 | 关联教师 | 示例 |
-|------|-------------|----------|------|
-| `p1-你的名字` | lecture-p1-students | Lecture-P1 | `p1-zhangsan` |
-| `p2-你的名字` | lecture-p2-students | Lecture-P2 | `p2-lisi` |
-| `p3-你的名字` | lecture-p3-students | Lecture-P3 | `p3-wangwu` |
-| `p4-你的名字` | lecture-p4-students | Lecture-P4 | `p4-zhaoliu` |
-| `p5-你的名字` | lecture-p5-students | Lecture-P5 | `p5-sunqi` |
-| `p6-你的名字` | lecture-p6-students | Lecture-P6 | `p6-zhouba` |
-| `你的名字`（无前缀） | all-students | teacher-zhang | `alice` |
-| `b1-你的名字`~`b6-你的名字` | lecture-b1~b6-students | Lecture-B1~B6 | `b1-alice`~`b6-alice` |
-| `a1-你的名字`~`a4-你的名字` | lecture-a1~a4-students | Lecture-A1~A4 | `a1-bob`~`a4-bob` |
+| 格式 | 自动挂载课程/班级 | 说明 | 示例 |
+|------|-------------------|------|------|
+| `stu_p1_001`~`stu_p6_xxx` | Lecture-P1~P6 · pN-class1 | 项目实战 8 份工单（P1~P8） | `stu_p1_001`（邮箱 stu-p1-001@edu.local） |
+| `stu_b1_001`~`stu_b6_xxx` | Lecture-B1~B6 · bN-class2 | 程序设计基础 12 份工单（B1~B12） | `stu_b1_001` |
+| `stu_a1_001`~`stu_a4_xxx` | Lecture-A1~A4 · aN-class1 | AI应用基础 12 份工单（A1~A12） | `stu_a1_001` |
+| 时间戳后缀同前缀 | 同对应课程 | 任意后缀不影响前缀匹配 | `stu_p4_104738` → P4/p4-class1 |
 
-> **重要**：用户名前缀决定了你自动获得哪个课程的 Notebook 和代码框架！
+> **重要**：用户名前缀（下划线格式）决定了你自动看到哪门课、自动获得哪些工单 Notebook 和代码框架；注册邮箱随意不影响挂载，推荐连字符邮箱（如 stu-p1-001@edu.local）。历史演示账户（student_python 等）保留不变。
 
 ### 1.3 你的工作空间
 
@@ -872,9 +867,11 @@ CockroachDB 已从裸金属迁移到 K8s Pod 部署：
 
 ---
 
-## 22. 多教师同课程+班级关联体系 (v2.2 新增)
+## 22. 多教师同课程+班级关联体系 (v2.2 新增，已被 v3 矩阵取代)
 
-### 体系架构
+> **历史章节**：早期 `teacher-b1-01` 式教师账户、`class-xx-01-A` 式分组与 `{课程}-{班级}-{学号}` 用户名格式均已停用。现行体系：学生用户名为 `stu_{p|b|a}N_编号`（见 §1.2），班级组为 `course-{课程码}-class{1|2}`；A 课程主讲为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）。以下保留作演进记录。
+
+### 体系架构（早期快照）
 
 ```
 teacher-zhang (总管理员)
@@ -899,7 +896,7 @@ teacher-zhang (总管理员)
     └── teacher-p6-01 → class-p6-01-A
 ```
 
-### 同一课程多个教师
+### 同一课程多个教师（早期快照）
 
 同一课程可以有多位教师同时授课，每位教师管理自己的班级：
 
@@ -1062,9 +1059,11 @@ python3 -m nbgrader submit ps1
 
 ---
 
-## 25. 多教师多课程账户体系 (v2.4 完整版)
+## 25. 多教师多课程账户体系 (v2.4 完整版，v3 矩阵现行)
 
-### 完整对照表
+> **历史快照**：以下 teacher-b1-01 式账户/分组与 `b1-A-01` 式用户名已停用，现行学生用户名格式见 §1.2（`stu_{p,b,a}N_编号`），现行教师矩阵见 `TEACHING-MATRIX.md`（A 课程主讲 teacher_ai_01/02，teacher-zhang 为系统级教师测试账户）。
+
+### 完整对照表（早期快照）
 
 ```
 teacher-zhang (总管理员, 密码: ide2026)
@@ -1092,21 +1091,21 @@ teacher-zhang (总管理员, 密码: ide2026)
     └── teacher-p6-01 → class-p6-01-A
 ```
 
-### 学生登录格式
+### 学生登录格式（现行）
 
-| 格式 | 含义 | 关联教师 |
+| 格式 | 含义 | 挂载课程 |
 |------|------|----------|
-| `b1-A-01` | 程序设计基础 B1 A班 01号 | teacher-b1-01 |
-| `a1-B-03` | AI应用基础 A1 B班 03号 | teacher-a1-01 |
-| `p1-A-05` | Python项目实战 P1 A班 05号 | teacher-p1-01 |
+| `stu_b1_001` | 程序设计基础 B1 班 01号 | Lecture-B1 · b1-class2 |
+| `stu_a1_001` | AI应用基础 A1 班 01号 | Lecture-A1 · a1-class1 |
+| `stu_p1_001` | Python项目实战 P1 班 01号 | Lecture-P1 · p1-class1 |
 
-### 账户总计
+### 账户总计（现行）
 
-- 33 个教师/管理员账户
-- 43 个分组
-- 56 个 Notebook
-- 28 个代码框架
-- 3 门课程
+- 22 个教师/系统账户（16 lecture + teacher_zhang + teacher_ai_01/02 + admin 等）
+- 32 个班级分组（course-{课程码}-class{1|2}）+ 课程/全体师生组
+- 32 份工单（A 12 + B 12 + P 8）→ 64 个 Notebook（学生版+教师版）
+- 32 个代码框架
+- 3 门课程（16 个 LMS Lecture 承载）
 
 ---
 

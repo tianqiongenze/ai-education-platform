@@ -26,17 +26,20 @@
 
 | 角色 | 账号 | 密码 | 权限 |
 |------|------|------|------|
-| **主教师** | teacher-zhang@edu.local | `EdxTeacher2026!` | 所有课程管理，JupyterHub管理员 |
+| **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全 16 门课 staff，保留不动；正式授课教师见下 |
+| **A 课程主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入 | A 课程班级1主讲（李智敏）/ 班级2主讲（周成峰） |
 | **系统管理员** | admin@openedx.local | `EdxAdmin2026!` | 平台最高权限 |
 | **Dify管理** | myuwei@126.com | `Difyai123456` | AI应用管理 |
+
+> 完整教师矩阵（含 16 个 lecture 主讲、班级分组、口令注入策略）见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
 
 #### 1.2.2 课程负责人账号
 
 | 课程类型 | 账号 | 密码 | 负责课程 |
 |----------|------|------|----------|
-| **Python项目实战** | lecture-p1@edu.local ~ lecture-p6@edu.local | `EdxTeacher2026!` | P1-P6课程 |
-| **AI应用基础** | lecture-a1@edu.local ~ lecture-a4@edu.local | `EdxTeacher2026!` | A1-A4课程 |
-| **软件工程基础** | lecture-b1@edu.local ~ lecture-b6@edu.local | `EdxTeacher2026!` | B1-B6课程 |
+| **Python项目实战** | lecture-p1@edu.local ~ lecture-p6@edu.local | `EdxTeacher2026!` | P1-P6课程（承载 P1~P8 共 8 份工单） |
+| **AI应用基础** | lecture-a1@edu.local ~ lecture-a4@edu.local | `EdxTeacher2026!` | A1-A4课程（承载 A1~A12 共 12 份工单） |
+| **程序设计基础** | lecture-b1@edu.local ~ lecture-b6@edu.local | `EdxTeacher2026!` | B1-B6课程（承载 B1~B12 共 12 份工单） |
 
 #### 1.2.3 服务共享密码
 

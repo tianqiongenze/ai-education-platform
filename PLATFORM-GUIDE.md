@@ -103,7 +103,7 @@
 
 | 机制 | 配置位置 | 行为 |
 |------|---------|------|
-| 新用户默认激活 | LMS 设置 ConfigMap `openedx-settings-lms-c9mmh48c87` → production.py：`FEATURES['SKIP_EMAIL_VALIDATION']=True` | 首次注册即 `is_active=True`，不再发激活邮件、不会卡在未激活态 |
+| 新用户默认激活 | LMS 设置 ConfigMap `openedx-settings-lms-testrl`（lms 实际挂载的 settings map）→ production.py：`FEATURES['SKIP_EMAIL_VALIDATION']=True` | 首次注册即 `is_active=True`，不再发激活邮件、不会卡在未激活态 |
 | 自动挂载（选课+入班） | 同 ConfigMap 内 `AUTOMOUNT_PREFIX_MAP`（22 条前缀规则）+ `post_save(User)` 全局信号（dispatch_uid=automount_user_global_post_save） | 用户创建/激活即自动 `CourseEnrollment.enroll(mode='honor')` + 加入对应班级 Cohort，幂等可重复触发 |
 | 仅见本班课程 | 16 门 AIEDU 课全部 `invitation_only=True` + `catalog_visibility=about` | 未匹配前缀的新用户 0 门课可见（课程目录页公开列表≠选课）；学生 Dashboard 仅显示被挂载的 1 门课 |
 | 多教师多班级 | 每门课 ≥2 名 staff 教师 + 2 个手动班级 Cohort（p1-class1/2 … 共 32 个） | 同一课程 2 名教师各绑定一个班级，可平行/串行、同/不同时间与教室授课；换班=迁移 Cohort |

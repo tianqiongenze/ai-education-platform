@@ -58,7 +58,7 @@ if skip_email: registration.activate()   # 直接激活
 else: compose_and_send_activation_email(...)  # 发激活邮件
 ```
 
-实施：在 LMS 设置 ConfigMap（openedx-settings-lms-c9mmh48c87 → production.py）追加：
+实施：在 LMS 设置 ConfigMap（`openedx-settings-lms-testrl`，lms deployment `settings-lms` 卷实际挂载的那份；名称后缀只是生成器随机串，勿按名字误删 → production.py）追加：
 ```python
 # == AUTO-ACTIVATE NEW USERS ==
 FEATURES['SKIP_EMAIL_VALIDATION'] = True
@@ -153,7 +153,7 @@ u=User.objects.get(username='teacher_go_02'); k=CourseKey.from_string('course-v1
 CourseStaffRole(k).add_users(u)"
 
 # 5.2 新增前缀映射（改 AUTOMOUNT_PREFIX_MAP 后重启 lms）
-kubectl edit configmap openedx-settings-lms-c9mmh48c87 -n openedx
+kubectl edit configmap openedx-settings-lms-testrl -n openedx   # lms 实际挂载的 settings map
 kubectl rollout restart deployment/lms -n openedx
 
 # 5.3 把存量学生迁班（cohort 变更 = 换教师班级）
