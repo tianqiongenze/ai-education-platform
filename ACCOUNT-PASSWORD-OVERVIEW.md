@@ -33,6 +33,9 @@
 | **课程负责人** | lecture-a1@edu.local ~ lecture-a4@edu.local | `EdxTeacher2026!` | AI应用课程负责人 |
 | **课程负责人** | lecture-b1@edu.local ~ lecture-b6@edu.local | `EdxTeacher2026!` | 软件工程课程负责人 |
 | **助教/其他教师** | teacher_python_02, teacher_java_01 等 | `EdxTeacher2026!` | 按需分配 |
+| **A 课程主讲（新设）** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入，不落文件/DB | A1~A4 班级1/班级2 主讲（李智敏/周成峰），staff + JupyterHub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter |
+
+> 说明：teacher_zhang 保留为系统级教师测试账户。所有教师/学生密码仅通过 `TEACHER_PASS` / `STUDENT_PASS` / `ADMIN_PASS` 环境变量注入（冒烟脚本、测试套件运行时读取），不硬编码进任何文档或数据库。
 
 #### 1.2.2 学生账户（通用样例）
 

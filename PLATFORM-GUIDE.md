@@ -112,7 +112,7 @@
 
 **前缀规则（22 条）**：`stu_p1..p6`→P1..P6/class1；`stu_b1..b6`→B1..B6/class2；`stu_a1..a4`→A1..A4/class1；`py_a1..a4`→A1..A4/class1；`py_a`→P1/class1（历史批次）；`py_b`→P2/class2。用户名用下划线、邮箱用连字符（stu_p1_601 → stu-p1-601@edu.local）。
 
-**多教师排课矩阵**（16 门课全部满足"同一课程 ≥2 教师"）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。P1-P6/B1-B6/A1-A4 每门课均为 teacher_zhang + 协讲（teacher_python_02/teacher_java_01/02/teacher_go_01/02/teacher_rust_01/02）+ 主讲 lecture_xx（instructor 角色），班级 Cohort 为 {课程码}-class1 / {课程码}-class2。
+**多教师排课矩阵**（16 门课全部满足"同一课程 ≥2 教师"）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。P1-P6/B1-B6 每门课为 teacher_zhang + 协讲（teacher_python_02/teacher_java_01/02/teacher_go_01/02/teacher_rust_01/02）+ 主讲 lecture_xx（instructor 角色）；A1-A4 主讲为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2），teacher_zhang 保留为系统级教师测试账户。班级 Cohort 为 {课程码}-class1 / {课程码}-class2。
 
 ### 3.1 Open edX LMS 账户（原有 84 + C500 800 + C500-V2 800 + 工业等 ≈ 共 1748 个，MySQL auth_user）
 
@@ -122,6 +122,7 @@
 | 教师 | teacher-zhang@edu.local | EdxTeacher2026! | 主教师，兼 JupyterHub 管理员 |
 | 课程负责人 | lecture_p1 ~ lecture_p6（LMS 与 Hub 侧同名，v3 已归一） | — | 每门课程的教师；LMS 侧还有 lecture_a1~a4 / lecture_b1~b6 |
 | 助教/其他教师 | teacher_python_02, teacher_java_01, teacher_java_02 等共 8 个 teacher_* | — | 按需分配 |
+| A 课程主讲（新设） | teacher_ai_01 / teacher_ai_02（teacher-ai-01@edu.local / teacher-ai-02@edu.local） | — | A1~A4 班级1/班级2 主讲（李智敏/周成峰），staff + JupyterHub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter；口令经 TEACHER_PASS 环境变量注入 |
 | 学生（通用样例） | student_python / student_java / student_go / student_rust / student_alice / student_bob / student_carol | — | 通用学生样例账号（LMS 下划线命名，Hub 对应中划线；**email 为连字符格式**，如 student-python@edu.local） |
 | 批量学生 | py_a_001 ~ py_a_050（50 个） | — | Python 实训批次 A |
 | **C500 并发测试学生** | stu_p1_001~050 … stu_a4_001~050（16 课程 × 50 = **800 个**） | — | 每门课程 50 名专属学生（C500 并发实训用，已全部选课本课程；email 连字符格式 stu-p1-001@edu.local；口令经环境变量注入，不入库） |

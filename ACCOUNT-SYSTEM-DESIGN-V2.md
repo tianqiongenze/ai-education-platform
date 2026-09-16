@@ -100,24 +100,31 @@ AFTER  is_active=True      # 注册即激活
 
 ### 4.3 多教师/多班级排课矩阵（当前 16 门课全部满足"≥2 教师"）
 
+主讲以"主讲(instructor)"列命名对应班级；A 课程另设两名主讲教师账户 teacher_ai_01 / teacher_ai_02，分别关联班级 1 / 班级 2（Hub 管理员，startup 脚本下发 A 全部 12 份工单学生版+教师版）。
+
 | 课程 | 教师1（staff） | 教师2（staff） | 主讲(instructor) | 班级 Cohort |
 |---|---|---|---|---|
-| P1 | teacher_zhang | teacher_python_02 | lecture_p1 | p1-class1/2 |
-| P2 | teacher_zhang | teacher_java_01 | lecture_p2 | p2-class1/2 |
-| P3 | teacher_zhang | teacher_python_02 | lecture_p3 | p3-class1/2 |
-| P4 | teacher_zhang | teacher_go_01 | lecture_p4 | p4-class1/2 |
-| P5 | teacher_zhang | teacher_python_02 | lecture_p5 | p5-class1/2 |
-| P6 | teacher_zhang | teacher_rust_01 | lecture_p6 | p6-class1/2 |
-| B1 | teacher_zhang | teacher_java_02 | lecture_b1 | b1-class1/2 |
-| B2 | teacher_zhang | teacher_java_01 | lecture_b2 | b2-class1/2 |
-| B3 | teacher_zhang | teacher_java_02 | lecture_b3 | b3-class1/2 |
-| B4 | teacher_zhang | teacher_java_01 | lecture_b4 | b4-class1/2 |
-| B5 | teacher_zhang | teacher_java_02 | lecture_b5 | b5-class1/2 |
-| B6 | teacher_zhang | teacher_java_01 | lecture_b6 | b6-class1/2 |
-| A1 | teacher_zhang | teacher_python_02 | Lecture-A1 | a1-class1/2 |
-| A2 | teacher_zhang | teacher_go_02 | Lecture-A2 | a2-class1/2 |
-| A3 | teacher_zhang | teacher_python_02 | Lecture-A3 | a3-class1/2 |
-| A4 | teacher_zhang | teacher_rust_02 | Lecture-A4 | a4-class1/2 |
+| P1 | teacher_zhang | teacher_python_02 | 李智敏·主讲P1 | p1-class1/2 |
+| P2 | teacher_zhang | teacher_java_01 | 周成峰·主讲P2 | p2-class1/2 |
+| P3 | teacher_zhang | teacher_python_02 | 李智敏·主讲P3 | p3-class1/2 |
+| P4 | teacher_zhang | teacher_go_01 | 周成峰·主讲P4 | p4-class1/2 |
+| P5 | teacher_zhang | teacher_python_02 | 李智敏·主讲P5 | p5-class1/2 |
+| P6 | teacher_zhang | teacher_rust_01 | 周成峰·主讲P6 | p6-class1/2 |
+| B1 | teacher_zhang | teacher_java_02 | 李智敏·主讲B1 | b1-class1/2 |
+| B2 | teacher_zhang | teacher_java_01 | 周成峰·主讲B2 | b2-class1/2 |
+| B3 | teacher_zhang | teacher_java_02 | 李智敏·主讲B3 | b3-class1/2 |
+| B4 | teacher_zhang | teacher_java_01 | 周成峰·主讲B4 | b4-class1/2 |
+| B5 | teacher_zhang | teacher_java_02 | 李智敏·主讲B5 | b5-class1/2 |
+| B6 | teacher_zhang | teacher_java_01 | 周成峰·主讲B6 | b6-class1/2 |
+| A1 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A1 | a1-class1/2 |
+| A2 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A2 | a2-class1/2 |
+| A3 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A3 | a3-class1/2 |
+| A4 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A4 | a4-class1/2 |
+
+说明：
+- **teacher_zhang 为系统级教师测试账户**（全 16 门课 staff，保留不动）。
+- **teacher_ai_01（李智敏，teacher-ai-01@edu.local）/ teacher_ai_02（周成峰，teacher-ai-02@edu.local）** 为 A 课程新设两名主讲教师账户，分别对应班级 1 / 班级 2；两账户均为 JupyterHub 管理员，登录 Hub 后自动获得 A 全套 12 份工单（M1-1a…M4-2、M5-1、Z，共 24 个 学生版+教师版 notebook）及 12 个代码框架 starter，可直接分发给各自班级。
+- P/B 课程的"主讲"列为授课教师命名（李智敏/周成峰交替任教），LMS 内仍以 lecture_pN/lecture_bN instructor 账户承载。
 
 平行/串行授课语义：同一课程的两名教师各自绑定一个班级 Cohort；两个班可以同周次不同教室（平行）或不同周次（串行），学生只随班级看到自己教师的课堂内容，互不影响。工业四语言项目（Java/Go/Rust/Python）教师账户已全部同步进 Open edX 且 active=True（teacher-java/go/rust-01/02@edu.local）。
 
@@ -186,7 +193,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 | 类别 | 数量 | 代表账户 | 挂载方式 | Hub 同步 |
 |---|---|---|---|---|
 | 管理员/系统 | 3 | admin, ecommerce_worker, login_service_user | 不挂载课程 | admin 在 Hub |
-| 教师账户 | 19 | teacher_zhang 等 8 + lecture_p1~p6 + Lecture-A1~A4 + Lecture-B1~B6 | instructor/staff 角色 | all-teachers + course-*-teachers |
+| 教师账户 | 21 | teacher_zhang 等 8 + teacher_ai_01/02 + lecture_p1~p6 + Lecture-A1~A4 + Lecture-B1~B6 | instructor/staff 角色 | all-teachers + course-*-teachers（teacher_ai_01/02 为 Hub admin） |
 | C500-V2 定向学生 | 1600 | stu_{p,b,a}N_001~650 | 前缀自动挂载（§7.2~7.4） | 已全部同步 |
 | 历史批次学生 | 51 | py_a_001~051 | 前缀 py_a → P1 | 已全部同步（含本次修复的 051） |
 | 体验/演示学生 | 11 | student_python 等 7 + free_user_88 + v16reg×4 | 手动/部分挂载 | 已同步 |
@@ -292,6 +299,8 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 | teacher_go_02 | teacher-go-02@edu.local | A2 staff |
 | teacher_rust_01 | teacher-rust-01@edu.local | P6 staff |
 | teacher_rust_02 | teacher-rust-02@edu.local | A4 staff |
+| teacher_ai_01 | teacher-ai-01@edu.local | A1~A4 班级1主讲（李智敏，staff + Hub 管理员，startup 下发 A 全套工单） |
+| teacher_ai_02 | teacher-ai-02@edu.local | A1~A4 班级2主讲（周成峰，staff + Hub 管理员，startup 下发 A 全套工单） |
 | lecture_p1~p6 | lecture-p1~p6@edu.local | P 系列主讲（instructor） |
 | Lecture-A1~A4 | lecture-a1~a4@edu.local | A 系列主讲（instructor，staff=True） |
 | Lecture-B1~B6 | lecture-b1~b6@edu.local | B 系列主讲（instructor，staff=True） |
