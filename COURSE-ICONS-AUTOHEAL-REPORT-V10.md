@@ -2,6 +2,7 @@
 
 日期: 2026-09-10
 前置: STUDIO-LINK-ICONS-REPORT-V9.md (commit dc18a82)
+现行说明（2026-09-16）：课程结构现为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本文"16 门课"即指这 16 个 Lecture。
 
 ## 需求
 

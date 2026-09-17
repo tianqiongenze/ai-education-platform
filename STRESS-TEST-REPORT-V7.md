@@ -3,6 +3,7 @@
 > **测试时间**: 2026-09-09
 > **测试范围**: LMS + Studio(CMS) + JupyterHub + PrairieLearn + Code-Server
 > **测试工具**: Playwright (功能) + Locust (HTTP压力) + k6 (全链路压力)
+> 现行说明（2026-09-16）：课程结构现为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本文"16 门课程"即指这 16 个 Lecture。
 
 ## 一、Studio 404 修复
 

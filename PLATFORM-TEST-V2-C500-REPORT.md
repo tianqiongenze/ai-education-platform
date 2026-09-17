@@ -4,6 +4,7 @@
 > 集群：k8s-master 10.167.2.175 / k8s-worker1 10.167.2.176（K8s v1.28.2），唯一 HTTPS 入口 NodePort 31825
 > 测试方式：Playwright 无头浏览器，全流程真实用户操作（非 API 模拟）
 > 本报告承接《PLATFORM-TEST-V15-C500-REPORT.md》（V15 57 用例 + C500 781/800）
+> 现行说明（2026-09-16）：课程结构现为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本文"16 门课程/16 门课"即指这 16 个 Lecture。
 
 ---
 

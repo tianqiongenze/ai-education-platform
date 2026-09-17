@@ -4,6 +4,7 @@
 **测试方式**: Playwright 无头 Chromium, 真实用户流程 (登录 → 页面导航 → 逐链接点击 → 落点断言 + 空白页防护)
 **结果**: **28/28 全部通过 (100% PASS)** — 明细见 `platform_test_v12_report.json`
 **测试脚本**: `platform_test_suite_v12.py`
+现行说明（2026-09-16）：课程结构现为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本文"16 门课程"即指这 16 个 Lecture。
 
 ---
 

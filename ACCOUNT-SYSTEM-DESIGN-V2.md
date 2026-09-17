@@ -78,7 +78,7 @@ AFTER  is_active=True      # 注册即激活
 ### 4.1 分层模型
 
 ```
-课程 Course (course-v1:AIEDU+P1+2026 … 共16门)
+课程 Course (course-v1:AIEDU+{课程码}+2026 … 3 门课程（A/B/P）共 16 个 Lecture)
  ├── 教师≥2（staff 角色，互为备份，均可进 Studio/LMS 教师视图）
  │    ├── 主讲教师（instructor 角色 = lecture_xx 虚拟账号持有）
  │    └── 协讲教师（teacher_xx_01/02）
@@ -95,10 +95,12 @@ AFTER  is_active=True      # 注册即激活
   - `stu_p1..stu_p6` → P1..P6/class1；`stu_b1..stu_b6` → B1..B6/class2；`stu_a1..stu_a4` → A1..A4/class1
   - `py_a1..py_a4` → A1..A4；`py_a` → P1（历史批次）；`py_b` → P2
 - 行为：`CourseEnrollment.enroll(mode='honor')` + `add_user_to_cohort(课程码-classN)`；幂等（已选课/已入班则跳过）。
-- 未匹配前缀的新用户：**0 门课可见**（16 门 AIEDU 课全部 `invitation_only=True`、`catalog_visibility=about`），从机制上禁止自主选课。
+- 未匹配前缀的新用户：**0 门课可见**（16 个 Lecture 全部 `invitation_only=True`、`catalog_visibility=about`），从机制上禁止自主选课。
 - **并发测试时间戳账号同样命中前缀规则**：如 `stu_p4_104738` 注册即挂载 P4/p4-class1（实测），任意数字后缀不影响前缀匹配（§7.5 全列）。
 
-### 4.3 多教师/多班级排课矩阵（当前 16 门课全部满足"≥2 教师"）
+### 4.3 多教师/多班级排课矩阵（当前 16 个 Lecture 全部满足"≥2 教师"）
+
+> 课程结构：平台为 **3 门课程**（A：01-AI 通识课程 / B：02-程序设计基础 / P：03-Python 程序设计-项目实战），LMS 中拆为 16 个 Lecture（A1~A4、B1~B6、P1~P6）承载，下表每行即一个 Lecture。
 
 主讲以"主讲(instructor)"列命名对应班级；A 课程另设两名主讲教师账户 teacher_ai_01 / teacher_ai_02，分别关联班级 1 / 班级 2（Hub 管理员，startup 脚本下发 A 全部 12 份工单学生版+教师版）。
 
@@ -122,7 +124,7 @@ AFTER  is_active=True      # 注册即激活
 | A4 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A4 | a4-class1/2 |
 
 说明：
-- **teacher_zhang 为系统级教师测试账户**（全 16 门课 staff，保留不动）。
+- **teacher_zhang 为系统级教师测试账户**（全部 16 个 Lecture staff，保留不动）。
 - **teacher_ai_01（李智敏，teacher-ai-01@edu.local）/ teacher_ai_02（周成峰，teacher-ai-02@edu.local）** 为 A 课程新设两名主讲教师账户，分别对应班级 1 / 班级 2；两账户均为 JupyterHub 管理员，登录 Hub 后自动获得 A 全套 12 份工单（M1-1a…M4-2、M5-1、Z，共 24 个 学生版+教师版 notebook）及 12 个代码框架 starter，可直接分发给各自班级。
 - P/B 课程的"主讲"列为授课教师命名（李智敏/周成峰交替任教），LMS 内仍以 lecture_pN/lecture_bN instructor 账户承载。
 
@@ -174,7 +176,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 
 - [x] SKIP_EMAIL_VALIDATION 生效（新 pod 内 settings 断言 True）
 - [x] 真实注册链路测试：注册即 is_active=True，测试账号已清理
-- [x] 16 门 AIEDU 课每门 ≥2 名 staff 教师（见 §4.3 矩阵）
+- [x] 16 个 Lecture 每门 ≥2 名 staff 教师（见 §4.3 矩阵）
 - [x] 每门课 2 个班级 Cohort 存在（p1-class1/2 …）
 - [x] AUTOMOUNT_PREFIX_MAP 22 条规则在 settings 加载（AUTOMOUNT entries = 22）
 - [x] invitation_only=True + catalog_visibility=about：未挂载用户 0 课可见
@@ -182,7 +184,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 - [x] **py_a_051 根因修复并验证**（§2.2）：LMS 邮箱修正 → Hub 账户建立 → 脏账户 0368414 删除
 - [x] **同步脚本加固**（§2.3）：hub_username 用户名优先，manual-sync-hardened 全量重跑 0 errors
 - [x] JupyterHub 侧账户/分组同步正常（加固后实测：Hub 总用户 3380，all-students 3350、all-teachers 27、course-p/b/a-students 1263/1268/864）
-- [x] LMS 全量选课核对：AIEDU 16 门课 active 选课 2581 条（P1 164 / P2 160 / P3 163 / P4 169 / P5 169 / P6 166 / A1~A4、B1~B6 各 159）
+- [x] LMS 全量选课核对：AIEDU 16 个 Lecture active 选课 2581 条（P1 164 / P2 160 / P3 163 / P4 169 / P5 169 / P6 166 / A1~A4、B1~B6 各 159）
 
 ## 7. 全量用户清单（LMS auth_user 共 1748 个，2026-09-14 逐池实测盘点）
 
@@ -264,7 +266,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 ### 7.7 历史批次学生（py_a_001~051，共 51 个，挂载 P1/p1-class1）
 
 - 规则来源：AUTOMOUNT_PREFIX_MAP 的 `py_a → P1`（历史批次映射）。
-- py_a_001 为超级样本账号：全 16 门课选课，用于教师演示；py_a_002~050 仅 P1。
+- py_a_001 为超级样本账号：全部 16 个 Lecture 选课，用于教师演示；py_a_002~050 仅 P1。
 - **py_a_051 即 §2 修复对象**：注册邮箱用了真实外部邮箱导致 Hub 侧被同步成 `0368414`；现已改为 `py_a_051@edu.local` 并成功同步（Hub id=4378）。
 - `py_a1..py_a4`、`py_b` 前缀当前库存为 0，规则保留待后续批次启用。
 
@@ -291,7 +293,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync-$(date +%s) -n jupyte
 
 | 账户 | 邮箱 | 角色 |
 |---|---|---|
-| teacher_zhang | teacher-zhang@edu.local | 全 16 门课 staff（教师1，矩阵 §4.3） |
+| teacher_zhang | teacher-zhang@edu.local | 全部 16 个 Lecture staff（教师1，矩阵 §4.3） |
 | teacher_python_02 | teacher-python-02@edu.local | P1/P3/P5/A1/A3 staff |
 | teacher_java_01 | teacher-java-01@edu.local | P2/B2/B4/B6 staff |
 | teacher_java_02 | teacher-java-02@edu.local | B1/B3/B5 staff |
@@ -435,7 +437,7 @@ v3 把每门课的两名教师固定为 **主讲(lead)** 与 **助教(assistant)
 |---|---|---|
 | T1 | LMS 登录（email 连字符格式 + login_session API + CSRF） | ✅ PASS |
 | T2 | 800 个 C500 学生均已挂载本课程（CourseEnrollment 幂等复验） | ✅ PASS |
-| T2b | 16 门课每门 ≥2 教师（staff/instructor 角色逐课核验） | ✅ PASS |
+| T2b | 16 个 Lecture 每门 ≥2 教师（staff/instructor 角色逐课核验） | ✅ PASS |
 | T2c | 32 个班级 Cohort 名册与 TEACHING-MATRIX.md 一致（抽查吻合） | ✅ PASS |
 | T2d | 800 学生口令统一（环境变量注入重置，验证登录成功） | ✅ PASS |
 | T3 | Hub OAuth 入口页 200 | ✅ PASS |

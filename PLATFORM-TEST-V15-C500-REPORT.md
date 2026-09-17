@@ -3,6 +3,7 @@
 > 测试日期：2026-09-13　|　测试对象：Open edX (tutor v13, LMS/CMS 13.3.2) + JupyterHub 4.0.3-custom + Code-Server + PrairieLearn Autograder v2 + Ollama LLM
 > 集群：k8s-master 10.167.2.175 / k8s-worker1 10.167.2.176（K8s v1.28.2），唯一 HTTPS 入口 NodePort 31825
 > 测试方式：Playwright 无头浏览器，全流程真实用户操作（非 API 模拟）
+> 现行说明（2026-09-16）：课程结构现为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本文"16 门课程"即指这 16 个 Lecture。
 
 ---
 

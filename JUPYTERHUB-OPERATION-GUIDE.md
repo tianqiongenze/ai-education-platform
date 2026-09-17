@@ -90,7 +90,7 @@
 
 | 用户名 | 密码 | 角色 | 说明 |
 |--------|------|------|------|
-| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全 16 门课 staff，保留不动；正式授课教师为 teacher_ai_01（李智敏·班级1主讲）/ teacher_ai_02（周成峰·班级2主讲）及各课协讲/主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
+| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 16 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为 teacher_ai_01（李智敏·班级1主讲）/ teacher_ai_02（周成峰·班级2主讲）及各课协讲/主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
 
 教师账户（teacher_ai_01 / teacher_ai_02 及 teacher-zhang 测试账户）拥有管理员权限，可以:
 - 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
@@ -940,7 +940,7 @@ redis-cli -h redis.dify-plus.svc.cluster.local -p 6379 -a difyai123456 ping
 | 03-Python程序设计-项目实战 | Lecture-P1~P6 | 李智敏/周成峰交替（instructor=lecture_pN，协讲 teacher_zhang） | stu_p1_~stu_p6_ | **8（P1~P8）** | 16 | 8 |
 | **合计** | **16个Lecture** | | | **32** | **64** | **32** |
 
-> 说明：teacher_zhang 为系统级教师测试账户（全 16 门课 staff，保留）。工单映射：A 课程 4 门 Lecture 各承载 3 份工单（A1=M1-1a/M1-1b，A2=M2-1a/M2-2/M2-3a/M2-3b，A3=M3-1/M3-2，A4=M4-1/M4-2/M5-1/Z，合计 12）；B 课程 6 门 Lecture 每门 2 周 = 2 份工单（如 B1=b1_w01+b1_w02）；P 课程 p11/p12→P1、p21/p22→P2、p33→P3、p41→P4、p55→P5、p66→P6。
+> 说明：teacher_zhang 为系统级教师测试账户（全部 16 个 Lecture staff，保留）。工单映射：A 课程 4 门 Lecture 各承载 3 份工单（A1=M1-1a/M1-1b，A2=M2-1a/M2-2/M2-3a/M2-3b，A3=M3-1/M3-2，A4=M4-1/M4-2/M5-1/Z，合计 12）；B 课程 6 门 Lecture 每门 2 周 = 2 份工单（如 B1=b1_w01+b1_w02）；P 课程 p11/p12→P1、p21/p22→P2、p33→P3、p41→P4、p55→P5、p66→P6。
 
 ### 课程详情
 
@@ -1279,7 +1279,7 @@ python3 -m nbgrader submit ps1
 
 ## 25. 多教师多课程账户体系 (v2.4 完整版，v3 矩阵现行)
 
-> 本节为早期 v2.4 快照，现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3/§9.1。差异要点：teacher-zhang 现为**系统级教师测试账户**（非"总管理员"，保留全 16 门课 staff）；A 课程主讲已改为 **teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）**（Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter）；早期 class-xx-01-A 式教师分组已清理，现行班级组为 course-{课程码}-class{1|2} 共 32 个。
+> 本节为早期 v2.4 快照，现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3/§9.1。差异要点：teacher-zhang 现为**系统级教师测试账户**（非"总管理员"，保留全部 16 个 Lecture staff；平台为 A/B/P 3 门课程经 16 个 Lecture 承载）；A 课程主讲已改为 **teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）**（Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter）；早期 class-xx-01-A 式教师分组已清理，现行班级组为 course-{课程码}-class{1|2} 共 32 个。
 
 ### 现行对照表
 
@@ -1567,10 +1567,10 @@ JupyterHub 启动脚本已集成评测组件：
 | 类型 | 账户 | 数量 | 说明 |
 |------|------|------|------|
 | 平台管理员 | admin | 1 | LMS/Hub 超级管理员 |
-| 教师测试账户 | teacher-zhang | 1 | 系统级教师测试账户（全 16 门课 staff，保留） |
+| 教师测试账户 | teacher-zhang | 1 | 系统级教师测试账户（全部 16 个 Lecture staff，保留） |
 | A 课程主讲 | teacher_ai_01 / teacher_ai_02 | 2 | 李智敏·班级1 / 周成峰·班级2（staff + Hub 管理员） |
 | 讲师账户 | lecture-p1 ~ lecture-p6、Lecture-A1~A4、Lecture-B1~B6 | 16 | 各课程主讲（instructor） |
-| 学生账户 | 已导入 Open edX | 2431 | 按 16 门课前缀自动挂载（详见 TEACHING-MATRIX.md） |
+| 学生账户 | 已导入 Open edX | 2431 | 按 16 个 Lecture 前缀自动挂载（详见 TEACHING-MATRIX.md） |
 
 ### 28.4 课程与项目映射
 

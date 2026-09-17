@@ -46,11 +46,11 @@
 ## 🔑 账户密码信息汇总
 
 ### 教师账户
-> **现行差异说明（2026-09-16）**：teacher-zhang 现为**系统级教师测试账户**（全 16 门课 staff，保留）；A 课程主讲为 teacher-ai-01（李智敏·班级1）/ teacher-ai-02（周成峰·班级2），口令经 `TEACHER_PASS` 环境变量注入。完整矩阵见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
+> **现行差异说明（2026-09-16）**：teacher-zhang 现为**系统级教师测试账户**（全部 16 个 Lecture staff，保留；平台为 A/B/P 3 门课程经 16 个 Lecture 承载）；A 课程主讲为 teacher-ai-01（李智敏·班级1）/ teacher-ai-02（周成峰·班级2），口令经 `TEACHER_PASS` 环境变量注入。完整矩阵见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
 
 | 角色 | 账号 | 密码 | 权限 |
 |------|------|------|------|
-| **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全 16 门课 staff（保留） |
+| **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全部 16 个 Lecture staff（保留） |
 | **系统管理员** | admin@openedx.local | `EdxAdmin2026!` | 平台最高权限 |
 | **课程负责人** | lecture-p1@edu.local ~ lecture-p6@edu.local | `EdxTeacher2026!` | 各课程负责人 |
 
