@@ -118,7 +118,7 @@
 
 | 类别 | 账号 | 密码 | 说明 |
 |------|------|------|------|
-| 管理员 | admin@openedx.local | EdxAdmin2026! | LMS + Studio 超管，已选全部 16 个 AIEDU Lecture |
+| 管理员 | admin@openedx.local | EdxAdmin2026! | LMS + Studio 超管，已选全部 32 个 AIEDU Lecture |
 | 教师 | teacher-zhang@edu.local | EdxTeacher2026! | 主教师，兼 JupyterHub 管理员 |
 | 课程负责人 | lecture_p1 ~ lecture_p6（LMS 与 Hub 侧同名，v3 已归一） | — | 每门课程的教师；LMS 侧还有 lecture_a1~a4 / lecture_b1~b6 |
 | 助教/其他教师 | teacher_python_02, teacher_java_01, teacher_java_02 等共 8 个 teacher_* | — | 按需分配 |

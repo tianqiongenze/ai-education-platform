@@ -1107,7 +1107,7 @@ teacher-zhang (总管理员, 密码: ide2026)
 - 32 个班级分组（course-{课程码}-class{1|2}）+ 课程/全体师生组
 - 32 份工单（A 12 + B 12 + P 8）→ 64 个 Notebook（学生版+教师版）
 - 32 个代码框架
-- 3 门课程（16 个 LMS Lecture 承载）
+- 3 门课程（32 个 LMS Lecture 承载：A1~A12、B1~B12、P1~P8）
 
 ---
 

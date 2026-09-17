@@ -38,9 +38,9 @@
 
 | 课程类型 | 账号 | 密码 | 负责课程 |
 |----------|------|------|----------|
-| **Python项目实战** | lecture-p1@edu.local ~ lecture-p6@edu.local | `EdxTeacher2026!` | P1-P6课程（承载 P1~P8 共 8 份工单） |
-| **AI应用基础** | lecture-a1@edu.local ~ lecture-a4@edu.local | `EdxTeacher2026!` | A1-A4课程（承载 A1~A12 共 12 份工单） |
-| **程序设计基础** | lecture-b1@edu.local ~ lecture-b6@edu.local | `EdxTeacher2026!` | B1-B6课程（承载 B1~B12 共 12 份工单） |
+| **Python项目实战** | lecture-p1@edu.local ~ lecture-p6@edu.local | `EdxTeacher2026!` | P1-P6 课程（重构前名义账户，承载课程实为 Lecture-P1~P8 共 8 份工单，P7/P8 由 lecture_p5/lecture_p6 代管 instructor） |
+| **AI应用基础** | lecture-a1@edu.local ~ lecture-a4@edu.local | `EdxTeacher2026!` | A1-A4 课程（重构前名义账户，承载课程实为 Lecture-A1~A12 共 12 份工单，总主讲 teacher_ai_01/02） |
+| **程序设计基础** | lecture-b1@edu.local ~ lecture-b6@edu.local | `EdxTeacher2026!` | B1-B6 课程（重构前名义账户，承载课程实为 Lecture-B1~B12 共 12 份工单） |
 
 #### 1.2.3 服务共享密码
 
