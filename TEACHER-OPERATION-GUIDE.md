@@ -27,11 +27,12 @@
 | 角色 | 账号 | 密码 | 权限 |
 |------|------|------|------|
 | **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师见下 |
-| **A 课程主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入 | A 课程班级1主讲（李智敏）/ 班级2主讲（周成峰） |
+| **A 课程总主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入 | A 课程班级1总主讲（李智敏）/ 班级2总主讲（周成峰），A1~A12 全部 staff + Hub 管理员 |
+| **Lecture 关联教师（64 个）** | teacher_a1_01 / teacher_a1_02 … teacher_p8_01 / teacher_p8_02（teacher-<lec>-0N@edu.local） | 经 `TEACHER_PASS` 环境变量注入 | 每个 Lecture 2 名：_01 → <lec>-class1，_02 → <lec>-class2（staff + instructor），用于多教师并行/串行上同一 Lecture |
 | **系统管理员** | admin@openedx.local | `EdxAdmin2026!` | 平台最高权限 |
 | **Dify管理** | myuwei@126.com | `Difyai123456` | AI应用管理 |
 
-> 完整教师矩阵（含 16 个 lecture 主讲、班级分组、口令注入策略）见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
+> 完整教师矩阵（64 个 Lecture 关联教师 + teacher_zhang + teacher_ai_01/02，口令注入策略）见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
 
 #### 1.2.2 课程负责人账号
 

@@ -80,57 +80,96 @@ AFTER  is_active=True      # 注册即激活
 ```
 课程 Course (course-v1:AIEDU+{课程码}+2026 … 3 门课程（A/B/P）共 32 个 Lecture：A1~A12、B1~B12、P1~P8，一门 Lecture = 一份工单）
  ├── 教师≥2（staff 角色，互为备份，均可进 Studio/LMS 教师视图）
- │    ├── 主讲教师（instructor 角色 = lecture_xx 虚拟账号持有）
- │    └── 协讲教师（teacher_xx_01/02）
- ├── 班级 Cohort（p1-class1 / p1-class2 … 每门课 2 个班）
+│    ├── 主讲教师（instructor 角色 = lecture_xx 虚拟账号持有）
+ │    └── 讲课教师（teacher_<lec>_01/_02 + teacher_zhang 等 staff）
+ ├── 班级 Cohort（每个 Lecture 2 个班：<lec>-class1 / <lec>-class2）
  │    ├── class1 → 教师1 的班（平行/串行授课，教室由课表决定）
  │    └── class2 → 教师2 的班
  └── 学生（按用户名前缀自动挂载：选课 + 入班，一次完成）
 ```
 
-### 4.2 自动挂载机制（已内置于 LMS settings）
+### 4.2 自动挂载机制（已内置于 LMS settings；2026-09-17 重构为 32 Lecture × class1/2 全覆盖）
 
 - 信号：`post_save(User)` 全局接收器，用户创建/激活即触发 `_automount_user`。
-- 规则：`AUTOMOUNT_PREFIX_MAP`（22 条）按用户名前缀 → (课程码, 班级)：
+- 规则 1（优先）：`_automount_explicit_class()` 显式班级前缀 `stu_<lec>_c<N>_` → 32 个 Lecture 任意 (课程码, class1/2)，如 `stu_a1_c2_001` → (A1, class2)。
+- 规则 2（历史兼容）：`AUTOMOUNT_PREFIX_MAP`（22 条）按用户名前缀 → (课程码, 班级)：
   - `stu_p1..stu_p6` → P1..P6/class1；`stu_b1..stu_b6` → B1..B6/class2；`stu_a1..stu_a4` → A1..A4/class1
   - `py_a1..py_a4` → A1..A4；`py_a` → P1（历史批次）；`py_b` → P2
 - 行为：`CourseEnrollment.enroll(mode='honor')` + `add_user_to_cohort(课程码-classN)`；幂等（已选课/已入班则跳过）。
 - 未匹配前缀的新用户：**0 门课可见**（32 个 Lecture 全部 `invitation_only=True`、`catalog_visibility=about`），从机制上禁止自主选课。
 - **并发测试时间戳账号同样命中前缀规则**：如 `stu_p4_104738` 注册即挂载 P4/p4-class1（实测），任意数字后缀不影响前缀匹配（§7.5 全列）。
 
-### 4.3 多教师/多班级排课矩阵（当前 32 个 Lecture；A1~A12/B1~B12/P1~P8）
+### 4.3 多教师/多班级排课矩阵（2026-09-17 全量重构，32 个 Lecture；A1~A12/B1~B12/P1~P8）
 
-> 课程结构：平台为 **3 门课程**（A：01-AI 通识课程 / B：02-程序设计基础 / P：03-Python 程序设计-项目实战），LMS 中拆为 32 个 Lecture（A1~A12、B1~B12、P1~P8）承载；下表历史行为重构前 16 Lecture 快照，现行角色分配见 `JUPYTERHUB-OPERATION-GUIDE.md` §18。
+> 课程结构：平台为 **3 门课程**（A：01-AI 通识课程 / B：02-程序设计基础 / P：03-Python 程序设计-项目实战），LMS 中拆为 32 个 Lecture（A1~A12、B1~B12、P1~P8）承载。**每个 Lecture 除系统账户 teacher_zhang 外，均新设 2 个与该 Lecture 关联命名的教师账户（teacher_<lec>_01 / teacher_<lec>_02），分别绑定该 Lecture 的班级 1 / 班级 2**，用于多教师并行或串行上同一 Lecture。
 
-主讲以"主讲(instructor)"列命名对应班级；A 课程另设两名主讲教师账户 teacher_ai_01 / teacher_ai_02，分别关联班级 1 / 班级 2（Hub 管理员，startup 脚本下发 A 全部 12 份工单学生版+教师版）。
-
-| 课程 | 教师1（staff） | 教师2（staff） | 主讲(instructor) | 班级 Cohort |
+| Lecture | 教师1 = teacher_<lec>_01（班级1） | 教师2 = teacher_<lec>_02（班级2） | 系统测试账户 | 班级 Cohort |
 |---|---|---|---|---|
-| P1 | teacher_zhang | teacher_python_02 | 李智敏·主讲P1 | p1-class1/2 |
-| P2 | teacher_zhang | teacher_java_01 | 周成峰·主讲P2 | p2-class1/2 |
-| P3 | teacher_zhang | teacher_python_02 | 李智敏·主讲P3 | p3-class1/2 |
-| P4 | teacher_zhang | teacher_go_01 | 周成峰·主讲P4 | p4-class1/2 |
-| P5 | teacher_zhang | teacher_python_02 | 李智敏·主讲P5 | p5-class1/2 |
-| P6 | teacher_zhang | teacher_rust_01 | 周成峰·主讲P6 | p6-class1/2 |
-| B1 | teacher_zhang | teacher_java_02 | 李智敏·主讲B1 | b1-class1/2 |
-| B2 | teacher_zhang | teacher_java_01 | 周成峰·主讲B2 | b2-class1/2 |
-| B3 | teacher_zhang | teacher_java_02 | 李智敏·主讲B3 | b3-class1/2 |
-| B4 | teacher_zhang | teacher_java_01 | 周成峰·主讲B4 | b4-class1/2 |
-| B5 | teacher_zhang | teacher_java_02 | 李智敏·主讲B5 | b5-class1/2 |
-| B6 | teacher_zhang | teacher_java_01 | 周成峰·主讲B6 | b6-class1/2 |
-| A1 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A1 | a1-class1/2 |
-| A2 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A2 | a2-class1/2 |
-| A3 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A3 | a3-class1/2 |
-| A4 | teacher_ai_01（李智敏·班级1主讲） | teacher_ai_02（周成峰·班级2主讲） | Lecture-A4 | a4-class1/2 |
+| A1~A12 | teacher_a1_01 … teacher_a12_01 | teacher_a1_02 … teacher_a12_02 | teacher_zhang | a1-class1/2 … a12-class1/2 |
+| B1~B12 | teacher_b1_01 … teacher_b12_01 | teacher_b1_02 … teacher_b12_02 | teacher_zhang | b1-class1/2 … b12-class1/2 |
+| P1~P8 | teacher_p1_01 … teacher_p8_01 | teacher_p1_02 … teacher_p8_02 | teacher_zhang | p1-class1/2 … p8-class1/2 |
+
+展开（64 个账户逐一列出，email 一律为 `teacher-<lec>-0N@edu.local`）：
+
+| Lecture | 班级1 教师 | 班级2 教师 |
+|---|---|---|
+| A1 | teacher_a1_01 | teacher_a1_02 |
+| A2 | teacher_a2_01 | teacher_a2_02 |
+| A3 | teacher_a3_01 | teacher_a3_02 |
+| A4 | teacher_a4_01 | teacher_a4_02 |
+| A5 | teacher_a5_01 | teacher_a5_02 |
+| A6 | teacher_a6_01 | teacher_a6_02 |
+| A7 | teacher_a7_01 | teacher_a7_02 |
+| A8 | teacher_a8_01 | teacher_a8_02 |
+| A9 | teacher_a9_01 | teacher_a9_02 |
+| A10 | teacher_a10_01 | teacher_a10_02 |
+| A11 | teacher_a11_01 | teacher_a11_02 |
+| A12 | teacher_a12_01 | teacher_a12_02 |
+| B1 | teacher_b1_01 | teacher_b1_02 |
+| B2 | teacher_b2_01 | teacher_b2_02 |
+| B3 | teacher_b3_01 | teacher_b3_02 |
+| B4 | teacher_b4_01 | teacher_b4_02 |
+| B5 | teacher_b5_01 | teacher_b5_02 |
+| B6 | teacher_b6_01 | teacher_b6_02 |
+| B7 | teacher_b7_01 | teacher_b7_02 |
+| B8 | teacher_b8_01 | teacher_b8_02 |
+| B9 | teacher_b9_01 | teacher_b9_02 |
+| B10 | teacher_b10_01 | teacher_b10_02 |
+| B11 | teacher_b11_01 | teacher_b11_02 |
+| B12 | teacher_b12_01 | teacher_b12_02 |
+| P1 | teacher_p1_01 | teacher_p1_02 |
+| P2 | teacher_p2_01 | teacher_p2_02 |
+| P3 | teacher_p3_01 | teacher_p3_02 |
+| P4 | teacher_p4_01 | teacher_p4_02 |
+| P5 | teacher_p5_01 | teacher_p5_02 |
+| P6 | teacher_p6_01 | teacher_p6_02 |
+| P7 | teacher_p7_01 | teacher_p7_02 |
+| P8 | teacher_p8_01 | teacher_p8_02 |
 
 说明：
 - **teacher_zhang 为系统级教师测试账户**（全部 32 个 Lecture staff，保留不动）。
-- **teacher_ai_01（李智敏，teacher-ai-01@edu.local）/ teacher_ai_02（周成峰，teacher-ai-02@edu.local）** 为 A 课程新设两名主讲教师账户，分别对应班级 1 / 班级 2；两账户均为 JupyterHub 管理员，登录 Hub 后自动获得 A 全套 12 份工单（M1-1a…M4-2、M5-1、Z，共 24 个 学生版+教师版 notebook）及 12 个代码框架 starter，可直接分发给各自班级。
-- P/B 课程的"主讲"列为授课教师命名（李智敏/周成峰交替任教），LMS 内仍以 lecture_pN/lecture_bN instructor 账户承载。
+- **teacher_<lec>_01 / _02（共 64 个）**：2026-09-17 统一创建，active=True，口令经 `TEACHER_PASS` 环境变量注入（不落文件/DB），每个账户对其所属 Lecture 具有 **staff + instructor** 双角色，并已加入对应班级 Cohort（如 teacher_a1_01 → a1-class1、teacher_a1_02 → a1-class2）。
+- A 课程原有的 teacher_ai_01（李智敏）/ teacher_ai_02（周成峰）保留：仍为 A1~A12 全部 staff + JupyterHub 管理员，登录 Hub 后自动获得 A 全套 12 份工单（M1-1a…M4-2、M5-1、Z，共 24 个 学生版+教师版 notebook）及 12 个代码框架 starter，可分发给各自班级。
+- P/B 课程的历史协讲账户（teacher_python_02 / teacher_java_01/02 / teacher_go_01 / teacher_rust_01）保留为机动协讲；各 Lecture 的 instructor 名义账户 lecture_pN / lecture_bN 不变。
 
-平行/串行授课语义：同一课程的两名教师各自绑定一个班级 Cohort；两个班可以同周次不同教室（平行）或不同周次（串行），学生只随班级看到自己教师的课堂内容，互不影响。工业四语言项目（Java/Go/Rust/Python）教师账户已全部同步进 Open edX 且 active=True（teacher-java/go/rust-01/02@edu.local）。
+平行/串行授课语义：同一 Lecture 的 teacher_<lec>_01 与 teacher_<lec>_02 各自绑定一个班级 Cohort；两个班可以同周次不同教室（平行）或不同周次（串行），学生只随班级看到自己教师的课堂内容，互不影响。
 
-### 4.4 前缀规范（用户注册时使用的用户名）
+### 4.4 前缀规范（用户注册时使用的用户名）——2026-09-17 重构：32 Lecture × class1/2 显式班级前缀
+
+**规则 1（现行，显式班级前缀）**：`stu_<lec>_c<N>_<序号>`，lec ∈ A1~A12/B1~B12/P1~P8，N ∈ 1/2，**任意 Lecture 均可指定班级 1 或班级 2**：
+
+| 用户名格式 | 自动挂载 | 例子 |
+|---|---|---|
+| stu_aN_c1_* | AN · class1 | stu_a1_c1_001 → A1/a1-class1 |
+| stu_aN_c2_* | AN · class2 | stu_a12_c2_050 → A12/a12-class2 |
+| stu_bN_c1_* | BN · class1 | stu_b1_c1_001 → B1/b1-class1 |
+| stu_bN_c2_* | BN · class2 | stu_b12_c2_050 → B12/b12-class2 |
+| stu_pN_c1_* | PN · class1 | stu_p8_c1_010 → P8/p8-class1 |
+| stu_pN_c2_* | PN · class2 | stu_p8_c2_010 → P8/p8-class2 |
+
+实现：LMS settings 中的 `_automount_explicit_class()`（正则 `^stu_(A12|...|P1)_c([12])_$…`，长码优先、大小写不敏感），**优先于规则 2** 匹配。
+
+**规则 2（历史兼容，存量 1630 名学生仍依赖，勿删）**：
 
 | 前缀 | 自动挂载 | 例子 |
 |---|---|---|
@@ -140,7 +179,7 @@ AFTER  is_active=True      # 注册即激活
 | py_a1..py_a4 | A1..A4 · class1 | py_a1_xxx（当前库存为空，规则保留） |
 | py_a / py_b | P1 / P2 | py_a_051 → P1-class1 |
 
-约定：用户名用下划线（stu_p1_001），邮箱用连字符（stu-p1-001@edu.local）。**注册邮箱随意不影响挂载与 Hub 同步**（§2.3 加固后同步以 LMS 用户名为准），但仍推荐规范邮箱便于识别。
+> 联网核实（edX 官方文档，Partner Course Staff §12.1 Cohorts）：平台内置的自动分班（automatic cohort assignment）**只支持随机分配**，无法按规则指定班级；因此确定性分班必须走自定义机制。本平台的用户名前缀自动挂载（注册 post_save 信号 → 选课 + 入 cohort）即为确定性方案，规则 1 将其扩展为 32 Lecture 全覆盖 + class1/2 可选，已实测部署验证。
 
 ## 5. 管理员操作手册
 

@@ -90,7 +90,7 @@
 
 | 用户名 | 密码 | 角色 | 说明 |
 |--------|------|------|------|
-| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为 teacher_ai_01（李智敏·班级1主讲）/ teacher_ai_02（周成峰·班级2主讲）及各课协讲/主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
+| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为每个 Lecture 的 teacher_<lec>_01（班级1）/ teacher_<lec>_02（班级2）共 64 个关联教师账户及 teacher_ai_01/02 总主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
 
 教师账户（teacher_ai_01 / teacher_ai_02 及 teacher-zhang 测试账户）拥有管理员权限，可以:
 - 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
@@ -935,12 +935,12 @@ redis-cli -h redis.dify-plus.svc.cluster.local -p 6379 -a difyai123456 ping
 
 | 课程 | Lecture课程 | 主讲教师 | 学生前缀 | 工单数 | Notebook数（学生版+教师版） | 代码框架 |
 |------|-------------|----------|----------|--------|---------------------------|----------|
-| 01-AI应用基础（48课时版） | Lecture-A1~A12（12个） | teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2） | stu_a1_~stu_a12_ | **12（A1~A12）** | 24 | 12 |
-| 02-程序设计基础 | Lecture-B1~B12（12个） | teacher_java_01/02 交替（协讲 teacher_zhang） | stu_b1_~stu_b12_ | **12（W01~W12）** | 24 | 12 |
-| 03-Python程序设计-项目实战 | Lecture-P1~P8（8个） | 李智敏/周成峰交替（instructor=lecture_pN，协讲 teacher_zhang） | stu_p1_~stu_p8_ | **8（P1~P7 系列）** | 16 | 8 |
-| **合计** | **32个Lecture** | | | **32** | **64** | **32** |
+| 01-AI应用基础（48课时版） | Lecture-A1~A12（12个） | teacher_a1_01/02 … teacher_a12_01/02（每 Lecture 2 名，各绑班级1/2）；teacher_ai_01/02 为 A 课程总主讲（Hub 管理员） | stu_aN_c1_ / stu_aN_c2_（历史 stu_a1_~stu_a4_ 兼容） | **12（A1~A12）** | 24 | 12 |
+| 02-程序设计基础 | Lecture-B1~B12（12个） | teacher_b1_01/02 … teacher_b12_01/02（每 Lecture 2 名，各绑班级1/2） | stu_bN_c1_ / stu_bN_c2_（历史 stu_b1_~stu_b6_ 兼容） | **12（W01~W12）** | 24 | 12 |
+| 03-Python程序设计-项目实战 | Lecture-P1~P8（8个） | teacher_p1_01/02 … teacher_p8_01/02（每 Lecture 2 名，各绑班级1/2） | stu_pN_c1_ / stu_pN_c2_（历史 stu_p1_~stu_p6_ 兼容） | **8（P1~P7 系列）** | 16 | 8 |
+| **合计** | **32个Lecture** | **64 个 Lecture 关联教师账户 + teacher_zhang** | | **32** | **64** | **32** |
 
-> 说明：teacher_zhang 为系统级教师测试账户（全部 32 个 Lecture staff，保留）。**一门 Lecture 承载一份工单**：A 课程 Lecture-A1~A12 对应工单 M1-1a~Z 共 12 份；B 课程 Lecture-B1~B12 对应工单 W01~W12；P 课程 Lecture-P1~P8 对应 P1~P7 系列共 8 份（P1 = P1.1+P1.2 合并，P2=P2.1，P3=P2.2，P4=P3，P5=P4，P6=P5，P7=P6，P8=P7）。P7/P8 两门 Lecture 的 instructor 暂由 lecture_p5/lecture_p6 代管（无独立教师账户）。
+> 说明：teacher_zhang 为系统级教师测试账户（全部 32 个 Lecture staff，保留）。**2026-09-17 新增 64 个 Lecture 关联教师账户**：每个 Lecture 配 teacher_<lec>_01（班级1）与 teacher_<lec>_02（班级2），staff + instructor 双角色，口令经 `TEACHER_PASS` 注入，矩阵详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。**一门 Lecture 承载一份工单**：A 课程 Lecture-A1~A12 对应工单 M1-1a~Z 共 12 份；B 课程 Lecture-B1~B12 对应工单 W01~W12；P 课程 Lecture-P1~P8 对应 P1~P7 系列共 8 份（P1 = P1.1+P1.2 合并，P2=P2.1，P3=P2.2，P4=P3，P5=P4，P6=P5，P7=P6，P8=P7）。P7/P8 两门 Lecture 的 instructor 名义账户暂由 lecture_p5/lecture_p6 代管（新设 teacher_p7_01/02、teacher_p8_01/02 已到位）。
 
 ### 课程详情
 
@@ -990,13 +990,16 @@ redis-cli -h redis.dify-plus.svc.cluster.local -p 6379 -a difyai123456 ping
 
 ### 学生登录格式
 
-学生注册用户名使用 **下划线前缀+编号**（邮箱用连字符）：
-- `stu_b1_001` → 自动挂载 Lecture-B1（程序设计基础第 1 周工单 W01）
-- `stu_a1_001` → 自动挂载 Lecture-A1（AI应用基础工单 M1-1a）
-- `stu_p1_001` → 自动挂载 Lecture-P1（项目实战工单 P1）
-- 前缀支持 A1~A12 / B1~B12 / P1~P8 全部 32 个 Lecture（`stu_a7_`、`stu_b10_`、`stu_p8_` 等均有效）
+学生注册用户名使用 **下划线前缀+编号**（邮箱用连字符）。**现行规则（2026-09-17 起）为显式班级前缀 `stu_<lec>_c<N>_`，32 个 Lecture 全部支持指定 class1 或 class2**：
+- `stu_a1_c1_001` → 自动挂载 Lecture-A1 · a1-class1（AI应用基础工单 M1-1a · 班级1）
+- `stu_a12_c2_050` → Lecture-A12 · a12-class2
+- `stu_b1_c1_001` → Lecture-B1 · b1-class1（工单 W01）
+- `stu_b12_c2_050` → Lecture-B12 · b12-class2
+- `stu_p8_c2_010` → Lecture-P8 · p8-class2（工单 P7）
 
-注册邮箱随意不影响挂载与 Hub 同步（同步以 LMS 用户名为准），但推荐规范邮箱 `stu-p1-001@edu.local` 便于识别。
+历史兼容前缀（存量学生仍在用，注册端仍生效）：`stu_a1_~stu_a4_` → A1~A4/class1；`stu_b1_~stu_b6_` → B1~B6/class2；`stu_p1_~stu_p6_` → P1~P6/class1。
+
+注册邮箱随意不影响挂载与 Hub 同步（同步以 LMS 用户名为准），但推荐规范邮箱 `stu-p1-c1-001@edu.local` 便于识别。
 
 ### 默认功能（所有用户）
 

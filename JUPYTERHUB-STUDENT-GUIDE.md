@@ -35,12 +35,14 @@
 
 | 格式 | 自动挂载课程/班级 | 说明 | 示例 |
 |------|-------------------|------|------|
-| `stu_p1_001`~`stu_p8_xxx` | Lecture-P1~P8 · pN-class1 | 项目实战 8 份工单（P1~P8） | `stu_p1_001`（邮箱 stu-p1-001@edu.local） |
-| `stu_b1_001`~`stu_b12_xxx` | Lecture-B1~B12 · bN-class2 | 程序设计基础 12 份工单（W01~W12） | `stu_b1_001` |
-| `stu_a1_001`~`stu_a12_xxx` | Lecture-A1~A12 · aN-class1 | AI应用基础 12 份工单（M1-1a~Z） | `stu_a1_001` |
-| 时间戳后缀同前缀 | 同对应课程 | 任意后缀不影响前缀匹配 | `stu_p4_104738` → P4/p4-class1 |
+| `stu_<lec>_c1_*`（lec ∈ A1~A12/B1~B12/P1~P8） | 对应 Lecture · class1 | 现行规则（2026-09-17 起）：32 个 Lecture 均可选班级 1 | `stu_a1_c1_001` → A1/a1-class1 |
+| `stu_<lec>_c2_*` | 对应 Lecture · class2 | 32 个 Lecture 均可选班级 2 | `stu_p8_c2_010` → P8/p8-class2 |
+| 历史前缀 `stu_p1_~stu_p6_` | P1~P6 · class1 | 历史兼容，仍生效 | `stu_p1_001` |
+| 历史前缀 `stu_b1_~stu_b6_` | B1~B6 · class2 | 历史兼容，仍生效 | `stu_b1_001` |
+| 历史前缀 `stu_a1_~stu_a4_` | A1~A4 · class1 | 历史兼容，仍生效 | `stu_a1_001` |
+| 时间戳后缀同前缀 | 同对应课程 | 任意后缀不影响前缀匹配 | `stu_p8_c1_104738` → P8/p8-class1 |
 
-> **重要**：用户名前缀（下划线格式）决定了你自动看到哪门课、自动获得哪些工单 Notebook 和代码框架；注册邮箱随意不影响挂载，推荐连字符邮箱（如 stu-p1-001@edu.local）。历史演示账户（student_python 等）保留不变。
+> **重要**：用户名前缀（下划线格式）决定了你自动看到哪门课、自动加入哪个班级（班级对应你的授课教师），以及自动获得哪些工单 Notebook 和代码框架；注册邮箱随意不影响挂载，推荐连字符邮箱（如 stu-p1-c1-001@edu.local）。历史演示账户（student_python 等）保留不变。
 
 ### 1.3 你的工作空间
 

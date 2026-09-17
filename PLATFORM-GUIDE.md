@@ -104,15 +104,15 @@
 | 机制 | 配置位置 | 行为 |
 |------|---------|------|
 | 新用户默认激活 | LMS 设置 ConfigMap `openedx-settings-lms-testrl`（lms 实际挂载的 settings map）→ production.py：`FEATURES['SKIP_EMAIL_VALIDATION']=True` | 首次注册即 `is_active=True`，不再发激活邮件、不会卡在未激活态 |
-| 自动挂载（选课+入班） | 同 ConfigMap 内 `AUTOMOUNT_PREFIX_MAP`（22 条前缀规则）+ `post_save(User)` 全局信号（dispatch_uid=automount_user_global_post_save） | 用户创建/激活即自动 `CourseEnrollment.enroll(mode='honor')` + 加入对应班级 Cohort，幂等可重复触发 |
-| 仅见本班课程 | 16 个 AIEDU Lecture 全部 `invitation_only=True` + `catalog_visibility=about` | 未匹配前缀的新用户 0 门课可见（课程目录页公开列表≠选课）；学生 Dashboard 仅显示被挂载的 1 门课 |
+| 自动挂载（选课+入班） | 同 ConfigMap：规则 1 `_automount_explicit_class()`（`stu_<lec>_c<N>_` 显式班级前缀，32 Lecture × class1/2 全覆盖）优先；规则 2 `AUTOMOUNT_PREFIX_MAP`（22 条历史前缀）+ `post_save(User)` 全局信号（dispatch_uid=automount_user_global_post_save） | 用户创建/激活即自动 `CourseEnrollment.enroll(mode='honor')` + 加入对应班级 Cohort，幂等可重复触发 |
+| 仅见本班课程 | 32 个 AIEDU Lecture 全部 `invitation_only=True` + `catalog_visibility=about` | 未匹配前缀的新用户 0 门课可见（课程目录页公开列表≠选课）；学生 Dashboard 仅显示被挂载的 1 门课 |
 | 多教师多班级 | 每门课 ≥2 名 staff 教师 + 2 个手动班级 Cohort（p1-class1/2 … 共 32 个） | 同一课程 2 名教师各绑定一个班级，可平行/串行、同/不同时间与教室授课；换班=迁移 Cohort |
 | Cohort 并发竞态修复 | 同 production.py：信号内 `get_cohort(user, ck, assign=False) is None` 守卫 | 高并发注册下同一用户不会重复入班/报错（2026-09-14 修复并 rollout） |
 | 空"默认组"清理 | — | 已删除 random 分配产生的空 Cohort 2 个（P1/B2），全部 32 个班级 Cohort 均为 manual |
 
-**前缀规则（22 条）**：`stu_p1..p6`→P1..P6/class1；`stu_b1..b6`→B1..B6/class2；`stu_a1..a4`→A1..A4/class1；`py_a1..a4`→A1..A4/class1；`py_a`→P1/class1（历史批次）；`py_b`→P2/class2。用户名用下划线、邮箱用连字符（stu_p1_601 → stu-p1-601@edu.local）。
+**前缀规则（2026-09-17 重构）**：规则 1（现行）`stu_<lec>_c<N>_<序号>` → 对应 Lecture · classN（32 个 Lecture 全覆盖、班级可选，如 `stu_a1_c2_001`→A1/class2）；规则 2（历史兼容，存量学生仍依赖）`stu_p1..p6`→P1..P6/class1；`stu_b1..b6`→B1..B6/class2；`stu_a1..a4`→A1..A4/class1；`py_a1..a4`→A1..A4/class1；`py_a`→P1/class1（历史批次）；`py_b`→P2/class2。用户名用下划线、邮箱用连字符（stu_p1_c1_601 → stu-p1-c1-601@edu.local）。
 
-**多教师排课矩阵**（32 个 Lecture，一门 Lecture = 一份工单；A1~A12、B1~B12、P1~P8）"同一课程 ≥2 教师"）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。P1-P6/B1-B6 每门课为 teacher_zhang + 协讲（teacher_python_02/teacher_java_01/02/teacher_go_01/02/teacher_rust_01/02）+ 主讲 lecture_xx（instructor 角色）；A1-A4 主讲为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2），teacher_zhang 保留为系统级教师测试账户。班级 Cohort 为 {课程码}-class1 / {课程码}-class2。
+**多教师排课矩阵**（32 个 Lecture，一门 Lecture = 一份工单；A1~A12、B1~B12、P1~P8）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。**2026-09-17 起每个 Lecture 配 2 个关联命名教师账户**：teacher_<lec>_01（绑定 <lec>-class1）+ teacher_<lec>_02（绑定 <lec>-class2），共 64 个，均 staff + instructor 双角色，口令经 TEACHER_PASS 注入；teacher_ai_01/02（李智敏/周成峰）保留为 A 课程总主讲（Hub 管理员），teacher_python_02/java_01/02/go_01/rust_01 等历史协讲账户保留为机动；teacher_zhang 保留为系统级教师测试账户。班级 Cohort 为 {课程码}-class1 / {课程码}-class2（每 Lecture 2 个）。
 
 ### 3.1 Open edX LMS 账户（原有 84 + C500 800 + C500-V2 800 + 工业等 ≈ 共 1748 个，MySQL auth_user）
 
@@ -122,7 +122,8 @@
 | 教师 | teacher-zhang@edu.local | EdxTeacher2026! | 主教师，兼 JupyterHub 管理员 |
 | 课程负责人 | lecture_p1 ~ lecture_p6（LMS 与 Hub 侧同名，v3 已归一） | — | 每门课程的教师；LMS 侧还有 lecture_a1~a4 / lecture_b1~b6 |
 | 助教/其他教师 | teacher_python_02, teacher_java_01, teacher_java_02 等共 8 个 teacher_* | — | 按需分配 |
-| A 课程主讲（新设） | teacher_ai_01 / teacher_ai_02（teacher-ai-01@edu.local / teacher-ai-02@edu.local） | — | A1~A4 班级1/班级2 主讲（李智敏/周成峰），staff + JupyterHub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter；口令经 TEACHER_PASS 环境变量注入 |
+| A 课程主讲（新设） | teacher_ai_01 / teacher_ai_02（teacher-ai-01@edu.local / teacher-ai-02@edu.local） | — | A 课程总主讲（李智敏/周成峰），全部 A1~A12 staff + JupyterHub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter；口令经 TEACHER_PASS 环境变量注入 |
+| Lecture 关联教师（新设 64 个） | teacher_a1_01/02 … teacher_a12_01/02、teacher_b1_01/02 … teacher_b12_01/02、teacher_p1_01/02 … teacher_p8_01/02（teacher-<lec>-0N@edu.local） | — | 2026-09-17 新设：每个 Lecture 2 名（_01→class1、_02→class2），staff + instructor 双角色；口令经 TEACHER_PASS 环境变量注入，不落文件/DB |
 | 学生（通用样例） | student_python / student_java / student_go / student_rust / student_alice / student_bob / student_carol | — | 通用学生样例账号（LMS 下划线命名，Hub 对应中划线；**email 为连字符格式**，如 student-python@edu.local） |
 | 批量学生 | py_a_001 ~ py_a_050（50 个） | — | Python 实训批次 A |
 | **C500 并发测试学生** | stu_p1_001~050 … stu_a4_001~050（重构前 16 课程 × 50 = **800 个**） | — | 每门课程 50 名专属学生（C500 并发实训用，已全部选课本课程；email 连字符格式 stu-p1-001@edu.local；口令经环境变量注入，不入库） |
