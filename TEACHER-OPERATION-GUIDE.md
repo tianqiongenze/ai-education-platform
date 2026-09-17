@@ -26,7 +26,7 @@
 
 | 角色 | 账号 | 密码 | 权限 |
 |------|------|------|------|
-| **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全部 16 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师见下 |
+| **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师见下 |
 | **A 课程主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入 | A 课程班级1主讲（李智敏）/ 班级2主讲（周成峰） |
 | **系统管理员** | admin@openedx.local | `EdxAdmin2026!` | 平台最高权限 |
 | **Dify管理** | myuwei@126.com | `Difyai123456` | AI应用管理 |

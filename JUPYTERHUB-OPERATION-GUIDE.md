@@ -90,7 +90,7 @@
 
 | 用户名 | 密码 | 角色 | 说明 |
 |--------|------|------|------|
-| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 16 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为 teacher_ai_01（李智敏·班级1主讲）/ teacher_ai_02（周成峰·班级2主讲）及各课协讲/主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
+| `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为 teacher_ai_01（李智敏·班级1主讲）/ teacher_ai_02（周成峰·班级2主讲）及各课协讲/主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
 
 教师账户（teacher_ai_01 / teacher_ai_02 及 teacher-zhang 测试账户）拥有管理员权限，可以:
 - 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
@@ -927,57 +927,74 @@ redis-cli -h redis.dify-plus.svc.cluster.local -p 6379 -a difyai123456 ping
 
 ---
 
-## 18. 多课程账户体系（v2.0 新增，2026-09-16 同步最新课程内容）
+## 18. 多课程账户体系（v3.0 更新，2026-09-17 重构为 32 个 Lecture）
 
-> A/B/P 三门课的内容已与最新教学实施资料同步：A 课程 12 份工单（A1~A12）、B 课程 12 份工单（B1~B12）、P 课程 8 份工单（P1~P8）。工单通过 LMS Lecture 课程按周次承载，教师/学生登录 Hub 按 username 前缀自动获得对应课程全部工单。
+> A/B/P 三门课的内容已与最新教学实施资料同步，且平台已重构为 **3 门课程（A/B/P）经 32 个 Lecture 承载，一门 Lecture = 一份工单**：A 课程 12 个 Lecture（A1~A12，12 份工单 M1-1a~Z）、B 课程 12 个 Lecture（B1~B12，工单 W01~W12）、P 课程 8 个 Lecture（P1~P8，工单 P1~P7 系列，P1 由 P1.1+P1.2 合并承载）。教师/学生登录 Hub 按 username 前缀自动获得对应课程全部工单。
 
 ### 课程→教师→学生对照表
 
-| 课程 | Lecture账户 | 主讲教师 | 学生前缀 | 工单数 | Notebook数（学生版+教师版） | 代码框架 |
+| 课程 | Lecture课程 | 主讲教师 | 学生前缀 | 工单数 | Notebook数（学生版+教师版） | 代码框架 |
 |------|-------------|----------|----------|--------|---------------------------|----------|
-| 01-AI应用基础（48课时版） | Lecture-A1~A4 | teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2） | stu_a1_~stu_a4_ | **12（A1~A12）** | 24 | 12 |
-| 02-程序设计基础 | Lecture-B1~B6 | teacher_java_01/02 交替（协讲 teacher_zhang） | stu_b1_~stu_b6_ | **12（B1~B12）** | 24 | 12 |
-| 03-Python程序设计-项目实战 | Lecture-P1~P6 | 李智敏/周成峰交替（instructor=lecture_pN，协讲 teacher_zhang） | stu_p1_~stu_p6_ | **8（P1~P8）** | 16 | 8 |
-| **合计** | **16个Lecture** | | | **32** | **64** | **32** |
+| 01-AI应用基础（48课时版） | Lecture-A1~A12（12个） | teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2） | stu_a1_~stu_a12_ | **12（A1~A12）** | 24 | 12 |
+| 02-程序设计基础 | Lecture-B1~B12（12个） | teacher_java_01/02 交替（协讲 teacher_zhang） | stu_b1_~stu_b12_ | **12（W01~W12）** | 24 | 12 |
+| 03-Python程序设计-项目实战 | Lecture-P1~P8（8个） | 李智敏/周成峰交替（instructor=lecture_pN，协讲 teacher_zhang） | stu_p1_~stu_p8_ | **8（P1~P7 系列）** | 16 | 8 |
+| **合计** | **32个Lecture** | | | **32** | **64** | **32** |
 
-> 说明：teacher_zhang 为系统级教师测试账户（全部 16 个 Lecture staff，保留）。工单映射：A 课程 4 门 Lecture 各承载 3 份工单（A1=M1-1a/M1-1b，A2=M2-1a/M2-2/M2-3a/M2-3b，A3=M3-1/M3-2，A4=M4-1/M4-2/M5-1/Z，合计 12）；B 课程 6 门 Lecture 每门 2 周 = 2 份工单（如 B1=b1_w01+b1_w02）；P 课程 p11/p12→P1、p21/p22→P2、p33→P3、p41→P4、p55→P5、p66→P6。
+> 说明：teacher_zhang 为系统级教师测试账户（全部 32 个 Lecture staff，保留）。**一门 Lecture 承载一份工单**：A 课程 Lecture-A1~A12 对应工单 M1-1a~Z 共 12 份；B 课程 Lecture-B1~B12 对应工单 W01~W12；P 课程 Lecture-P1~P8 对应 P1~P7 系列共 8 份（P1 = P1.1+P1.2 合并，P2=P2.1，P3=P2.2，P4=P3，P5=P4，P6=P5，P7=P6，P8=P7）。P7/P8 两门 Lecture 的 instructor 暂由 lecture_p5/lecture_p6 代管（无独立教师账户）。
 
 ### 课程详情
 
-#### 01-AI应用基础（48课时版，12份工单）
-| Lecture | 承载工单 | Notebook 主题 |
-|---------|----------|--------------|
-| A1 | A1~A3（M1-1a/M1-1b 等） | AI 应用基础第 1 批工单 |
-| A2 | A4~A7（M2 系列） | AI 应用基础第 2 批工单 |
-| A3 | A8~A9（M3 系列） | AI 应用基础第 3 批工单 |
-| A4 | A10~A12（M4/M5/Z） | AI 应用基础第 4 批工单 |
-
-#### 02-程序设计基础（12周，12份工单）
-| Lecture | 周次 | 工单 |
-|---------|------|------|
-| B1 | w01-w02 | B1（b1_w01）+ B2（b1_w02） |
-| B2 | w03-w04 | B3 + B4 |
-| B3 | w05-w06 | B5 + B6 |
-| B4 | w07-w08 | B7 + B8 |
-| B5 | w09-w10 | B9 + B10 |
-| B6 | w11-w12 | B11 + B12 |
-
-#### 03-Python程序设计-项目实战（8份工单）
+#### 01-AI应用基础（48课时版，12份工单 = 12个 Lecture）
 | Lecture | 承载工单 | 主题 |
 |---------|----------|------|
-| P1 | P1（p11+p12） | Python 基础 + 标准库 |
-| P2 | P2（p21+p22） | Pandas 数据 + NumPy |
-| P3 | P3（p33） | KPI 仪表盘 |
-| P4 | P4（p41） | 多源采集 |
-| P5 | P5（p55） | 数据仓库 |
-| P6 | P6（p66） | 故障诊断 |
+| A1 | M1-1a | 数据清洗与质量评估 |
+| A2 | M1-1b | 特征设计与优化 |
+| A3 | M2-1 | LR+DT 机器学习 |
+| A4 | M2-2 | XGBoost 限时调优 |
+| A5 | M2-3a | MLP 神经网络 |
+| A6 | M2-3b | CNN/LSTM 竞标 |
+| A7 | M3-1 | ResNet 小样本 |
+| A8 | M3-2 | YOLO 实时检测 |
+| A9 | M4-1 | LLM+Prompt 三模板 |
+| A10 | M4-2 | RAG 带引用问答 |
+| A11 | M5-1 | gym-industrial 检修调度 |
+| A12 | Z | 预答辩/正式答辩 |
+
+#### 02-程序设计基础（12周，12份工单 = 12个 Lecture）
+| Lecture | 周次 | 工单 |
+|---------|------|------|
+| B1 | w01 | W01 环境搭建+数据类型 |
+| B2 | w02 | W02 条件判断 |
+| B3 | w03 | W03 循环与函数 |
+| B4 | w04 | W04 类与对象 |
+| B5 | w05 | W05 继承与多态 |
+| B6 | w06 | W06 异常与日志 |
+| B7 | w07 | W07 容器与正则 |
+| B8 | w08 | W08 文件与JSON |
+| B9 | w09 | W09 jieba+词云 |
+| B10 | w10 | W10 Pillow+reportlab |
+| B11 | w11 | W11 网络编程 |
+| B12 | w12 | W12 综合项目答辩 |
+
+#### 03-Python程序设计-项目实战（8份工单 = 8个 Lecture）
+| Lecture | 周次 | 承载工单 | 主题 |
+|---------|------|----------|------|
+| P1 | w1-w2 | P1（P1.1+P1.2） | Python 基础 + 工程模板 |
+| P2 | w3 | P2.1 | Pandas 数据管道 |
+| P3 | w4 | P2.2 | NumPy 特征提取 |
+| P4 | w5 | P3 | KPI 仪表盘 |
+| P5 | w6 | P4 | 多源采集 |
+| P6 | w7 | P5 | 数据仓库 |
+| P7 | w8 | P6 | 故障诊断（ML） |
+| P8 | 收官 | P7 | 智能运维平台 |
 
 ### 学生登录格式
 
 学生注册用户名使用 **下划线前缀+编号**（邮箱用连字符）：
-- `stu_b1_001` → 自动挂载 Lecture-B1（程序设计基础 w01-w02 / 工单 B1~B2）
-- `stu_a1_001` → 自动挂载 Lecture-A1（AI应用基础第 1 批工单）
+- `stu_b1_001` → 自动挂载 Lecture-B1（程序设计基础第 1 周工单 W01）
+- `stu_a1_001` → 自动挂载 Lecture-A1（AI应用基础工单 M1-1a）
 - `stu_p1_001` → 自动挂载 Lecture-P1（项目实战工单 P1）
+- 前缀支持 A1~A12 / B1~B12 / P1~P8 全部 32 个 Lecture（`stu_a7_`、`stu_b10_`、`stu_p8_` 等均有效）
 
 注册邮箱随意不影响挂载与 Hub 同步（同步以 LMS 用户名为准），但推荐规范邮箱 `stu-p1-001@edu.local` 便于识别。
 
@@ -1279,23 +1296,23 @@ python3 -m nbgrader submit ps1
 
 ## 25. 多教师多课程账户体系 (v2.4 完整版，v3 矩阵现行)
 
-> 本节为早期 v2.4 快照，现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3/§9.1。差异要点：teacher-zhang 现为**系统级教师测试账户**（非"总管理员"，保留全部 16 个 Lecture staff；平台为 A/B/P 3 门课程经 16 个 Lecture 承载）；A 课程主讲已改为 **teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）**（Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter）；早期 class-xx-01-A 式教师分组已清理，现行班级组为 course-{课程码}-class{1|2} 共 32 个。
+> 本节为早期 v2.4 快照，现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3/§9.1。差异要点：teacher-zhang 现为**系统级教师测试账户**（非"总管理员"，保留全部 32 个 Lecture staff；平台为 A/B/P 3 门课程经 32 个 Lecture 承载）；A 课程主讲已改为 **teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）**（Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter）；早期 class-xx-01-A 式教师分组已清理，现行班级组为 course-{课程码}-class{1|2} 共 32 个。
 
 ### 现行对照表
 
 ```
 admin (平台超级管理员)
 ├── 02-程序设计基础
-│   ├── Lecture-B1~B6 (instructor)
+│   ├── Lecture-B1~B12 (instructor)
 │   ├── teacher_java_01 / teacher_java_02 (staff, B 主讲/协讲交替)
 │   └── teacher_zhang (系统级教师测试账户, staff)
 ├── 01-AI应用基础（48课时版）
-│   ├── Lecture-A1~A4 (instructor)
+│   ├── Lecture-A1~A12 (instructor)
 │   ├── teacher_ai_01 (李智敏, 班级1主讲, staff + Hub admin)
 │   ├── teacher_ai_02 (周成峰, 班级2主讲, staff + Hub admin)
 │   └── teacher_zhang (系统级教师测试账户, staff)
 └── 03-Python程序设计-项目实战
-    ├── Lecture-P1~P6 (instructor)
+    ├── Lecture-P1~P8 (instructor)
     ├── teacher_python_02 / teacher_java_01 / teacher_go_01 / teacher_rust_01 (staff)
     └── teacher_zhang (系统级教师测试账户, staff)
 ```
@@ -1310,7 +1327,7 @@ admin (平台超级管理员)
 
 ### 账户总计（现行）
 
-- 22 个教师/系统账户（§7.10 全列：8 名教师 + teacher_ai_01/02 + lecture_p1~p6 + Lecture-A1~A4 + Lecture-B1~B6 + admin 等）
+- 22 个教师/系统账户（§7.10 全列：8 名教师 + teacher_ai_01/02 + lecture_p1~p6 + admin（P7/P8 由 lecture_p5/lecture_p6 代管） 等）
 - 32 个班级分组（course-{课程码}-class{1|2}）+ all-students/all-teachers/course-{p,b,a}-students/teachers
 - 32 份工单（A 12 + B 12 + P 8）→ 64 个 Notebook（学生版+教师版）
 - 32 个代码框架
@@ -1354,7 +1371,7 @@ admin (平台超级管理员)
 | 3 | 管理面板 - 管理员账户 | ✅ PASS | HTML中发现4个管理员账户: teacher-zhang, lecture-p1, lecture-p2, lecture-p3 |
 | 4 | 管理面板 - 用户组 | ✅ PASS | 发现4/5个用户组: lecture-p1/p2/p3-students, all-students |
 
-**验证要点**: 7个管理员账户（teacher-zhang + Lecture-P1~P6）已配置; 5个用户组（lecture-p1~p6-students + all-students + all-teachers）已配置; admin_access=True，管理员可访问所有用户服务器。
+**验证要点**: 管理员账户（teacher-zhang + 各 Lecture instructor，见 §18）已配置; 5个用户组（lecture-p1~p6-students + all-students + all-teachers）已配置; admin_access=True，管理员可访问所有用户服务器。
 
 ### 26.3 JupyterLab界面（3项）
 
@@ -1567,10 +1584,10 @@ JupyterHub 启动脚本已集成评测组件：
 | 类型 | 账户 | 数量 | 说明 |
 |------|------|------|------|
 | 平台管理员 | admin | 1 | LMS/Hub 超级管理员 |
-| 教师测试账户 | teacher-zhang | 1 | 系统级教师测试账户（全部 16 个 Lecture staff，保留） |
+| 教师测试账户 | teacher-zhang | 1 | 系统级教师测试账户（全部 32 个 Lecture staff，保留） |
 | A 课程主讲 | teacher_ai_01 / teacher_ai_02 | 2 | 李智敏·班级1 / 周成峰·班级2（staff + Hub 管理员） |
-| 讲师账户 | lecture-p1 ~ lecture-p6、Lecture-A1~A4、Lecture-B1~B6 | 16 | 各课程主讲（instructor） |
-| 学生账户 | 已导入 Open edX | 2431 | 按 16 个 Lecture 前缀自动挂载（详见 TEACHING-MATRIX.md） |
+| 讲师账户 | lecture-p1 ~ lecture-p6、teacher_ai_01/02、teacher_java_01/02 | 8 | 各课程主讲（instructor）；Lecture-A1~A12/B1~B12/P1~P8 的角色按 §18 对照表分配 |
+| 学生账户 | 已导入 Open edX | 2431 | 按 32 个 Lecture 前缀自动挂载（详见 TEACHING-MATRIX.md） |
 
 ### 28.4 课程与项目映射
 

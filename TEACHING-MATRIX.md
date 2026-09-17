@@ -1,7 +1,7 @@
 # 教学矩阵报告 (student -> course -> class -> teacher)
 
-> **课程结构说明**：平台实际为 **3 门课程**（01-AI 通识课程 A、02-程序设计基础 B、03-Python 程序设计-项目实战 P），LMS 中经 **16 个 Lecture 课程**（A1~A4、B1~B6、P1~P6，course-v1:AIEDU+{课程码}+2026）承载；本文 A1~P6 各节即这 16 个 Lecture，每门各挂 2 个班级 Cohort（course-{课程码}-class{1|2}）。
-> 说明：teacher_zhang 为系统级教师测试账户（全部 16 个 Lecture staff，保留不动）。A 课程主讲已改为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2），两账户均为 Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单（学生版+教师版 notebook）及 12 个代码框架 starter。
+> **课程结构说明**：平台实际为 **3 门课程**（01-AI 通识课程 A、02-程序设计基础 B、03-Python 程序设计-项目实战 P），LMS 中经 **32 个 Lecture 课程**（A1~A12、B1~B12、P1~P8，course-v1:AIEDU+{课程码}+2026）承载，**一门 Lecture = 一份工单**；每门各挂 2 个班级 Cohort（course-{课程码}-class{1|2}）。2026-09-17 已从旧 16 Lecture（A1~A4、B1~B6、P1~P6）重构升级，历史各节中的 A1~P6 记录为重构前快照。
+> 说明：teacher_zhang 为系统级教师测试账户（全部 32 个 Lecture staff，保留不动）。A 课程主讲已改为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2），两账户均为 Hub 管理员，登录 Hub 自动获得 A 全套 12 份工单（学生版+教师版 notebook）及 12 个代码框架 starter。
 
 ## A1 主讲=teacher_ai_01(李智敏, class1, 75人) 第二主讲=teacher_ai_02(周成峰, class2, 75人)
 - class1: py_a_002, py_a_004, py_a_006, py_a_008, py_a_010, py_a_012, py_a_014, py_a_016, py_a_018, py_a_020, py_a_022, py_a_024, py_a_026, py_a_028, py_a_030, py_a_032, py_a_034, py_a_036, py_a_038, py_a_040, py_a_042, py_a_044, py_a_046, py_a_048, py_a_050, stu_a1_001, stu_a1_003, stu_a1_005, stu_a1_007, stu_a1_009, stu_a1_011, stu_a1_013, stu_a1_015, stu_a1_017, stu_a1_019, stu_a1_021, stu_a1_023, stu_a1_025, stu_a1_027, stu_a1_029, stu_a1_031, stu_a1_033, stu_a1_035, stu_a1_037, stu_a1_039, stu_a1_041, stu_a1_043, stu_a1_045, stu_a1_047, stu_a1_049, stu_a1_601, stu_a1_603, stu_a1_605, stu_a1_607, stu_a1_609, stu_a1_611, stu_a1_613, stu_a1_615, stu_a1_617, stu_a1_619, stu_a1_621, stu_a1_623, stu_a1_625, stu_a1_627, stu_a1_629, stu_a1_631, stu_a1_633, stu_a1_635, stu_a1_637, stu_a1_639, stu_a1_641, stu_a1_643, stu_a1_645, stu_a1_647, stu_a1_649

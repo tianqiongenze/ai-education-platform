@@ -35,9 +35,9 @@
 
 | 格式 | 自动挂载课程/班级 | 说明 | 示例 |
 |------|-------------------|------|------|
-| `stu_p1_001`~`stu_p6_xxx` | Lecture-P1~P6 · pN-class1 | 项目实战 8 份工单（P1~P8） | `stu_p1_001`（邮箱 stu-p1-001@edu.local） |
-| `stu_b1_001`~`stu_b6_xxx` | Lecture-B1~B6 · bN-class2 | 程序设计基础 12 份工单（B1~B12） | `stu_b1_001` |
-| `stu_a1_001`~`stu_a4_xxx` | Lecture-A1~A4 · aN-class1 | AI应用基础 12 份工单（A1~A12） | `stu_a1_001` |
+| `stu_p1_001`~`stu_p8_xxx` | Lecture-P1~P8 · pN-class1 | 项目实战 8 份工单（P1~P8） | `stu_p1_001`（邮箱 stu-p1-001@edu.local） |
+| `stu_b1_001`~`stu_b12_xxx` | Lecture-B1~B12 · bN-class2 | 程序设计基础 12 份工单（W01~W12） | `stu_b1_001` |
+| `stu_a1_001`~`stu_a12_xxx` | Lecture-A1~A12 · aN-class1 | AI应用基础 12 份工单（M1-1a~Z） | `stu_a1_001` |
 | 时间戳后缀同前缀 | 同对应课程 | 任意后缀不影响前缀匹配 | `stu_p4_104738` → P4/p4-class1 |
 
 > **重要**：用户名前缀（下划线格式）决定了你自动看到哪门课、自动获得哪些工单 Notebook 和代码框架；注册邮箱随意不影响挂载，推荐连字符邮箱（如 stu-p1-001@edu.local）。历史演示账户（student_python 等）保留不变。
@@ -1068,7 +1068,7 @@ python3 -m nbgrader submit ps1
 ```
 teacher-zhang (总管理员, 密码: ide2026)
 ├── 02-程序设计基础
-│   ├── Lecture-B1~B6 (原始管理员)
+│   ├── Lecture-B1~B12 (原始管理员)
 │   ├── teacher-b1-01 → class-b1-01-A, class-b1-01-B
 │   ├── teacher-b2-01 → class-b2-01-A
 │   ├── teacher-b3-01 → class-b3-01-A
@@ -1076,13 +1076,13 @@ teacher-zhang (总管理员, 密码: ide2026)
 │   ├── teacher-b5-01 → class-b5-01-A
 │   └── teacher-b6-01 → class-b6-01-A
 ├── 01-AI应用基础
-│   ├── Lecture-A1~A4
+│   ├── Lecture-A1~A12
 │   ├── teacher-a1-01 → class-a1-01-A, class-a1-01-B
 │   ├── teacher-a2-01 → class-a2-01-A
 │   ├── teacher-a3-01 → class-a3-01-A
 │   └── teacher-a4-01 → class-a4-01-A
 └── 03-Python项目实战
-    ├── Lecture-P1~P6
+    ├── Lecture-P1~P8
     ├── teacher-p1-01 → class-p1-01-A, class-p1-01-B
     ├── teacher-p2-01 → class-p2-01-A
     ├── teacher-p3-01 → class-p3-01-A

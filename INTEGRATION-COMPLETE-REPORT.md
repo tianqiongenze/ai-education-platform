@@ -4,7 +4,7 @@
 > **执行范围**: 方案B (LMS选课→JupyterHub自动同步) + 方案C (全链路OAuth+成绩回写)
 > **状态**: ✅ 全部完成
 >
-> **现行差异说明（2026-09-16）**：本报告为 2026-09-09 时点快照。此后账户体系已升级（v3 矩阵）：teacher-zhang 调整为**系统级教师测试账户**（保留全部 16 个 Lecture staff）；A 课程主讲为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）；A/B/P 课程内容按 32 份工单（A1~A12 / B1~B12 / P1~P8）重新同步。课程结构现表述为 **3 门课程（A/B/P）经 16 个 Lecture 承载**，本报告内"16 门课程"字样均指这 16 个 Lecture。现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。
+> **现行差异说明（2026-09-16 注记，2026-09-17 更新）**：本报告为 2026-09-09 时点快照。此后账户体系已升级（v3 矩阵）：teacher-zhang 调整为**系统级教师测试账户**（保留全部 32 个 Lecture staff）；A 课程主讲为 teacher_ai_01（李智敏·班级1）/ teacher_ai_02（周成峰·班级2）；A/B/P 课程内容按 32 份工单（A1~A12 / B1~B12 / P1~P8）重新同步。课程结构现表述为 **3 门课程（A/B/P）经 32 个 Lecture 承载（一门 Lecture = 一份工单）**，本报告内"16 门课程"字样均指这 16 个 Lecture。现行权威矩阵见 `TEACHING-MATRIX.md` 与 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。
 
 ## 一、集成架构总览
 

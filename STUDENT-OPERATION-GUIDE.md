@@ -29,7 +29,7 @@
 | **Go实训** | student_go | student-go@edu.local | Go工业网关开发 |
 | **Rust实训** | student_rust | student-rust@edu.local | Rust安全审计 |
 | **通用学生** | student_alice | student-alice@edu.local | Python通用环境 |
-| **C500测试学生** | stu_p1_001 ~ stu_a4_050 | stu-p1-001@edu.local ~ stu-a4-050@edu.local | 并发测试专用 |
+| **C500测试学生** | stu_p1_001 ~ stu_p8_xxx / stu_b1_ ~ stu_b12_ / stu_a1_ ~ stu_a12_ 系列测试学生 | stu-p1-001@edu.local ~ stu-a4-050@edu.local | 并发测试专用 |
 
 #### 1.2.2 密码说明
 

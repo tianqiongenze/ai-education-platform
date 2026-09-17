@@ -58,7 +58,7 @@
 | 账户类型 | 数量 | 认证方式 | 权限 | 存储位置 |
 |----------|------|----------|------|----------|
 | **教师/管理员** | 24个（16 lecture + teacher_zhang + teacher_ai_01/02 + admin 等） | OAuth2 | 管理面板访问 | SQLite |
-| **学生** | 2431 个（16 个 Lecture 按前缀自动挂载，详见 TEACHING-MATRIX.md） | OAuth2 | 基本使用 | SQLite |
+| **学生** | 2431 个（32 个 Lecture 按前缀自动挂载，详见 TEACHING-MATRIX.md） | OAuth2 | 基本使用 | SQLite |
 | **通用学生** | 7个 | OAuth2 | 预配置环境 | SQLite |
 | **系统用户** | 3个 | 本地 | 系统功能 | SQLite |
 
@@ -74,7 +74,7 @@
 
 | 账户 | 权限 | 说明 |
 |------|------|------|
-| **teacher-zhang** | 完全管理权限 | **系统级教师测试账户**（全部 16 个 Lecture staff，保留不动） |
+| **teacher-zhang** | 完全管理权限 | **系统级教师测试账户**（全部 32 个 Lecture staff，保留不动） |
 | **teacher_ai_01** | 课程管理权限 | A 课程班级1主讲（李智敏，staff + JupyterHub 管理员，登录 Hub 自动获得 A 全套 12 份工单学生版+教师版及 12 个代码框架 starter） |
 | **teacher_ai_02** | 课程管理权限 | A 课程班级2主讲（周成峰，staff + JupyterHub 管理员，同上） |
 | **lecture-p1 ~ p6** | 课程管理权限 | Python项目实战课程主讲（instructor） |
@@ -130,7 +130,7 @@
 |--------|------|------|
 | **student1** | 历史测试用户 | 基本使用 |
 | **student2** | 历史测试用户 | 基本使用 |
-| **teacher_zhang** | 系统级教师测试账户（保留，全部 16 个 Lecture staff） | 管理权限 |
+| **teacher_zhang** | 系统级教师测试账户（保留，全部 32 个 Lecture staff） | 管理权限 |
 
 ---
 
@@ -547,7 +547,7 @@ kubectl rollout status deployment/jupyterhub -n jupyterhub
 
 #### 9.1.1 账户命名规范
 
-> **历史快照**：本表为早期命名约定。现行规范：教师用课程 instructor 账户（`lecture-p1~p6` / `Lecture-A1~A4` / `Lecture-B1~B6`）+ A 课程主讲 `teacher_ai_01/02`（李智敏/周成峰）+ 系统教师测试账户 `teacher-zhang`；学生用户名为 `stu_{p,b,a}N_xxx`（下划线前缀），分组为 `course-{课程码}-class{1|2}`。详见 `TEACHING-MATRIX.md`。
+> **历史快照**：本表为早期命名约定。现行规范：教师用课程 instructor 账户（`lecture-p1~p6` / teacher_ai_01/02 / teacher_java_01/02；32 Lecture 见 OPERATION-GUIDE §18）+ A 课程主讲 `teacher_ai_01/02`（李智敏/周成峰）+ 系统教师测试账户 `teacher-zhang`；学生用户名为 `stu_{p,b,a}N_xxx`（下划线前缀），分组为 `course-{课程码}-class{1|2}`。详见 `TEACHING-MATRIX.md`。
 
 | 账户类型 | 命名规则 | 示例 |
 |----------|----------|------|
