@@ -522,7 +522,9 @@ v3 把每门课的两名教师固定为 **主讲(lead)** 与 **助教(assistant)
 
 **口令重置**：73 教师 + 1630 学生/py 批次账户口令按 §4.3a 规律统一重置（环境变量注入，不落明文）。
 
-**限速感知全量登录扫描**：无头 HTTP 链路（GET /login 取 CSRF → POST login_session），220/220（73 教师 + 51 py + 96 学生）**100% 成功**。限速特性实测：GET /login 自身限流（高压 429）；登录 POST 按 email/IP 各 1000/5m（超限 403）；单用户锁定 6 次/30min。全部为瞬态、退避 10–20s 即自愈，生产限流无需放宽。
+**限速感知全量登录扫描**：无头 HTTP 链路（GET /login 取 CSRF → POST login_session），220/220（73 教师 + 51 py + 96 学生）**100% 成功**。
+
+**限速配置（2026-09-18 按"教室 NAT 共享出口 IP + 单班 500 并发"设计，已固化为永久值，替代本节早期的 100/5m 临时窗口）**：生效 ConfigMap 为 `openedx-settings-lms-testrl`（挂载 `lms/envs/tutor/production.py`）——`LOGISTRATION_API_RATELIMIT=3600/m`（登录 POST per-IP，默认 20/m）、`RATELIMIT_RATE=6000/m`（全局 GET 兜底，默认 120/m）、`LOGIN_AND_REGISTER_FORM_RATELIMIT=6000/m`（GET /login 表单页，默认 100/5m，500 并发曾整波 429）；防爆破语义保留（per-email/per-IP 各 1000/5m、单用户 6 次/30min）。转发链路同步调优：caddy 上游 transport `versions h1` + lms `UWSGI_WORKERS=12`（原 6）。调优后 50 并发登录 5 轮 48/49/50/49/50 成功、墙钟 5.2~7.8 s、p95 ≈3 s（明细见 `PLATFORM-GUIDE.md` §五b）。
 
 **压力/性能测试**（明细见 `PLATFORM-GUIDE.md` §五b.2）：
 

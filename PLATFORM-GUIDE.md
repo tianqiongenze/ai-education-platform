@@ -371,7 +371,13 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 
 - **重置范围**: 73 个教师账户（64 个 teacher_<lec>_01/02 + teacher_ai_01/02 + 历史协讲等）+ 1630 个存量学生（stu_*/py_* 已挂载 Lecture 的全部账户），口令统一按 §3.0a 规律重置（环境变量注入，不落明文）。
 - **全量登录扫描**: 无头浏览器式 HTTP 链路（GET /login 取 CSRF → POST login_session），抽样 220/220 账户（73 教师 + 51 py + 96 学生，每 Lecture ≥6 人）**100% 登录成功**。
-- **限速特性（生产保护，实测均为瞬态自愈）**: GET /login 自身限流（120/min 类窗口，高压下 429）；登录 POST 按 email 与按 IP 各 1000/5m（超限 403 "Too many failed login attempts"）；单用户锁定 6 次/30min。并发扫描须带重试退避（10–20s），所有 429/403 均可在窗口内恢复，**无需放宽限流**。
+- **限速配置（2026-09-18 按教室共享出口 IP + 单班 500 并发设计，已固化为永久值）**：局域网 NAT 下全班学生呈现同一出口 IP，per-IP 分钟窗口必须放行整班突发。生效值（ConfigMap `openedx-settings-lms-testrl` 挂载至 `lms/envs/tutor/production.py`，默认值 20/m 与 120/m 已被覆盖）：
+  - `LOGISTRATION_API_RATELIMIT = 3600/m`（登录 POST /user_api/v1/account/login_session 等，per-IP，默认 20/m）
+  - `RATELIMIT_RATE = 6000/m`（全局 GET 兜底窗口，默认 120/m）
+  - `LOGIN_AND_REGISTER_FORM_RATELIMIT = 6000/m`（GET /login、/register 表单页，默认 100/5m；500 并发实测曾触发整波 429，必须随上述两项同步调高）
+  - 仍保留：按 email 与按 IP 各 `LOGISTRATION_RATELIMIT_RATE=1000/5m`、单用户锁定 6 次/30min（防爆破语义不变，属账户级保护，不受教室共享 IP 影响）。
+- **转发链路容量（同日调优）**：caddy（`cm caddy-config-ka1`）→ lms uwsgi 的上游 transport 强制 `versions h1`（HTTP/1.1），消除 Go 默认 HTTP/2 复用单连接在 50 并发波首的 idle-connection 竞态（症状：瞬时 502 "server closed idle connection / broken pipe"，post 0.005s 即拒）；`deploy/lms` 环境变量 `UWSGI_WORKERS=12`（原 6）+ `UWSGI_MAX_REQUESTS=4000`。残留 502 为 uwsgi 进程回收导致的个位数瞬态，客户端一次重试即可恢复。
+- **50 并发登录复测（调优后 5 轮）**：48/49/50/49/50 成功，墙钟 5.2~7.8 s（原 8.2~10.4 s），POST p50 ≈2.1 s / p95 ≈3.0 s（原 p95 6.9 s）；429/403 为 0。调优前 3 轮仅 43~48/50 且 2~7 例瞬时 502。
 
 ### 5b.2 压力与性能测试结果
 
