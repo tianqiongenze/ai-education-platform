@@ -13,7 +13,7 @@
 ```
                            局域网用户
                                  │
-                    https://10.167.2.175:31825
+                    https://openedx.10.167.2.175.nip.io:31825
                      (ingress-nginx NodePort)
                                  │
          ┌─────────────────────────┼─────────────────────────┐
@@ -48,10 +48,10 @@
 
 | 服务 | 地址 | 端口 | 说明 |
 |------|------|------|------|
-| **JupyterHub入口** | `https://10.167.2.175:31825/ide/` | 31825 | 通过ingress-nginx代理 |
+| **JupyterHub入口** | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/` | 31825 | 通过ingress-nginx代理 |
 | **Hub服务** | `http://jupyterhub.jupyterhub.svc.cluster.local:8000` | 8000 | 内部Hub服务 |
-| **用户Pod** | `https://10.167.2.175:31825/ide/user/{username}/lab` | 31825 | 用户JupyterLab |
-| **管理面板** | `https://10.167.2.175:31825/ide/hub/admin` | 31825 | 管理员面板 |
+| **用户Pod** | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/{username}/lab` | 31825 | 用户JupyterLab |
+| **管理面板** | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin` | 31825 | 管理员面板 |
 
 ### 1.3 账户体系
 
@@ -186,7 +186,7 @@ kubectl create job --from=cronjob/lms-hub-sync manual-sync -n jupyterhub
 
 #### 4.1.1 访问管理面板
 
-1. **访问地址**: `https://10.167.2.175:31825/ide/hub/admin`
+1. **访问地址**: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`
 2. **登录账号**: 使用管理员账户（如 teacher-zhang）
 3. **管理功能**: 用户管理、服务状态、资源监控
 

@@ -13,7 +13,7 @@
 ```
                         局域网用户（浏览器）
                               │
-                    https://10.167.2.175:31825
+                    https://openedx.10.167.2.175.nip.io:31825
                      (ingress-nginx NodePort)
                               │
       ┌───────────┬───────────┼───────────┬──────────────┐
@@ -56,7 +56,7 @@
 | **Open edX LMS** | openedx | https://openedx.10.167.2.175.nip.io:31825 | 200 ✅ | 学生端：选课、学习、成绩 |
 | **Open edX Studio (CMS)** | openedx | https://studio.openedx.10.167.2.175.nip.io:31825 | 200 ✅ | 教师端：课程创建/编辑 |
 | **MFE 微前端** | openedx | https://apps.openedx.10.167.2.175.nip.io:31825/learning 等 | 200 ✅ | learning/authn/account/profile/gradebook/discussions/course-authoring |
-| **JupyterHub** | jupyterhub | https://jupyterhub.10.167.2.175.nip.io:31825/ide/<br>（等价 https://10.167.2.175:31825/ide/） | 200 ✅ | 在线编程实验平台（JupyterLab） |
+| **JupyterHub** | jupyterhub | https://jupyterhub.10.167.2.175.nip.io:31825/ide/<br>（等价 https://jupyterhub.10.167.2.175.nip.io:31825/ide/） | 200 ✅ | 在线编程实验平台（JupyterLab） |
 | **PrairieLearn Autograder API** | prairielearn | http://10.167.2.176:30093（master 30093 亦可） | healthy v2.0 ✅ | 自动评测 API（4 门评测课程） |
 | **Code-Server** | ai-platform | http://10.167.2.175:30087/login | 200 ✅ | 在线 VS Code 编辑器 |
 
@@ -74,7 +74,7 @@
 
 | 入口 | 行为 | 说明 |
 |------|------|------|
-| `https://jupyterhub.*:31825/ide/` 或 `https://10.167.2.175:31825/ide/` | 200 → 跳转 LMS OAuth 登录 | **唯一正确的 Hub 入口** |
+| `https://jupyterhub.*:31825/ide/` 或 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/` | 200 → 跳转 LMS OAuth 登录 | **唯一正确的 Hub 入口** |
 | `https://jupyterhub.*:31825/`（Hub 根路径） | **503** | 预期行为：ingress 只路由 `/ide/` 前缀 |
 | `https://apps.*:31825/`（MFE 根路径） | **204** | 预期行为：Caddy 设计如此，必须带 `/learning` 等子路径 |
 | 课程内容中的实验链接 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/...` | 已于 2026-09-09 修复 44 处死链并发布（原链接误指向 apps 根路径 204 空页） |
@@ -181,18 +181,18 @@
 
 ---
 
-## 四、课程体系（17 门，实测核验）
+## 四、课程体系（3 门 AIEDU × 32 Lecture，实测核验）
 
-LMS 共 **17 门课程**：3 门 AIEDU 课程（A/B/P，经 32 个 Lecture 承载：A1~A12、B1~B12、P1~P8，一门 Lecture = 一份工单）+ 1 门 edX Demo 演示课。
+LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程经 **32 个 Lecture** 承载（A1~A12、B1~B12、P1~P8），一门 Lecture = 一份实训工单。
 
 ### 4.1 课程清单
 
-| 系列 | 课程 ID | 门数 | 主题 |
-|------|---------|------|------|
-| AI应用基础 | course-v1:AIEDU+A1~A4+2026 | 4 | 泵类故障诊断 / 焊接检测 / 表面缺陷 / 智能决策 |
-| 程序设计基础 | course-v1:AIEDU+B1~B6+2026 | 6 | 设备参数 / 告警系统 / 继承体系 / 数据格式 / 故障分析 / 综合项目 |
-| Python项目实战 | course-v1:AIEDU+P1~P6+2026 | 6 | Python基础 / Pandas / 仪表盘 / 数据采集 / 数据仓库 / 故障模型 |
-| 演示课程 | course-v1:edX+DemoX+Demo_Course | 1 | edX 官方 Demo |
+| 系列 | Lecture | 主题（工单覆盖） |
+|------|---------|------|
+| AI应用基础 | A1~A12（12 个 Lecture） | 泵类故障诊断 / 焊接检测 / 表面缺陷 / 智能决策 / ResNet 迁移学习 / YOLO 缺陷检测 / LLM 故障诊断 / RAG 知识库 / 多智能体检修调度 / 综合项目答辩等 |
+| 程序设计基础 | B1~B12（12 个 Lecture） | 设备参数 / 实时告警 / 数据处理 / 可视化 / 综合项目 / 结业实战等 |
+| Python项目实战 | P1~P8（8 个 Lecture） | Python 基础 / Pandas / Streamlit 仪表盘 / 数据采集 / 数据仓库 / 故障模型等 |
+| 演示课程 | course-v1:edX+DemoX+Demo_Course | edX 官方 Demo |
 
 ### 4.2 课程结构
 
@@ -209,20 +209,22 @@ LMS 共 **17 门课程**：3 门 AIEDU 课程（A/B/P，经 32 个 Lecture 承�
 
 > 2026-09-09 修复记录（当时为 16 个 Lecture，2026-09-17 已重构为 32 个）：44 处 HTML 实验链接误指向 `https://apps.openedx.../`（204 空页），已全部改写为 Hub `/ide/` 正确入口，draft + published 双分支清零残留，61 个 vertical 子树已发布。V13 套件 J/K 组回归通过。
 
-### 4.3 实训 Notebook（JupyterHub 内置 8 个，teacher-zhang 全量持有）
+### 4.3 实训 Notebook（JupyterHub ConfigMap 分发，32 份工单 × 学生版/教师版 = 64 个 ipynb + 32 个代码框架 starter）
 
-| 编号 | 文件名 | 主题 | 状态 |
-|------|--------|------|------|
-| P1.1 | p11_P1.1_Python基础_学生版.ipynb | C→Python 迁移五题 | ✅ 可执行 |
-| P1.2 | p12_P1.2_标准Python_学生版.ipynb | 标准工程模板 | ✅ 可执行 |
-| P2.1 | p21_P2.1_Pandas数据_学生版.ipynb | Pandas 数据清洗 | ✅ 可执行 |
-| P2.2 | p22_P2.2_NumPy故障特_学生版.ipynb | NumPy 故障特征提取 | ✅ 可执行 |
-| P3 | p33_P3_产线KPI仪表盘_学生版.ipynb | Streamlit KPI 仪表盘 | 需安装 streamlit |
-| P4.1 | p41_P4.1_多源数据采集系统_学生版.ipynb | 多源数据采集 | 需安装 pymodbus |
-| P5 | p55_P5_产线数据仓库与O_学生版.ipynb | 数据仓库与 ORM | ✅ 可执行 |
-| P6 | p66_P6_故障诊断模型与部_学生版.ipynb | 故障诊断模型 | ✅ 可执行 |
+- **A 系（cm-course-a）**: a1_m11…a4_m44 共 12 份工单，学生版+教师版 24 个 ipynb + fw_m11…fw_m44 12 个框架文件（w1_clean_starter.py … w12_defense_starter.py）
+- **B 系（cm-course-b）**: b1_w01…b6_w12 共 12 份工单，24 个 ipynb + fw_w01…fw_w12 12 个框架文件
+- **P 系（cm-course-p）**: p1_p11…p6_p66 共 8 份工单，16 个 ipynb + fw_p11/p12/p21/p22/p33/p41/p55/p66 8 个框架文件
+- 每个学生/教师用户 Pod 首次 spawn 时由 startup.sh 按 `Lecture-*` / `stu_<lec>_*` / `teacher_<lec>_*` 用户名分发对应本次 Lecture 的 ipynb 与代码框架（实测 2026-09-18）。
 
-**指南文件自动分发**（PVC 初始化）: 教师 = 学生版 + 教师版双指南；学生 = 仅 `JUPYTERHUB-STUDENT-GUIDE.md` + `AUTOGRADER-GUIDE.md`。教师环境实测 109 个文件/目录。
+**指南与文件自动分发**（PVC 初始化 startup.sh，2026-09-18 实测）:
+
+| 角色 | 分发内容 |
+|------|---------|
+| admin | 全部 A/B/P 系 ipynb（学生版+教师版 64 个）+ 全部代码框架 + 双指南 |
+| 教师（teacher_ai_01/02、teacher_<lec>_01/02、Lecture-* 等） | 学生版 + 教师版双指南（`JUPYTERHUB-STUDENT-GUIDE.md` + `JUPYTERHUB-OPERATION-GUIDE.md`）+ 本 Lecture（或本课程全量）ipynb + 代码框架。teacher_ai_01 实测 43 个文件/目录：A 系 24 ipynb + 12 starter + 2 指南 + grader 脚本 + nbgrader |
+| 学生（stu_<lec>_*） | 仅 `JUPYTERHUB-STUDENT-GUIDE.md` + `AUTOGRADER-GUIDE.md` + **本 Lecture 的学生版 ipynb + 教师版 ipynb + student_code_framework/ 代码框架**（实测 stu_p1_601：4 ipynb + 2 指南；stu_b1_601：4 ipynb） |
+
+> 已知差异（startup.sh v2 待 v3 收敛）：① 下划线教师账户 `teacher_<lec>_01/02` 未命中 `teacher-*` 指南分支 → 目前仅有学生指南；② B 系学生框架复制 pattern `fw_b1_*` 与实际 key `fw_w01…` 不匹配 → stu_b1_601 的 student_code_framework 为空；③ 新 Lecture（stu_a5_~a12_、stu_b7_~b12_、stu_p7_/p8_）暂无独立 case 分支，回退 `*)` 仅得双指南。已在 2026-09-18 实测确认，startup.sh v3 修复排期中。
 
 ### 4.4 PrairieLearn 评测课程（Autograder API v2.0）
 
@@ -233,17 +235,20 @@ LMS 共 **17 门课程**：3 门 AIEDU 课程（A/B/P，经 32 个 Lecture 承�
 | go-gateway | go | Go工业网关 |
 | rust-audit | rust | Rust安全审计 |
 
-**API 速查**（Base: `http://10.167.2.176:30093`）:
+**API 速查**（Base: `http://10.167.2.175:30093`，2026-09-18 实测；注意 API 无 `/grader` 前缀、无网页界面）:
 - `GET /health` → `{"service":"autograder","status":"healthy","version":"2.0"}`
 - `GET /api/courses`（教师 Key）→ 4 门课程
-- `POST /api/submit`（学生 Key）→ 提交代码，返回 score/tests_passed/feedback
-- `GET /api/report/{course_id}`（教师 Key）→ 课程成绩汇总（CockroachDB scores 表已积累 3000+ 条）
+- `POST /api/grade`（学生 Key）→ 提交代码+tests，返回 score/tests.passed/tests.total/lint/feedback（tests 文件内 `from submission import <符号>` 引用学生代码）
+- `GET /api/report/{course_id}`（教师 Key）→ 课程成绩汇总
+- `GET /api/student/{student_name}/scores`（学生 Key）→ 查询本人成绩（CockroachDB scores 表已积累 3000+ 条）
 
 ---
 
-## 五、JupyterHub 人工测试汇总（已融入本指南）
+## 五、整体在线平台人工测试汇总
 
-### 5.1 无头浏览器全功能测试（2026-09-07，24/24 PASS）
+> 覆盖 Open edX LMS/Studio、JupyterHub/Code-Server、Autograder API、Dify、Grafana 全部入口与服务。历史各阶段报告见 5.1/5.5~5.7；2026-09-18 全入口与分发实测见 5.8。
+
+### 5.1 JupyterHub 无头浏览器全功能测试（2026-09-07，24/24 PASS）
 
 | 模块 | 结果 | 关键数据 |
 |------|------|---------|
@@ -319,6 +324,27 @@ LMS 共 **17 门课程**：3 门 AIEDU 课程（A/B/P，经 32 个 Lecture 承�
 | 多教师教学矩阵 | ✅ 全部 Lecture（现行 32 个）每门 ≥2 教师，2431 名学生四元组（课程+班级+主讲+助教）逐人可查（TEACHING-MATRIX.md）；投诉主讲双通道设计见 §9.5 |
 | **C500-V3 并发实测（550 并发目标）** | ✅ **LMS 登录 741/800（92.6%），Hub 可达/实训入口 784/800（98.0%），墙钟 242 s**；无头并发脚本 per-user 独立会话 + CSRF 重试；失败样本全为波首 CSRF cookie 竞态（客户端压力放大项，Hub 侧 0 失败、集群无 OOM/重启） |
 | 测试窗口限流临时放宽 | ✅ 已还原（100/5m、30/5m），还原后 smoke 登录 200 复验通过 |
+
+### 5.8 2026-09-18 全平台入口 URL 与文件分发实测（curl + Pod 内核验）
+
+**入口 URL 矩阵**（curl 实测状态码）:
+
+| 服务 | URL | 实测 | 结论 |
+|------|-----|------|------|
+| LMS | `https://openedx.10.167.2.175.nip.io:31825` | 200 | ✅ 唯一正确 LMS 入口 |
+| Studio | `https://studio.openedx.10.167.2.175.nip.io:31825` | 200 | ✅ |
+| JupyterHub | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/` | 302 → /ide/hub/login（200） | ✅ |
+| Code-Server | 直连 `http://10.167.2.175:30087/vscode/` | 302 → /vscode/login | ✅ 唯一可用入口；`jupyterhub…:31825/vscode/` 实测 **404**（Hub ingress 未挂 /vscode 路由，勿再引用） |
+| **裸 IP LMS** | `https://openedx.10.167.2.175.nip.io:31825` | **503**（ingress default backend） | ❌ 报"拒绝连接/无法访问"的根因，必须用 nip.io 域名 |
+| **裸 IP Studio** | `https://studio.10.167.2.175:31825` | 连接失败 | ❌ 同上 |
+| Autograder API | `http://10.167.2.175:30093/health` | 200 version 2.0 | ✅（`.176:30093` 亦可；`/grader` 前缀不存在，API-only 无网页） |
+| Dify Web | `http://web.dify-plus.local.10.167.2.175.nip.io` | 302→HTTPS，根路径返回 Rancher catchall JSON；`/apps`、`/signin` 302→404 | ❌ **当前宕机**（2026-09-18 实测：`dify` 命名空间 dify-web/dify-api/dify-worker/dify-plugin-daemon/dify-sandbox Deployment 副本数均为 0，endpoints 为空，仅 dify-plus ns 存 db-postgres/redis；ingress dify-ingress/dify-catchall 仍指向死服务） |
+| Dify Console | `http://console.dify-plus.local.10.167.2.175.nip.io` | 同上 404 | ❌ 当前宕机，待重新扩容 dify 命名空间工作负载后恢复 |
+| Grafana | `http://10.167.2.175:30082`（kube-prometheus-stack-grafana） | — | 文档旧值 30090 实为 redis8-node-0，已修正 |
+
+**Autograder API 实测评测全链路**：`POST /api/grade` 以 `from submission import add` 约定引用学生代码 → 实测返回 score=100、PASS；自包含 tests（0 tests collected）或 `from code import`（报错）均不计分，已写入 MANUAL-TEST-CASES。
+
+**PVC 初始化分发实测**（startup.sh v2）：stu_p1_601 = 4 ipynb（学生版+教师版）+ 2 指南；stu_b1_601 = 4 ipynb 但 student_code_framework 为空（fw pattern 不匹配）；teacher_ai_01 = 43 项（24 A 系 ipynb + 12 starter + 双指南 + grader 脚本 + nbgrader）。学生确实获得**本 Lecture 学生版+教师版 ipynb**，但存在 §4.3 所列 3 项已知差异，startup.sh v3 修复排期中。
 
 ---
 

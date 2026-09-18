@@ -26,7 +26,7 @@
 
 ### 1.1 登录步骤
 
-1. 浏览器打开 **`https://10.167.2.175:31825/ide/`**
+1. 浏览器打开 **`https://jupyterhub.10.167.2.175.nip.io:31825/ide/`**
 2. 输入用户名（格式见下表）
 3. 输入密码 `ide2026`
 4. 等待 30-60 秒自动创建个人工作空间
@@ -907,7 +907,7 @@ teacher-zhang (总管理员)
 | B1 (设备初始化) | teacher-b1-01 | class-b1-01-A, class-b1-01-B | A班+B班学生 |
 | B1 (设备初始化) | teacher-b1-02 (新增) | class-b1-02-A | 新教师A班学生 |
 
-> 教师使用 `https://10.167.2.175:31825/ide/hub/admin` 管理面板查看自己班级的学生。
+> 教师使用 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin` 管理面板查看自己班级的学生。
 
 ### 学生登录格式
 
@@ -923,7 +923,7 @@ teacher-zhang (总管理员)
 ### 教师管理学生流程
 
 1. 教师登录 (`teacher-b1-01`, 密码 `ide2026`)
-2. 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
+2. 访问管理面板: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`
 3. 查看自己班级的学生服务器状态
 4. 启动/停止学生服务器
 5. 使用 `code_grader.py` 评分学生代码
@@ -1103,7 +1103,7 @@ teacher-zhang (总管理员, 密码: ide2026)
 
 ### 账户总计（现行）
 
-- 22 个教师/系统账户（16 lecture + teacher_zhang + teacher_ai_01/02 + admin 等）
+- 教师/系统账户：64 个 Lecture 关联教师（teacher_<lec>_01/_02 × 32）+ teacher_ai_01/02 + teacher-zhang（系统级测试）+ admin 等
 - 32 个班级分组（course-{课程码}-class{1|2}）+ 课程/全体师生组
 - 32 份工单（A 12 + B 12 + P 8）→ 64 个 Notebook（学生版+教师版）
 - 32 个代码框架
@@ -1153,7 +1153,7 @@ JupyterHub 平台已于 2026-09-07 完成 **Playwright 无头浏览器（Headles
 
 JupyterHub 已集成 **PrairieLearn v2 Autograder**，你可以提交代码进行自动评分，评分结果持久化到 CockroachDB，可随时查询自己的成绩。
 
-- 评测服务地址: `https://10.167.2.175:31825/grader/`
+- 评测服务地址: `http://10.167.2.175:30093/`
 - 学生 API Key: `pl-student-2026`
 
 ### 27.2 提交代码评分
@@ -1182,7 +1182,7 @@ python3 submit_grade.py my_code.py test_code.py ps1
 
 ```bash
 curl -H "Authorization: Bearer pl-student-2026" \
-     https://10.167.2.175:31825/grader/api/v2/scores
+     http://10.167.2.175:30093/api/scores
 ```
 
 返回 JSON 包含: 作业编号、分数、测试通过率、Lint 问题数、提交时间。
@@ -1217,9 +1217,9 @@ curl -H "Authorization: Bearer pl-student-2026" \
 | 服务 | 访问地址 | 账户 / 密码 |
 |------|----------|-------------|
 | Open edX LMS（在线课程） | https://openedx.10.167.2.175.nip.io:31825/ | 你的学号账户 |
-| JupyterHub（实训IDE） | https://10.167.2.175:31825/ide/ | p1-你的名字 / ide2026 |
-| Code-Server（VS Code） | http://10.167.2.175:30087/vscode/ | 你的JupyterHub账户 / Dify@2026 |
-| PrairieLearn（自动评测） | https://10.167.2.175:31825/grader/ | API Key: pl-student-2026 |
+| JupyterHub（实训IDE） | https://jupyterhub.10.167.2.175.nip.io:31825/ide/ | p1-你的名字 / ide2026 |
+| Code-Server（VS Code） | http://10.167.2.175:30087/vscode/（2026-09-18 实测 302；`jupyterhub…:31825/vscode/` 已 404 勿用） | 单密码 Dify@2026 |
+| PrairieLearn（自动评测） | http://10.167.2.175:30093/ | API Key: pl-student-2026 |
 
 > **说明**: Open edX 使用 `nip.io` 通配 DNS，浏览器直接打开即可，无需配置 hosts。你的账户已由教师导入 Open edX，首次登录请在 LMS 使用学号账户。
 
@@ -1258,10 +1258,10 @@ python3 submit_grade.py src/industrial/api/routes.py tests/test_e2e_api.py pytho
 ```bash
 # 查询自己的所有历史成绩
 curl -H "Authorization: Bearer pl-student-2026" \
-     https://10.167.2.175:31825/grader/api/v2/scores
+     http://10.167.2.175:30093/api/scores
 ```
 
-返回 JSON 包含：作业编号、分数、测试通过率、Lint 问题数、提交时间。也可在 PrairieLearn 网页端 `https://10.167.2.175:31825/grader/` 查看可视化报告。
+返回 JSON 包含：作业编号、分数、测试通过率、Lint 问题数、提交时间。也可在 PrairieLearn 网页端 `http://10.167.2.175:30093/` 查看可视化报告。
 
 ### 28.5 测试结果
 

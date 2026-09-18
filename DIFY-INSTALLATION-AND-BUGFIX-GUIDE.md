@@ -99,8 +99,8 @@
 
 | 服务 | 地址 | 说明 |
 |------|------|------|
-| Dify 控制台 | `https://10.167.2.175:31825` | IP 直连，完整 API 链路正常 |
-| Dify API | `https://10.167.2.175:31825/v1` | 程序化调用 |
+| Dify 控制台 | `https://openedx.10.167.2.175.nip.io:31825` | IP 直连，完整 API 链路正常 |
+| Dify API | `https://openedx.10.167.2.175.nip.io:31825/v1` | 程序化调用 |
 | LiteLLM 网关 | `http://10.167.2.176:30083` | LLM 模型代理 |
 | Ollama | `http://10.167.2.176:30086` | 本地模型服务 |
 | Redis 8 Cluster | `10.167.2.175:30095` | Redis 8.10.1 Cluster (3主节点) |
@@ -275,7 +275,7 @@ Dify 平台共有 15 个账户，分 4 种角色，属于工作空间 `Zheng_Gon
 
 **API 调用示例**:
 ```bash
-curl -X POST 'https://10.167.2.175:31825/v1/chat-messages' \
+curl -X POST 'https://openedx.10.167.2.175.nip.io:31825/v1/chat-messages' \
   -H 'Authorization: Bearer app-YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -288,7 +288,7 @@ curl -X POST 'https://10.167.2.175:31825/v1/chat-messages' \
 
 **工作流 API 调用**:
 ```bash
-curl -X POST 'https://10.167.2.175:31825/v1/workflows/run' \
+curl -X POST 'https://openedx.10.167.2.175.nip.io:31825/v1/workflows/run' \
   -H 'Authorization: Bearer app-YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1022,7 +1022,7 @@ curl http://10.167.2.176:30086/api/tags
 
 **步骤 4: 验证 Dify 登录**
 ```bash
-curl -k -X POST 'https://10.167.2.175:31825/console/api/login' \
+curl -k -X POST 'https://openedx.10.167.2.175.nip.io:31825/console/api/login' \
   -H 'Content-Type: application/json' \
   -d '{"email":"myuwei@126.com","password":"RGlmZmFpMTIzNDU2"}'
 # 预期返回 {"result":"success"}
@@ -1031,7 +1031,7 @@ curl -k -X POST 'https://10.167.2.175:31825/console/api/login' \
 **步骤 5: 验证 Dify 聊天**
 ```bash
 # 使用应用 API Key 测试聊天
-curl -k -X POST 'https://10.167.2.175:31825/v1/chat-messages' \
+curl -k -X POST 'https://openedx.10.167.2.175.nip.io:31825/v1/chat-messages' \
   -H 'Authorization: Bearer app-YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{"inputs":{},"query":"你好","response_mode":"blocking","user":"test"}'

@@ -30,10 +30,10 @@
 
 | 组件 | 地址 | 说明 |
 |------|------|------|
-| JupyterHub HTTPS 入口 | `https://10.167.2.175:31825/ide/` | **主入口**，浏览器访问（HTTPS，推荐） |
+| JupyterHub HTTPS 入口 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/` | **主入口**，浏览器访问（HTTPS，推荐） |
 | JupyterHub HTTP 入口 | `http://10.167.2.175:30089/ide/` | 备用直连 NodePort（HTTP） |
-| JupyterHub 管理面板 | `https://10.167.2.175:31825/ide/hub/admin` | 管理员面板（需 admin 账户登录） |
-| JupyterHub 登录页 | `https://10.167.2.175:31825/ide/hub/login` | 登录页面 |
+| JupyterHub 管理面板 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin` | 管理员面板（需 admin 账户登录） |
+| JupyterHub 登录页 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/login` | 登录页面 |
 | JupyterHub API | `http://10.167.2.175:30089/ide/hub/api` | 内部 REST API |
 | Ollama AI 服务 | `ollama-worker.ai-platform:11434` | AI 模型推理（集群内） |
 | CockroachDB 写节点 | `10.167.2.175:26257` | 数据库写入 |
@@ -58,13 +58,13 @@
 
 | 项目 | 值 |
 |------|-----|
-| 登录地址 (HTTPS) | `https://10.167.2.175:31825/ide/hub/login` |
+| 登录地址 (HTTPS) | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/login` |
 | 登录地址 (HTTP) | `http://10.167.2.175:30089/ide/hub/login` |
 | 共享密码 | `ide2026` |
 | 认证类型 | 用户名 + 密码（密码为共享的 `ide2026`） |
 | 自动登录 | 否（显示登录页面，用户自行输入用户名） |
 | base_url | `/ide/` |
-| 管理面板 | `https://10.167.2.175:31825/ide/hub/admin`（需管理员账户） |
+| 管理面板 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`（需管理员账户） |
 
 ### 2.2 学生账户
 
@@ -72,13 +72,13 @@
 
 | 用户名 | 密码 | 项目环境 | 对应项目 | JupyterLab 地址 |
 |--------|------|----------|----------|-----------------|
-| `student-python` | `ide2026` | Python 工业遥测分析 | industrial-analytics (FastAPI) | `https://10.167.2.175:31825/ide/user/student-python/lab` |
-| `student-java` | `ide2026` | Java MES 生产管理 | mes-system (Spring Boot 3) | `https://10.167.2.175:31825/ide/user/student-java/lab` |
-| `student-go` | `ide2026` | Go 工业网关 | industrial-gateway (Gin) | `https://10.167.2.175:31825/ide/user/student-go/lab` |
-| `student-rust` | `ide2026` | Rust 安全审计 | security-audit (actix-web) | `https://10.167.2.175:31825/ide/user/student-rust/lab` |
-| `student-alice` | `ide2026` | 通用学生 | Python 通用环境 | `https://10.167.2.175:31825/ide/user/student-alice/lab` |
-| `student-bob` | `ide2026` | 通用学生 | Python 通用环境 | `https://10.167.2.175:31825/ide/user/student-bob/lab` |
-| `student-carol` | `ide2026` | 通用学生 | Python 通用环境 | `https://10.167.2.175:31825/ide/user/student-carol/lab` |
+| `student-python` | `ide2026` | Python 工业遥测分析 | industrial-analytics (FastAPI) | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-python/lab` |
+| `student-java` | `ide2026` | Java MES 生产管理 | mes-system (Spring Boot 3) | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-java/lab` |
+| `student-go` | `ide2026` | Go 工业网关 | industrial-gateway (Gin) | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-go/lab` |
+| `student-rust` | `ide2026` | Rust 安全审计 | security-audit (actix-web) | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-rust/lab` |
+| `student-alice` | `ide2026` | 通用学生 | Python 通用环境 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-alice/lab` |
+| `student-bob` | `ide2026` | 通用学生 | Python 通用环境 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-bob/lab` |
+| `student-carol` | `ide2026` | 通用学生 | Python 通用环境 | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/user/student-carol/lab` |
 
 **每个学生账户的资源配置**:
 - CPU: 限制 2 核，保底 0.2 核
@@ -93,7 +93,7 @@
 | `teacher-zhang` | `ide2026` | **系统级教师测试账户**（管理员 + 教师） | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师为每个 Lecture 的 teacher_<lec>_01（班级1）/ teacher_<lec>_02（班级2）共 64 个关联教师账户及 teacher_ai_01/02 总主讲（见 §18、`ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3），口令经 `TEACHER_PASS` 环境变量注入 |
 
 教师账户（teacher_ai_01 / teacher_ai_02 及 teacher-zhang 测试账户）拥有管理员权限，可以:
-- 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
+- 访问管理面板: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`
 - 查看所有用户列表和状态
 - 启动/停止用户的服务器
 - 查看资源使用情况
@@ -102,7 +102,7 @@
 
 | 项目 | 值 |
 |------|-----|
-| 管理面板 URL | `https://10.167.2.175:31825/ide/hub/admin` |
+| 管理面板 URL | `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin` |
 | 管理员用户 | `teacher-zhang` |
 | 管理员密码 | `ide2026` |
 | 配置项 | `c.Authenticator.admin_users = {"teacher-zhang"}` |
@@ -123,8 +123,8 @@
 
 ### 2.6 首次登录步骤
 
-1. 浏览器打开 `https://10.167.2.175:31825/ide/`
-2. 自动跳转到登录页面 `https://10.167.2.175:31825/ide/hub/login`
+1. 浏览器打开 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/`
+2. 自动跳转到登录页面 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/login`
 3. 输入用户名（如 `student-python`）
 4. 输入密码 `ide2026`
 5. 点击 "Sign in"
@@ -234,14 +234,14 @@
 共享密码: ide2026
 管理员用户: teacher-zhang (c.Authenticator.admin_users = {"teacher-zhang"})
 管理面板: 已开启 (c.JupyterHub.admin_access = True)
-管理面板 URL: https://10.167.2.175:31825/ide/hub/admin
+管理面板 URL: https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin
 base_url: /ide/
 ```
 
 ### 5.2 访问管理面板
 
-1. 浏览器打开 `https://10.167.2.175:31825/ide/hub/admin`
-2. 如未登录，会跳转到登录页 `https://10.167.2.175:31825/ide/hub/login`
+1. 浏览器打开 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`
+2. 如未登录，会跳转到登录页 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/login`
 3. 输入用户名 `teacher-zhang`，密码 `ide2026`
 4. 登录后自动进入管理面板
 
@@ -1143,7 +1143,7 @@ teacher-zhang (总管理员)
 | B1 (设备初始化) | teacher-b1-01 | class-b1-01-A, class-b1-01-B | A班+B班学生 |
 | B1 (设备初始化) | teacher-b1-02 (新增) | class-b1-02-A | 新教师A班学生 |
 
-> 教师使用 `https://10.167.2.175:31825/ide/hub/admin` 管理面板查看自己班级的学生。
+> 教师使用 `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin` 管理面板查看自己班级的学生。
 
 ### 学生登录格式
 
@@ -1159,7 +1159,7 @@ teacher-zhang (总管理员)
 ### 教师管理学生流程
 
 1. 教师登录 (`teacher-b1-01`, 密码 `ide2026`)
-2. 访问管理面板: `https://10.167.2.175:31825/ide/hub/admin`
+2. 访问管理面板: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/admin`
 3. 查看自己班级的学生服务器状态
 4. 启动/停止学生服务器
 5. 使用 `code_grader.py` 评分学生代码
@@ -1330,7 +1330,7 @@ admin (平台超级管理员)
 
 ### 账户总计（现行）
 
-- 22 个教师/系统账户（§7.10 全列：8 名教师 + teacher_ai_01/02 + lecture_p1~p6 + admin（P7/P8 由 lecture_p5/lecture_p6 代管） 等）
+- 教师/系统账户：64 个 Lecture 关联教师（teacher_<lec>_01/_02 × 32）+ teacher_ai_01/02 + teacher-zhang（系统级测试）+ lecture_p1~p6 + admin 等（§7.10、§18 全列）
 - 32 个班级分组（course-{课程码}-class{1|2}）+ all-students/all-teachers/course-{p,b,a}-students/teachers
 - 32 份工单（A 12 + B 12 + P 8）→ 64 个 Notebook（学生版+教师版）
 - 32 个代码框架
@@ -1482,17 +1482,17 @@ admin (平台超级管理员)
 
 ### 概述
 
-JupyterHub 已集成 **PrairieLearn v2 Autograder**，提供工业级自动评测能力，支持代码提交、自动评分、Lint 检查、成绩报告和持久化存储。服务通过 Ingress 暴露在 `https://10.167.2.175:31825/grader/`。
+JupyterHub 已集成 **PrairieLearn v2 Autograder**，提供工业级自动评测能力，支持代码提交、自动评分、Lint 检查、成绩报告和持久化存储。服务通过 Ingress 暴露在 `http://10.167.2.175:30093/`。
 
 ### 27.1 Autograder API
 
 | 端点 | 方法 | 说明 |
 |------|------|------|
-| `/grader/api/v2/health` | GET | 健康检查 |
-| `/grader/api/v2/grade` | POST | 提交代码并评分 |
-| `/grader/api/v2/lint` | POST | 代码风格检查 |
-| `/grader/api/v2/report` | GET | 生成评分报告 |
-| `/grader/api/v2/scores` | GET | 查询学生成绩 |
+| `/api/health` | GET | 健康检查 |
+| `/api/grade` | POST | 提交代码并评分 |
+| `/api/lint` | POST | 代码风格检查 |
+| `/api/report` | GET | 生成评分报告 |
+| `/api/scores` | GET | 查询学生成绩 |
 
 ### 27.2 API Key 认证
 
@@ -1544,8 +1544,8 @@ JupyterHub 启动脚本已集成评测组件：
 
 ### 访问地址
 
-- Autograder UI: `https://10.167.2.175:31825/grader/`
-- Autograder API: `https://10.167.2.175:31825/grader/api/v2/`
+- Autograder UI: `http://10.167.2.175:30093/`
+- Autograder API: `http://10.167.2.175:30093/api/`
 
 ✅ PrairieLearn 评测集成全链路测试通过，自动评分系统稳定可用。
 
@@ -1575,9 +1575,9 @@ JupyterHub 启动脚本已集成评测组件：
 |------|----------|-------------|
 | Open edX LMS（学习） | https://openedx.10.167.2.175.nip.io:31825/ | admin@openedx.local / Admin@2026 |
 | Open edX CMS（建课） | https://studio.openedx.10.167.2.175.nip.io:31825/ | admin@openedx.local / Admin@2026 |
-| JupyterHub | https://10.167.2.175:31825/ide/ | teacher-zhang / ide2026（系统级教师测试账户；正式教师口令经 TEACHER_PASS 注入） |
+| JupyterHub | https://jupyterhub.10.167.2.175.nip.io:31825/ide/ | teacher-zhang / ide2026（系统级教师测试账户；正式教师口令经 TEACHER_PASS 注入） |
 | Code-Server | http://10.167.2.175:30087/vscode/ | teacher-zhang / Dify@2026 |
-| PrairieLearn | https://10.167.2.175:31825/grader/ | API Key: pl-teacher-2026 |
+| PrairieLearn | http://10.167.2.175:30093/ | API Key: pl-teacher-2026 |
 | Grafana 监控 | http://10.167.2.175:30082/ | admin / prom-operator |
 
 > **说明**: Open edX 使用 `nip.io` 通配 DNS，浏览器直接访问，无需配置 hosts 文件。

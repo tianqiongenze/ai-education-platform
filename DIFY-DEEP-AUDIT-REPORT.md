@@ -365,8 +365,8 @@ fi
 
 ### 7.2 访问信息
 
-- **Dify 控制台**: `https://10.167.2.175:31825` (Host: console.dify-plus.local)
-- **Dify API**: `https://10.167.2.175:31825/v1` (Host: api.dify-plus.local)
+- **Dify 控制台**: `https://openedx.10.167.2.175.nip.io:31825` (Host: console.dify-plus.local)
+- **Dify API**: `https://openedx.10.167.2.175.nip.io:31825/v1` (Host: api.dify-plus.local)
 - **管理员**: `myuwei@126.com` / `Difyai123456`
 - **LiteLLM**: `http://10.167.2.176:30083` (Key: `sk-ai-platform-master`)
 - **Ollama**: `http://10.167.2.176:30086`

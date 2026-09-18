@@ -540,7 +540,7 @@ kubectl delete pods -A --field-selector=status.phase=Failed
 |------|------|------|
 | JupyterHub | `http://10.167.2.175:30089/ide/` | 多用户在线编程平台 |
 | JupyterLab (简易) | `http://10.167.2.175:30088/jupyter/` | 无需密码,快速使用 |
-| Dify控制台 | `https://10.167.2.175:31825` | AI应用管理 |
+| Dify控制台 | `https://openedx.10.167.2.175.nip.io:31825` | AI应用管理 |
 | LiteLLM网关 | `http://10.167.2.176:30083` | AI模型API |
 | Mailpit邮件 | `http://10.167.2.175:30205` | 邮件调试 |
 | Grafana监控 | `http://10.167.2.175:30082` | 监控面板 |

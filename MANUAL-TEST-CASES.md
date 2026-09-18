@@ -2,8 +2,8 @@
 
 > 版本：v1.0（对应 Browser Test Suite v6.0 自动化验收 58/58 PASS 后的基线）
 > 适用范围：局域网内任何一台电脑（Windows/macOS/Linux），浏览器 + 终端即可执行，无需集群权限
-> 集群入口：`https://10.167.2.175:31825`（唯一 HTTPS 入口，ingress-nginx NodePort）
-> 用例总数：46 条（按 8 个模块分组，每条含前置条件、操作步骤、预期结果、失败排查）
+> 集群入口：`https://openedx.10.167.2.175.nip.io:31825`（唯一 HTTPS 入口，ingress-nginx NodePort）
+> 用例总数：47 条（按 8 个模块分组，每条含前置条件、操作步骤、预期结果、失败排查）
 > 预计总耗时：单人完整执行约 60~75 分钟；快速冒烟（标 ⭐ 的 16 条）约 15 分钟
 
 ---
@@ -14,7 +14,7 @@
 | 项 | 内容 |
 |----|------|
 | 前置 | 测试机与集群同局域网（能 ping 通 10.167.2.175） |
-| 步骤 | 1. `ping 10.167.2.175`；2. 浏览器打开 `https://10.167.2.175:31825` |
+| 步骤 | 1. `ping 10.167.2.175`；2. 浏览器打开 `https://openedx.10.167.2.175.nip.io:31825` |
 | 预期 | ping 通；浏览器出现页面（LMS 首页或登录页） |
 | 注意 | 首次访问会有"证书不受信任"警告（自签证书），点击 **高级→继续前往** 即可。这是预期行为，不是缺陷 |
 | 失败排查 | ping 不通→检查网线/交换机/防火墙；ping 通但页面打不开→登录 master 检查 `kubectl -n ingress-nginx get svc` 的 NodePort 31825 |
@@ -131,10 +131,10 @@ kubectl -n prairielearn get pods     # 评测服务
 
 ## 模块 C：JupyterHub 在线编程（12 条）
 
-> 对应自动化用例 C1-C12。入口：`https://10.167.2.175:31825/ide`
+> 对应自动化用例 C1-C12。入口：`https://jupyterhub.10.167.2.175.nip.io:31825/ide`
 
 ### ⭐T-C1 登录页
-- 步骤：访问 `https://10.167.2.175:31825/ide`
+- 步骤：访问 `https://jupyterhub.10.167.2.175.nip.io:31825/ide`
 - 预期：跳转到 JupyterHub 登录页（表单含用户名/密码）
 
 ### ⭐T-C2 教师登录并进入 JupyterLab
@@ -193,34 +193,44 @@ kubectl -n prairielearn get pods     # 评测服务
 
 ## 模块 D：PrairieLearn 自动评测（8 条）
 
-> 对应自动化用例 D1-D10。入口：`https://10.167.2.175:31825/grader`；API 直连 `http://10.167.2.175:30087`（evaluator 服务）
+> 对应自动化用例 D1-D10。API 直连 `http://10.167.2.175:30093`（2026-09-18 实测；`.176:30093` 亦可；无 `/grader` 前缀、无网页界面）。注意：30087 已分配给 Code-Server。
 > 需要 API Key 请求头 `X-API-Key`：教师 `pl-teacher-2026`，学生 `pl-student-2026`
 
 ### ⭐T-D1 健康检查
-- 步骤：浏览器访问 `http://10.167.2.175:30087/health`
+- 步骤：浏览器访问 `http://10.167.2.175:30093/health`
 - 预期：JSON 含 `"status": "healthy"`、`"version": "2.0"`
 
 ### T-D2 课程列表
-- 步骤：PowerShell/curl：`curl -H "X-API-Key: pl-teacher-2026" http://10.167.2.175:30087/api/courses`
+- 步骤：PowerShell/curl：`curl -H "X-API-Key: pl-teacher-2026" http://10.167.2.175:30093/api/courses`
 - 预期：返回 4 门课程（含 python-industrial）
 
 ### ⭐T-D4 Python 满分评测
-- 步骤：
+- 步骤（tests 文件内以 `from submission import <符号>` 引用学生代码，2026-09-18 实测 100 分约定；自包含 tests 会报 0 tests collected）：
   ```bash
-  curl -X POST http://10.167.2.175:30087/api/submit \
+  curl -X POST http://10.167.2.175:30093/api/grade \
     -H "X-API-Key: pl-student-2026" -H "Content-Type: application/json" \
     -d '{"course_id":"python-industrial","assignment_id":"a1","student_name":"manual-test",
-         "language":"python","code":"def add(a,b):\n    return a+b\n\nassert add(1,2)==3\nassert add(-1,1)==0"}'
+         "language":"python",
+         "code":"def add(a,b):\n    return a+b\n",
+         "tests":"from submission import add\n\ndef test_add():\n    assert add(1,2)==3\n    assert add(-1,1)==0\n"}'
   ```
-- 预期：响应 `"score": 100.0`，tests_passed=tests_total
+- 预期：响应 `"score": 100.0`，tests.passed = tests.total
 
 ### ⭐T-D5 错误代码区分性
 - 步骤：同上但 code 改为 `def add(a,b):\n    return a-b`
-- 预期：score < 100（实测 40.0），feedback 含失败测试信息
+- 预期：score < 100，feedback 含失败测试信息
 
 ### T-D6 PEP8 风格检查
 - 步骤：code 改为带缩进/空格问题的代码（如 `x=1` 顶格无函数、超长行）
-- 预期：feedback 含 lint/PEP8 错误计数（实测 errors=4）
+- 预期：feedback 含 lint/PEP8 错误计数
+
+### T-D7 教师成绩报告
+- 步骤：`curl -H "X-API-Key: pl-teacher-2026" http://10.167.2.175:30093/api/report/python-industrial`
+- 预期：返回课程成绩汇总 JSON
+
+### T-D8 学生本人成绩查询
+- 步骤：`curl -H "X-API-Key: pl-student-2026" http://10.167.2.175:30093/api/student/manual-test/scores`
+- 预期：返回该生历次评测记录（CockroachDB scores 表持久化）
 
 ### T-D7 API Key 鉴权
 - 步骤：不带 X-API-Key 头调用 T-D4 接口
@@ -228,7 +238,7 @@ kubectl -n prairielearn get pods     # 评测服务
 
 ### ⭐T-D8 成绩持久化（CockroachDB）
 - 步骤：T-D4 提交后，教师 Key 查询成绩：
-  `curl -H "X-API-Key: pl-teacher-2026" http://10.167.2.175:30087/api/report/python-industrial`
+  `curl -H "X-API-Key: pl-teacher-2026" http://10.167.2.175:30093/api/report/python-industrial`
 - 预期：报告包含 manual-test 及其分数（实测库中已积累 2980+ 条）
 
 ### T-D10 多语言评测（Java）
@@ -237,14 +247,14 @@ kubectl -n prairielearn get pods     # 评测服务
 
 ---
 
-## 模块 E：Code-Server 与跨平台全链路（6 条）
+## 模块 E：Code-Server 与跨平台全链路（7 条）
 
 > 对应自动化用例 E1-E8
 
 ### T-E1 Code-Server 可达
-- 步骤：浏览器访问 `http://10.167.2.175:30087` 之外的 Code-Server 端口 `http://10.167.2.175:30080`（或按实际部署端口）
-- 预期：302 → 登录页/工作台加载
-- 注：具体端口以 `kubectl get svc` 输出为准（当前部署 30087 为评测 API，Code-Server 为 30080 系）
+- 步骤：直连访问 `http://10.167.2.175:30087/vscode/`（2026-09-18 实测 302 → /vscode/login；注意 `jupyterhub…:31825/vscode/` 实测 404，勿用）
+- 预期：302 → 登录页/工作台加载（单密码 Dify@2026）
+- 注：评测 API 现为 30093（Autograder），30087 已分配给 Code-Server 服务
 
 ### T-E2 Code-Server 工作台
 - 步骤：登录 Code-Server
@@ -269,6 +279,11 @@ kubectl -n prairielearn get pods     # 评测服务
 - 步骤：MFE /learning 页面登录后查看课程数据是否加载（或 F12 Network 看 /api/courseware 链路）
 - 预期：课程数据接口返回 200/301（正常重定向），前端渲染出课程内容
 
+### T-E9 Dify 服务可达性（2026-09-18 新增）
+- 步骤：`curl -sk -o /dev/null -w "%{http_code}" -L https://web.dify-plus.local.10.167.2.175.nip.io/signin`；集群侧 `kubectl -n dify get deploy`、`kubectl -n dify get endpoints dify-web dify-api`
+- 预期（健康时）：200 返回 Dify 登录页；dify-web/dify-api Deployment 副本 ≥1、endpoints 非空
+- ⚠️ **当前实测（2026-09-18）：服务宕机** —— `dify` 命名空间 dify-web/dify-api/dify-worker/dify-plugin-daemon/dify-sandbox 副本数均为 0，endpoints `<none>`；HTTP 请求被 Rancher catchall 接管（根路径返回 Rancher API JSON，/apps、/signin 404）。恢复方式：重新扩容 dify 命名空间工作负载（`kubectl -n dify scale deploy/dify-web --replicas=1` 等）后复测本用例
+
 ---
 
 ## 模块 F：性能基线人工复核（3 条）
@@ -287,7 +302,7 @@ kubectl -n prairielearn get pods     # 评测服务
 
 | 编号 | 名称 | 一句话预期 |
 |------|------|-----------|
-| T0.1 | 入口可达 | https://10.167.2.175:31825 打开页面 |
+| T0.1 | 入口可达 | https://openedx.10.167.2.175.nip.io:31825 打开页面 |
 | T-A1 | LMS 登录页 | 200 + 表单 |
 | T-A2 | LMS 登录 | → Dashboard |
 | T-A5 | LMS 登出 | 回登录页 |
@@ -327,7 +342,7 @@ kubectl -n prairielearn get pods     # 评测服务
 | B | B1-B10（10 条） | 人工 7 条（4-6 合并） |
 | C | C1-C12（12 条） | 人工 12 条全覆盖 |
 | D | D1-D10（10 条） | 人工 8 条（D3/D9 并入 D2/D8） |
-| E | E1-E8（8 条） | 人工 6 条 |
+| E | E1-E8 + T-E9 Dify 可达性（9 条） | 人工 7 条 |
 | F | F1-F4（4 条） | 人工 3 条 |
 | 合计 | 58 | 46（冒烟 16） |
 

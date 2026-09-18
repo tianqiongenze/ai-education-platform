@@ -3,7 +3,7 @@
 > 测试日期：2026-09-08
 > 测试方式：Playwright 1.62.0 无头 Chromium 全端全链路功能测试（真实浏览器登录/跳转/会话）+ HTTP API 校验
 > 集群：k8s-master 10.167.2.175 / k8s-worker1 10.167.2.176（K8s v1.28.2, docker 26.1.4）
-> 统一入口：ingress-nginx NodePort **https://10.167.2.175:31825**（唯一 HTTPS 入口）
+> 统一入口：ingress-nginx NodePort **https://openedx.10.167.2.175.nip.io:31825**（唯一 HTTPS 入口）
 > 域名：`*.openedx.10.167.2.175.nip.io:31825`
 > 测试脚本：`D:\dify-install\browser_test_suite_v6.py`（58 用例，6 个模块）
 > 详细结果 JSON：`D:\dify-install\browser_test_suite_v6_report.json`
@@ -147,7 +147,7 @@
 
 ## 八、上线检查清单
 
-- [x] 唯一入口 https://10.167.2.175:31825 全部服务可达（LMS/Studio/MFE/JupyterHub /ide/PrairieLearn /grader/Code-Server）
+- [x] 唯一入口 https://openedx.10.167.2.175.nip.io:31825 全部服务可达（LMS/Studio/MFE/JupyterHub /ide/PrairieLearn /grader/Code-Server）
 - [x] Studio SSO 全链路：登录→OAuth authorize→callback→课程列表，无 404/400/500
 - [x] MFE 7 个微前端应用路由 + JS 静态资源全部 200
 - [x] 教师账号（teacher-zhang）与管理员账号（admin）双角色验证通过

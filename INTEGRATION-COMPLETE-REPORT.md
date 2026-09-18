@@ -109,7 +109,7 @@
 | enable_pkce | False (Open edX oauth2_provider不支持PKCE) |
 | allow_all | True (允许所有LMS认证用户) |
 
-- **redirect_uri**: `https://10.167.2.175:31825/ide/hub/oauth_callback` (含/ide/前缀)
+- **redirect_uri**: `https://jupyterhub.10.167.2.175.nip.io:31825/ide/hub/oauth_callback` (含/ide/前缀)
 - **认证流程验证**: `/ide/hub/oauth_login` → 302重定向到LMS `/oauth2/authorize/` → 用户登录 → 回调 → token交换 → 用户信息获取
 - **Hub Pod状态**: Running, 1/1 Ready
 

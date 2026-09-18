@@ -12,8 +12,8 @@
 
 | 服务 | 地址 | 说明 |
 |------|------|------|
-| Dify 控制台 | `https://10.167.2.175:31825` | AI应用管理(浏览器直接访问) |
-| Dify API | `https://10.167.2.175:31825/v1` | 程序化调用 |
+| Dify 控制台 | `https://openedx.10.167.2.175.nip.io:31825` | AI应用管理(浏览器直接访问) |
+| Dify API | `https://openedx.10.167.2.175.nip.io:31825/v1` | 程序化调用 |
 | Code-Server | `http://10.167.2.175:30087/vscode/` | 在线编程环境（IP直连，无需hosts） |
 | JupyterLab | `http://10.167.2.175:30088/jupyter/` | Python科学计算（原生子路径，无需密码） |
 | LiteLLM 网关 | `http://10.167.2.176:30083` | 26个AI模型代理 |
@@ -73,9 +73,9 @@
 
 学生可通过三种方式使用知识库:
 
-1. **Web 界面（推荐）**: 浏览器打开 `https://10.167.2.175:31825` → 使用学生账号登录 → 在工作室选择关联了知识库的应用 → 对话即可自动检索知识库内容
-2. **API 调用**: 获取应用 API Key（需 owner/admin/editor 权限），调用 `POST https://10.167.2.175:31825/v1/chat-messages` 对话接口，AI 自动检索关联知识库
-3. **知识库检索 API**: 直接调用 `POST https://10.167.2.175:31825/console/api/datasets/{id}/retrieve` 检索知识库内容（需 owner/admin/editor 权限）
+1. **Web 界面（推荐）**: 浏览器打开 `https://openedx.10.167.2.175.nip.io:31825` → 使用学生账号登录 → 在工作室选择关联了知识库的应用 → 对话即可自动检索知识库内容
+2. **API 调用**: 获取应用 API Key（需 owner/admin/editor 权限），调用 `POST https://openedx.10.167.2.175.nip.io:31825/v1/chat-messages` 对话接口，AI 自动检索关联知识库
+3. **知识库检索 API**: 直接调用 `POST https://openedx.10.167.2.175.nip.io:31825/console/api/datasets/{id}/retrieve` 检索知识库内容（需 owner/admin/editor 权限）
 
 **已关联知识库的应用**:
 

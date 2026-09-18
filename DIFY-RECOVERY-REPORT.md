@@ -48,8 +48,8 @@
 
 | 服务 | 状态 | 访问地址 |
 |------|------|---------|
-| Dify API | ✅ Running | https://10.167.2.175:31825 (ingress) |
-| Dify Web | ✅ Running | https://10.167.2.175:31825 |
+| Dify API | ✅ Running | https://openedx.10.167.2.175.nip.io:31825 (ingress) |
+| Dify Web | ✅ Running | https://openedx.10.167.2.175.nip.io:31825 |
 | Dify Worker | ✅ Running | 集群内部 |
 | Dify Plugin Daemon | ✅ Running | 集群内部 |
 | Dify Sandbox | ✅ Running | 集群内部 |
@@ -63,8 +63,8 @@
 
 ### 2.2 Dify 访问信息
 
-- **控制台**: `https://10.167.2.175:31825` (Host: console.dify-plus.local)
-- **API**: `https://10.167.2.175:31825/v1` (Host: api.dify-plus.local)
+- **控制台**: `https://openedx.10.167.2.175.nip.io:31825` (Host: console.dify-plus.local)
+- **API**: `https://openedx.10.167.2.175.nip.io:31825/v1` (Host: api.dify-plus.local)
 - **管理员邮箱**: `myuwei@126.com`
 - **管理员密码**: `Difyai123456`
 
@@ -126,7 +126,7 @@
 
 由于 RSA 私钥丢失，所有加密的模型提供商凭据被清除。API 方式添加模型因插件 daemon 的 model/schema 端点返回 404 而无法保存。需要通过 Dify Web UI 手动重新配置：
 
-1. 登录 `https://10.167.2.175:31825` (Host: console.dify-plus.local)
+1. 登录 `https://openedx.10.167.2.175.nip.io:31825` (Host: console.dify-plus.local)
 2. 进入 **设置 → 模型供应商**
 3. 配置 **OpenAI-API-compatible** 提供商:
    - API Key: `sk-ai-platform-master`

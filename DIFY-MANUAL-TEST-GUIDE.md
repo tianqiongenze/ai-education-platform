@@ -32,8 +32,8 @@
 
 | 服务 | 地址 | 说明 |
 |------|------|------|
-| Dify 控制台 | `https://10.167.2.175:31825` | 浏览器直接访问（IP直连，无需hosts，完整API链路正常） |
-| Dify API | `https://10.167.2.175:31825/v1` | 程序化调用（IP直连可用） |
+| Dify 控制台 | `https://openedx.10.167.2.175.nip.io:31825` | 浏览器直接访问（IP直连，无需hosts，完整API链路正常） |
+| Dify API | `https://openedx.10.167.2.175.nip.io:31825/v1` | 程序化调用（IP直连可用） |
 | LiteLLM 网关 | `http://10.167.2.176:30083` | LLM 模型代理（26个模型，支持fallback故障切换） |
 | Ollama | `http://10.167.2.176:30086` | 本地模型服务（24个模型） |
 | Redis 8 Cluster | `10.167.2.175:30090/30091/30092` | Redis 8.10.1 Cluster（3主节点，局域网无MOVED） |
@@ -46,7 +46,7 @@
 ### 1.2 访问方式说明
 
 **浏览器直接访问（无需任何配置）**:
-- **Dify 控制台**: 直接打开 `https://10.167.2.175:31825`，自动显示登录页面，登录后完整功能可用 ✅
+- **Dify 控制台**: 直接打开 `https://openedx.10.167.2.175.nip.io:31825`，自动显示登录页面，登录后完整功能可用 ✅
 - **Grafana**: 直接打开 `http://10.167.2.175:30082`
 - **Rancher**: 直接打开 `https://10.167.2.175`
 - **LiteLLM**: 直接打开 `http://10.167.2.176:30083/health/liveliness`
@@ -70,7 +70,7 @@
 **Dify 控制台与 Code-Server 的区别**:
 - Dify 控制台是 AI 应用管理平台（创建应用、配置模型、管理知识库）— IP 直连即可
 - Code-Server 是在线 VS Code 编程环境（编写代码、AI 辅助编程）— IP 直连 `http://10.167.2.175:30087/vscode/`
-- IP 直连 `https://10.167.2.175:31825` 默认进入 Dify 控制台
+- IP 直连 `https://openedx.10.167.2.175.nip.io:31825` 默认进入 Dify 控制台
 - JupyterLab 是 Python 科学计算环境 — IP 直连 `http://10.167.2.175:30088/jupyter/`
 
 ### 1.3 登录账号
@@ -792,7 +792,7 @@ Dify 平台共有 **15 个账户**，分为 4 种角色。所有账户属于同�
 
 **适用角色**: owner / admin / editor
 
-1. 浏览器打开 `https://10.167.2.175:31825`
+1. 浏览器打开 `https://openedx.10.167.2.175.nip.io:31825`
 2. 使用 owner/admin/editor 账号登录
 3. 左侧导航栏点击 **知识库**
 4. 选择目标知识库，点击进入
@@ -816,7 +816,7 @@ Dify 平台共有 **15 个账户**，分为 4 种角色。所有账户属于同�
 | 工业网络安全助手 | 工业安全标准知识库 | 对话即可触发检索 |
 
 **学生使用步骤**:
-1. 浏览器打开 `https://10.167.2.175:31825`
+1. 浏览器打开 `https://openedx.10.167.2.175.nip.io:31825`
 2. 使用学生账号（如 `qiaoguiping@126.com` / `Difyai123456`）登录
 3. 在工作室页面选择对应的应用
 4. 在对话框输入问题，AI 会自动从关联的知识库中检索相关内容并回答
@@ -827,11 +827,11 @@ Dify 平台共有 **15 个账户**，分为 4 种角色。所有账户属于同�
 
 ```bash
 # 1. 获取知识库列表
-curl -X GET 'https://10.167.2.175:31825/console/api/datasets' \
+curl -X GET 'https://openedx.10.167.2.175.nip.io:31825/console/api/datasets' \
   -H 'Authorization: Bearer {YOUR_API_KEY}'
 
 # 2. 检索知识库内容
-curl -X POST 'https://10.167.2.175:31825/console/api/datasets/{DATASET_ID}/retrieve' \
+curl -X POST 'https://openedx.10.167.2.175.nip.io:31825/console/api/datasets/{DATASET_ID}/retrieve' \
   -H 'Authorization: Bearer {YOUR_API_KEY}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -841,7 +841,7 @@ curl -X POST 'https://10.167.2.175:31825/console/api/datasets/{DATASET_ID}/retri
   }'
 
 # 3. 通过应用 API 对话（自动触发知识库检索）
-curl -X POST 'https://10.167.2.175:31825/v1/chat-messages' \
+curl -X POST 'https://openedx.10.167.2.175.nip.io:31825/v1/chat-messages' \
   -H 'Authorization: Bearer app-{APP_API_KEY}' \
   -H 'Content-Type: application/json' \
   -d '{

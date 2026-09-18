@@ -94,11 +94,11 @@
 
 | 平台 | 地址 | 认证 |
 |------|------|------|
-| Open edX LMS | https://10.167.2.175:31825/ (Host: openedx.10.167.2.175.nip.io) | admin@openedx.local / Admin@2026 |
-| Open edX CMS | https://10.167.2.175:31825/ (Host: studio.openedx.10.167.2.175.nip.io) | 同上 |
-| JupyterHub | https://10.167.2.175:31825/ide/ | 密码 ide2026 |
+| Open edX LMS | https://openedx.10.167.2.175.nip.io:31825/ (Host: openedx.10.167.2.175.nip.io) | admin@openedx.local / Admin@2026 |
+| Open edX CMS | https://openedx.10.167.2.175.nip.io:31825/ (Host: studio.openedx.10.167.2.175.nip.io) | 同上 |
+| JupyterHub | https://jupyterhub.10.167.2.175.nip.io:31825/ide/ | 密码 ide2026 |
 | Code-Server | http://10.167.2.175:30087/vscode/ | 密码 Dify@2026 |
-| PrairieLearn | https://10.167.2.175:31825/grader/ | API Key |
+| PrairieLearn | http://10.167.2.175:30093/ | API Key |
 | Ollama AI | http://10.167.2.175:30086 | 无 |
 | CockroachDB | http://10.167.2.175:30259/health | 无 |
 
