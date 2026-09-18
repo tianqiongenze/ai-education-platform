@@ -154,6 +154,20 @@ AFTER  is_active=True      # 注册即激活
 
 平行/串行授课语义：同一 Lecture 的 teacher_<lec>_01 与 teacher_<lec>_02 各自绑定一个班级 Cohort；两个班可以同周次不同教室（平行）或不同周次（串行），学生只随班级看到自己教师的课堂内容，互不影响。
 
+### 4.3a 账户口令规律（2026-09-18 全量重置）
+
+> 2026-09-18 起全部教师/学生/py 批次账户口令统一为**与账户绑定的 Lecture 相关的规律口令**（忘记可自行重拼；明文不落任何文件/DB，重置脚本运行时经 `TEACHER_PASS`/`STUDENT_PASS` 环境变量注入）：
+
+| 账户类别 | 口令构成 | 示例（Lecture a1） |
+|---|---|---|
+| 教师 `teacher_<lec>_01/02` | `T<lec>@26` | teacher_a1_01 / teacher_a1_02 → `Ta1@26` |
+| 学生 `stu_<lec>_*` / `stu_<lec>_c<N>_*` | `<lec>@26` | stu_a1_002 → `a1@26` |
+| py 实训批次 `py_<lec>_*` | `p<lec>@26` | py_a1_001 → `pa1@26` |
+
+- `<lec>` 为账户所属 Lecture 小写编号（a1…a12 / b1…b12 / p1…p8）。
+- teacher_zhang、admin、lecture_* 名义账户等系统账户不受此规律约束。
+- 重置后抽样验证 220/220（73 教师 + 51 py + 96 学生）登录成功，详情见 `PLATFORM-GUIDE.md` §五b。
+
 ### 4.4 前缀规范（用户注册时使用的用户名）——2026-09-17 重构：32 Lecture × class1/2 显式班级前缀
 
 **规则 1（现行，显式班级前缀）**：`stu_<lec>_c<N>_<序号>`，lec ∈ A1~A12/B1~B12/P1~P8，N ∈ 1/2，**任意 Lecture 均可指定班级 1 或班级 2**：
@@ -503,3 +517,19 @@ v3 把每门课的两名教师固定为 **主讲(lead)** 与 **助教(assistant)
 **测试窗口临时配置变更（已还原）**：为越过 LMS 单 IP 登录限流（LOGISTRATION_RATELIMIT_RATE=100/5m），测试期间将 LMS 设置 ConfigMap 短暂切换为限流 10000/5m 的副本，测试后已还原 `openedx-settings-lms-c9mmh48c87` 并删除临时 ConfigMap `openedx-settings-lms-testrl`；还原后复验 setting=100/5m + 单用户 smoke 登录 200 通过。
 
 **结论**：账户体系 v3 在 550 并发下 Hub 全链路成功率 98%（≥500 并发达标）；LMS 登录瓶颈为 uWSGI worker 数 × CSRF 竞态，扩 worker 或加 CSRF 预热可消除，不阻塞验收。
+
+### 9.8 口令全量重置 + 登录扫描 + 压力测试（2026-09-18，上线前验收）
+
+**口令重置**：73 教师 + 1630 学生/py 批次账户口令按 §4.3a 规律统一重置（环境变量注入，不落明文）。
+
+**限速感知全量登录扫描**：无头 HTTP 链路（GET /login 取 CSRF → POST login_session），220/220（73 教师 + 51 py + 96 学生）**100% 成功**。限速特性实测：GET /login 自身限流（高压 429）；登录 POST 按 email/IP 各 1000/5m（超限 403）；单用户锁定 6 次/30min。全部为瞬态、退避 10–20s 即自愈，生产限流无需放宽。
+
+**压力/性能测试**（明细见 `PLATFORM-GUIDE.md` §五b.2）：
+
+| 场景 | 并发 | 结果 |
+|---|---|---|
+| LMS 并发登录（30 学生+15 py+5 教师） | 50 | 50/50 成功，墙钟 13.8 s；POST p50 1.23 s / p95 2.10 s |
+| Hub OAuth 登录 + spawn | 10 | 10/10 spawn 成功；延迟 47.6~116.8 s |
+| Autograder POST /api/grade | 20×100 提交 | 100/100 HTTP 200，墙钟 0.9 s；p50 0.18 s / p95 0.26 s |
+
+**上线判定**：登录、Hub 实验环境、自动评测三链路全部通过，平台达到上线运行状态。

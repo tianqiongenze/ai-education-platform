@@ -114,6 +114,20 @@
 
 **多教师排课矩阵**（32 个 Lecture，一门 Lecture = 一份工单；A1~A12、B1~B12、P1~P8）：详见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3。**2026-09-17 起每个 Lecture 配 2 个关联命名教师账户**：teacher_<lec>_01（绑定 <lec>-class1）+ teacher_<lec>_02（绑定 <lec>-class2），共 64 个，均 staff + instructor 双角色，口令经 TEACHER_PASS 注入；teacher_ai_01/02（李智敏/周成峰）保留为 A 课程总主讲（Hub 管理员），teacher_python_02/java_01/02/go_01/rust_01 等历史协讲账户保留为机动；teacher_zhang 保留为系统级教师测试账户。班级 Cohort 为 {课程码}-class1 / {课程码}-class2（每 Lecture 2 个）。
 
+### 3.0a 账户口令规律（2026-09-18 全量重置后生效）
+
+> 2026-09-18 起全部教师/学生/py 批次账户口令统一重置为**与账户绑定的 Lecture 相关的规律口令**（用户自助记忆，无需找回）。规则如下（只描述规律，不落明文清单；管理脚本运行时仍以 `TEACHER_PASS`/`STUDENT_PASS` 等环境变量注入）：
+
+| 账户类别 | 口令构成 | 示例（Lecture a1） |
+|---|---|---|
+| 教师 `teacher_<lec>_01/02` | `T` + `<lec>` + `@26` | teacher_a1_01 / teacher_a1_02 → `T` + `a1` + `@26` |
+| 学生 `stu_<lec>_*` / `stu_<lec>_c<N>_*` | `<lec>` + `@26` | stu_a1_002 → `a1` + `@26` |
+| py 实训批次 `py_<lec>_*` | `p` + `<lec>` + `@26` | py_a1_001 → `p` + `a1` + `@26` |
+
+- `<lec>` 为账户所属 Lecture 小写编号（a1…a12 / b1…b12 / p1…p8），师生只需记住自己 Lecture 编号即可拼出口令。
+- teacher_zhang、admin、lecture_* 名义账户等系统账户不受此规律约束（维持既有注入口令）。
+- 忘记口令 = 按规律重拼即可；教师亦可在 Studio/LMS 后台为学生重置。
+
 ### 3.1 Open edX LMS 账户（原有 84 + C500 800 + C500-V2 800 + 工业等 ≈ 共 1748 个，MySQL auth_user）
 
 | 类别 | 账号 | 密码 | 说明 |
@@ -348,6 +362,26 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 **Autograder API 实测评测全链路**：`POST /api/grade` 以 `from submission import add` 约定引用学生代码 → 实测返回 score=100、PASS；自包含 tests（0 tests collected）或 `from code import`（报错）均不计分，已写入 MANUAL-TEST-CASES。
 
 **PVC 初始化分发实测**（startup.sh v3，2026-09-18 部署 ConfigMap `jupyterhub/jupyterhub-startup` 后 debug Pod 实测）：teacher_p1_01 = 双指南 + p1_p11/p12 学生版+教师版 4 ipynb + fw_p11.py/fw_p12.py；stu_b1_602 = 学生指南 + b1_w01/w02 4 ipynb + fw_w01.py/fw_w02.py；stu_a8_601 / stu_p8_601 = 学生指南 + 评测脚本（新 Lecture 内容未发布分支）；`submit_grade.py` 内嵌 `AUTOGRADER_URL = "http://10.167.2.175:30093"`。同一批 ConfigMap 变更中 `jupyterhub-config` 的 KubeSpawner 环境变量 `AUTOGRADER_URL` 亦由 31825 失效地址修正为 30093 并滚动 hub 生效。v2 时代的 3 项已知差异全部收敛（见 §4.3）。
+
+---
+
+## 五b、2026-09-18 口令重置 + 全量登录扫描 + 压力/性能测试（上线前验收）
+
+### 5b.1 全量口令重置与无头全功能登录扫描
+
+- **重置范围**: 73 个教师账户（64 个 teacher_<lec>_01/02 + teacher_ai_01/02 + 历史协讲等）+ 1630 个存量学生（stu_*/py_* 已挂载 Lecture 的全部账户），口令统一按 §3.0a 规律重置（环境变量注入，不落明文）。
+- **全量登录扫描**: 无头浏览器式 HTTP 链路（GET /login 取 CSRF → POST login_session），抽样 220/220 账户（73 教师 + 51 py + 96 学生，每 Lecture ≥6 人）**100% 登录成功**。
+- **限速特性（生产保护，实测均为瞬态自愈）**: GET /login 自身限流（120/min 类窗口，高压下 429）；登录 POST 按 email 与按 IP 各 1000/5m（超限 403 "Too many failed login attempts"）；单用户锁定 6 次/30min。并发扫描须带重试退避（10–20s），所有 429/403 均可在窗口内恢复，**无需放宽限流**。
+
+### 5b.2 压力与性能测试结果
+
+| 场景 | 并发 | 结果 | 关键指标 |
+|---|---|---|---|
+| LMS 并发登录（30 学生 + 15 py + 5 教师） | 50 | **50/50 成功**，墙钟 13.8 s | POST 登录 p50 1.23 s / p95 2.10 s / max 2.40 s；Dashboard p50 1.23 s / p95 2.59 s；GET /login p50 2.57 s / max 4.91 s |
+| Hub OAuth 登录 + spawn（10 学生并发） | 10 | **10/10 spawn 成功**（首轮 7 例完成 47.6~116.8 s，第 8 例 126 s 时仍 ContainerCreating、随后 Running；2 例 Hub 500 为瞬态、Pod 均正常 Running） | spawn 延迟 47.6~116.8 s（10 路并发下）；首轮后复spawn ≈8 s（历史基线） |
+| Autograder 并发评测（POST /api/grade，20 workers × 100 提交） | 20 | **100/100 HTTP 200**，墙钟 0.9 s | 延迟 p50 0.18 s / p95 0.26 s / max 0.28 s（略优于历史基线 avg 2.71 s，评测队列空载）；评分/lint/反馈字段完整 |
+
+**结论**: 登录、Hub 实验环境、自动评测三大链路在上述并发下全部成功、延迟可控，配合限速感知重试策略，平台具备上线运行条件。测试脚本与结果存于 lms Pod `/tmp/`（sweep6/sweep8/stress2/stress_hub3/stress_ag*.py + *.json）。
 
 ---
 

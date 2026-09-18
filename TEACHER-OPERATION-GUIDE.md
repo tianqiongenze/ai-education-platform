@@ -27,12 +27,14 @@
 | 角色 | 账号 | 密码 | 权限 |
 |------|------|------|------|
 | **系统级教师测试账户** | teacher-zhang@edu.local | `EdxTeacher2026!` | 全部 32 个 Lecture（A/B/P 3 门课程）staff，保留不动；正式授课教师见下 |
-| **A 课程总主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 经 `TEACHER_PASS` 环境变量注入 | A 课程班级1总主讲（李智敏）/ 班级2总主讲（周成峰），A1~A12 全部 staff + Hub 管理员 |
-| **Lecture 关联教师（64 个）** | teacher_a1_01 / teacher_a1_02 … teacher_p8_01 / teacher_p8_02（teacher-<lec>-0N@edu.local） | 经 `TEACHER_PASS` 环境变量注入 | 每个 Lecture 2 名：_01 → <lec>-class1，_02 → <lec>-class2（staff + instructor），用于多教师并行/串行上同一 Lecture |
+| **A 课程总主讲** | teacher-ai-01@edu.local / teacher-ai-02@edu.local | 口令 `Tai@26`（2026-09-18 重置，规律见下） | A 课程班级1总主讲（李智敏）/ 班级2总主讲（周成峰），A1~A12 全部 staff + Hub 管理员 |
+| **Lecture 关联教师（64 个）** | teacher_a1_01 / teacher_a1_02 … teacher_p8_01 / teacher_p8_02（teacher-<lec>-0N@edu.local） | 口令规律 `T<lec>@26`（如 teacher_a1_01 → `Ta1@26`），2026-09-18 重置，规律见下 | 每个 Lecture 2 名：_01 → <lec>-class1，_02 → <lec>-class2（staff + instructor），用于多教师并行/串行上同一 Lecture |
 | **系统管理员** | admin@openedx.local | `EdxAdmin2026!` | 平台最高权限 |
 | **Dify管理** | myuwei@126.com | `Difyai123456` | AI应用管理 |
 
 > 完整教师矩阵（64 个 Lecture 关联教师 + teacher_zhang + teacher_ai_01/02，口令注入策略）见 `ACCOUNT-SYSTEM-DESIGN-V2.md` §4.3 与 `TEACHING-MATRIX.md`。
+>
+> **口令规律说明（2026-09-18 全量重置）**：正式授课教师口令 = `T` + 小写课程号 + `@26`（A 课程总主讲同理，`<lec>`=ai → `Tai@26`）；学生口令 = `<lec>@26`（如 stu_a1_002 → `a1@26`）；py 账户 = `p<lec>@26`。系统级账户（teacher-zhang、admin、lecture-*）不在规律内。完整规律表见 `ACCOUNT-PASSWORD-OVERVIEW.md` §1.2.1a 或 `PLATFORM-GUIDE.md` §3.0a。
 
 #### 1.2.2 课程负责人账号
 
