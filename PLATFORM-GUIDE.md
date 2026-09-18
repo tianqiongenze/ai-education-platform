@@ -224,7 +224,7 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 | 教师（teacher_ai_01/02、teacher_<lec>_01/02、Lecture-* 等） | 学生版 + 教师版双指南（`JUPYTERHUB-STUDENT-GUIDE.md` + `JUPYTERHUB-OPERATION-GUIDE.md`）+ 本 Lecture（或本课程全量）ipynb + 代码框架。teacher_ai_01 实测 43 个文件/目录：A 系 24 ipynb + 12 starter + 2 指南 + grader 脚本 + nbgrader |
 | 学生（stu_<lec>_*） | 仅 `JUPYTERHUB-STUDENT-GUIDE.md` + `AUTOGRADER-GUIDE.md` + **本 Lecture 的学生版 ipynb + 教师版 ipynb + student_code_framework/ 代码框架**（实测 stu_p1_601：4 ipynb + 2 指南；stu_b1_601：4 ipynb） |
 
-> 已知差异（startup.sh v2 待 v3 收敛）：① 下划线教师账户 `teacher_<lec>_01/02` 未命中 `teacher-*` 指南分支 → 目前仅有学生指南；② B 系学生框架复制 pattern `fw_b1_*` 与实际 key `fw_w01…` 不匹配 → stu_b1_601 的 student_code_framework 为空；③ 新 Lecture（stu_a5_~a12_、stu_b7_~b12_、stu_p7_/p8_）暂无独立 case 分支，回退 `*)` 仅得双指南。已在 2026-09-18 实测确认，startup.sh v3 修复排期中。
+> **startup.sh v3 已上线（2026-09-18 部署并实测）**，v2 的 3 项已知差异全部收敛：① 指南/nbgrader 分支新增 `teacher_*`（下划线）pattern → `teacher_<lec>_01/02` 现获双指南；② B 系框架 pattern 修正为实际 key `fw_w01…fw_w12`（b1→w01+w02 … b6→w11+w12）→ stu_b1_602 实测得 fw_w01.py/fw_w02.py；③ 新增 32-Lecture 扩展段（A5~A12 / B7~B12 / P7~P8 的 `stu_*`/`teacher_*` 全 pattern）→ stu_a8_601/stu_p8_601 实测正常落入"内容未发布，仅指南+评测脚本"分支；④ `submit_grade.py` 内嵌 `AUTOGRADER_URL` 同步修正为 `http://10.167.2.175:30093`（v2 为已失效的 `https://10.167.2.175:31825/grader`）。新 Lecture 的工单内容（ipynb/框架）待入库 cm-course-a/b/p 后自动生效。
 
 ### 4.4 PrairieLearn 评测课程（Autograder API v2.0）
 
@@ -344,7 +344,7 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 
 **Autograder API 实测评测全链路**：`POST /api/grade` 以 `from submission import add` 约定引用学生代码 → 实测返回 score=100、PASS；自包含 tests（0 tests collected）或 `from code import`（报错）均不计分，已写入 MANUAL-TEST-CASES。
 
-**PVC 初始化分发实测**（startup.sh v2）：stu_p1_601 = 4 ipynb（学生版+教师版）+ 2 指南；stu_b1_601 = 4 ipynb 但 student_code_framework 为空（fw pattern 不匹配）；teacher_ai_01 = 43 项（24 A 系 ipynb + 12 starter + 双指南 + grader 脚本 + nbgrader）。学生确实获得**本 Lecture 学生版+教师版 ipynb**，但存在 §4.3 所列 3 项已知差异，startup.sh v3 修复排期中。
+**PVC 初始化分发实测**（startup.sh v3，2026-09-18 部署 ConfigMap `jupyterhub/jupyterhub-startup` 后 debug Pod 实测）：teacher_p1_01 = 双指南 + p1_p11/p12 学生版+教师版 4 ipynb + fw_p11.py/fw_p12.py；stu_b1_602 = 学生指南 + b1_w01/w02 4 ipynb + fw_w01.py/fw_w02.py；stu_a8_601 / stu_p8_601 = 学生指南 + 评测脚本（新 Lecture 内容未发布分支）；`submit_grade.py` 内嵌 `AUTOGRADER_URL = "http://10.167.2.175:30093"`。同一批 ConfigMap 变更中 `jupyterhub-config` 的 KubeSpawner 环境变量 `AUTOGRADER_URL` 亦由 31825 失效地址修正为 30093 并滚动 hub 生效。v2 时代的 3 项已知差异全部收敛（见 §4.3）。
 
 ---
 
