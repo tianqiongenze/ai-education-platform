@@ -209,12 +209,13 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 
 > 2026-09-09 修复记录（当时为 16 个 Lecture，2026-09-17 已重构为 32 个）：44 处 HTML 实验链接误指向 `https://apps.openedx.../`（204 空页），已全部改写为 Hub `/ide/` 正确入口，draft + published 双分支清零残留，61 个 vertical 子树已发布。V13 套件 J/K 组回归通过。
 
-### 4.3 实训 Notebook（JupyterHub ConfigMap 分发，32 份工单 × 学生版/教师版 = 64 个 ipynb + 32 个代码框架 starter）
+### 4.3 实训 Notebook（JupyterHub ConfigMap 分发，32 Lecture 全量：64 份工单 × 学生版/教师版 = 128 个 ipynb + 64 个代码框架 starter）
 
-- **A 系（cm-course-a）**: a1_m11…a4_m44 共 12 份工单，学生版+教师版 24 个 ipynb + fw_m11…fw_m44 12 个框架文件（w1_clean_starter.py … w12_defense_starter.py）
-- **B 系（cm-course-b）**: b1_w01…b6_w12 共 12 份工单，24 个 ipynb + fw_w01…fw_w12 12 个框架文件
-- **P 系（cm-course-p）**: p1_p11…p6_p66 共 8 份工单，16 个 ipynb + fw_p11/p12/p21/p22/p33/p41/p55/p66 8 个框架文件
-- 每个学生/教师用户 Pod 首次 spawn 时由 startup.sh 按 `Lecture-*` / `stu_<lec>_*` / `teacher_<lec>_*` 用户名分发对应本次 Lecture 的 ipynb 与代码框架（实测 2026-09-18）。
+- **A 系（cm-course-a）**: a1_m11…a4_m44 共 12 份工单 + **a5_m51…a12_z2 新增 16 份工单**（合计 28 份），56 个 ipynb + fw_m11…fw_m44 及 fw_m51…fw_m81、fw_z2 共 20 个框架文件
+- **B 系（cm-course-b）**: b1_w01…b6_w12 共 12 份工单 + **b7_w13…b12_w18 新增 12 份工单**（合计 24 份），48 个 ipynb + fw_w01…fw_w18 18 个框架文件
+- **P 系（cm-course-p）**: p1_p11…p6_p66 共 8 份工单 + **p7_p77、p8_p88 新增 2 份工单**（合计 10 份），20 个 ipynb + fw_p11/p12/p21/p22/p33/p41/p55/p66 及 fw_p77/fw_p88 共 10 个框架文件
+- ConfigMap 现状（2026-09-17 apply 后实测）：cm-course-a 60 keys、cm-course-b 54 keys、cm-course-p 30 keys；新工单 key 命名与存量一致（`a5_m51_student/_teacher` 等无扩展名）。
+- 每个学生/教师用户 Pod 首次 spawn 时由 startup.sh 按 `Lecture-*` / `stu_<lec>_*` / `teacher_<lec>_*` 用户名分发对应本次 Lecture 的 ipynb 与代码框架（老 Lecture 实测 2026-09-18；新 Lecture 实测 2026-09-17，见下）。
 
 **指南与文件自动分发**（PVC 初始化 startup.sh，2026-09-18 实测）:
 
@@ -224,7 +225,9 @@ LMS 共 **3 门 AIEDU 课程 + 1 门 edX Demo 演示课**；3 门 AIEDU 课程�
 | 教师（teacher_ai_01/02、teacher_<lec>_01/02、Lecture-* 等） | 学生版 + 教师版双指南（`JUPYTERHUB-STUDENT-GUIDE.md` + `JUPYTERHUB-OPERATION-GUIDE.md`）+ 本 Lecture（或本课程全量）ipynb + 代码框架。teacher_ai_01 实测 43 个文件/目录：A 系 24 ipynb + 12 starter + 2 指南 + grader 脚本 + nbgrader |
 | 学生（stu_<lec>_*） | 仅 `JUPYTERHUB-STUDENT-GUIDE.md` + `AUTOGRADER-GUIDE.md` + **本 Lecture 的学生版 ipynb + 教师版 ipynb + student_code_framework/ 代码框架**（实测 stu_p1_601：4 ipynb + 2 指南；stu_b1_601：4 ipynb） |
 
-> **startup.sh v3 已上线（2026-09-18 部署并实测）**，v2 的 3 项已知差异全部收敛：① 指南/nbgrader 分支新增 `teacher_*`（下划线）pattern → `teacher_<lec>_01/02` 现获双指南；② B 系框架 pattern 修正为实际 key `fw_w01…fw_w12`（b1→w01+w02 … b6→w11+w12）→ stu_b1_602 实测得 fw_w01.py/fw_w02.py；③ 新增 32-Lecture 扩展段（A5~A12 / B7~B12 / P7~P8 的 `stu_*`/`teacher_*` 全 pattern）→ stu_a8_601/stu_p8_601 实测正常落入"内容未发布，仅指南+评测脚本"分支；④ `submit_grade.py` 内嵌 `AUTOGRADER_URL` 同步修正为 `http://10.167.2.175:30093`（v2 为已失效的 `https://10.167.2.175:31825/grader`）。新 Lecture 的工单内容（ipynb/框架）待入库 cm-course-a/b/p 后自动生效。
+> **startup.sh v3 已上线（2026-09-18 部署并实测）**，v2 的 3 项已知差异全部收敛：① 指南/nbgrader 分支新增 `teacher_*`（下划线）pattern → `teacher_<lec>_01/02` 现获双指南；② B 系框架 pattern 修正为实际 key `fw_w01…fw_w12`（b1→w01+w02 … b6→w11+w12）→ stu_b1_602 实测得 fw_w01.py/fw_w02.py；③ 新增 32-Lecture 扩展段（A5~A12 / B7~B12 / P7~P8 的 `stu_*`/`teacher_*` 全 pattern）；④ `submit_grade.py` 内嵌 `AUTOGRADER_URL` 同步修正为 `http://10.167.2.175:30093`（v2 为已失效的 `https://10.167.2.175:31825/grader`）。
+>
+> **startup.sh v3.1 已上线（2026-09-17 部署，md5 a25706ab92e9892e9aaf6dfb46a79c51）**：32-Lecture 扩展段由占位分支升级为 glob 驱动的自动分发分支（A5~A12 / B7~B12 / P7~P8），且兼容带/不带 `.json` 后缀的 key（`sed -e s/_student$// -e s/\.json$//`）。**新 Lecture 工单内容已全部入库 cm-course-a/b/p 并实测自动分发**（2026-09-17 debug Pod 实测 6 新 Lecture 用户 + 2 老用户回归）：stu_a5_c601_01 → a5_m51 双版 ipynb + fw_m51…fw_z2 8 框架；teacher_a10_01 → a10_m72 双版 ipynb；stu_b7_c601_01 → b7_w13 双版 ipynb + fw_w13…fw_w18；teacher_b12_01 → b12_w18 双版；stu_p7_601_01 → p7_p77 双版 + fw_p77/fw_p88；teacher_p8_01 → p8_p88 双版；老用户 stu_p1_101（p1_p11/p12 4 ipynb）与 teacher_a1_01（M1-1a/M1-1b 4 ipynb）回归无差异。新分发文件 JSON 校验通过（nbformat 4）。教研侧后续新增工单只需按 `<lecture>_<id>_student/_teacher` 命名入库对应 ConfigMap，**无需改 startup.sh 即自动生效**。
 
 ### 4.4 PrairieLearn 评测课程（Autograder API v2.0）
 
