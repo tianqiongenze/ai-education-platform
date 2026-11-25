@@ -68,7 +68,7 @@ metadata:
 type: Opaque
 data:
   url: "aHR0cHM6Ly8xMC4xNjcuMi4xNzU="
-  token: "bGIycGZ2ZDR2NTljbWRyamNmYzR2djljNW5sNzR2Y205dnM3Z25ra3JmaGxkbm5xYzl2OWNi"
+  token: "REPLACE_WITH_RANCHER_TOKEN"
   namespace: ""
 
 ---

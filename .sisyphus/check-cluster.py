@@ -1,6 +1,6 @@
 import sys, json, ssl, urllib.request
 
-token = "token-5vvlk:p7mnx7jjcnh8hm6n8mfdfkd5l4vhfc4n9fzht8kjxkfl24d2dc6dd9"
+token = "REPLACE_WITH_RANCHER_TOKEN"
 
 req = urllib.request.Request("https://localhost/v3/clusters")
 req.add_header("Authorization", "Bearer " + token)
